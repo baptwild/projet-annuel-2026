@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+
+  backend:
+    build:
+      context: ./backend
+    container_name: symfony_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/var/www
+    working_dir: /var/www
+    command: php -S 0.0.0.0:8000 -t public
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: next_frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: npm run dev
+    depends_on:
+      - backend
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: app
+      MYSQL_USER: symfony
+      MYSQL_PASSWORD: symfony
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
