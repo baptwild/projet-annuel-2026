@@ -1,0 +1,27 @@
+@use "../../Settings/variables" as *;
+@use "../../Tools/mixins";
+
+.a_IconButton {
+   @include mixins.buttonDefault;
+
+   padding: 0.5rem;
+   font-size: 1.2rem;
+   background: none;
+   color: inherit;
+
+   &-primary {
+      @include mixins.buttonColor($color-primary, $color-white, $color-secondary, $color-white);
+   }
+
+   &-secondary {
+      @include mixins.buttonColor($color-white, $color-primary, $color-primary, $color-white);
+   }
+
+   &-tertiary {
+      @include mixins.buttonColor($color-white, $color-primary, $color-secondary, $color-white);
+   }
+
+   &-quarternary {
+      @include mixins.buttonColor($color-secondary, $color-white, $color-primary, $color-white);
+   }
+}

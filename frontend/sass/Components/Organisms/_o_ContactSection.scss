@@ -1,0 +1,103 @@
+@use "../../Settings/responsive_variables";
+@use "../../Tools/mixins";
+@use "../../Tools/typography";
+
+.o_ContactSection {
+   @include mixins.margin;
+
+   display: flex;
+   flex-direction: column;
+   gap: 5rem;
+
+   &_contact {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      width: 100%;
+
+      &-title {
+         @include typography.h2;
+         @include mixins.underline;
+      }
+
+      &-subtitle {
+         @include typography.h4;
+      }
+
+      &-info {
+         @include typography.body-bold;
+      }
+
+      &-list {
+         display: flex;
+         flex-direction: column;
+         gap: 1rem;
+      }
+
+      &-item {
+         display: flex;
+         flex-direction: row;
+         justify-content: space-between;
+         align-items: center;
+      }
+
+      &-link {
+         display: inline-flex;
+         align-items: center;
+
+         i {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+         }
+      }
+
+      &-social {
+         display: flex;
+         flex-direction: row;
+         gap: 1.5rem;
+         margin-top: 3rem;
+
+         &-link {
+            i {
+               font-size: 2rem;
+            }
+         }
+      }
+   }
+
+   &_opening {
+      &-list {
+         display: flex;
+         flex-direction: column;
+         gap: 1rem;
+      }
+
+      &-item {
+         display: flex;
+         flex-direction: row;
+         justify-content: space-between;
+         align-items: center;
+         width: 70%;
+
+         &-day,
+         &-time {
+            @include typography.body-bold;
+         }
+      }
+   }
+
+   @media screen and (min-width: responsive_variables.$screen-m-min) {
+      flex-direction: row;
+      justify-content: space-between;
+
+      &_contact {
+         width: 50%;
+      }
+
+      &_opening {
+         &-item {
+            width: 60%;
+         }
+      }
+   }
+}

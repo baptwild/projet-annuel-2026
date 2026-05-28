@@ -1,0 +1,17 @@
+@use "../../Settings/responsive_variables";
+@use "../../Tools/mixins";
+
+.o_PriceCardList {
+   @include mixins.margin;
+
+   display: flex;
+   flex-direction: column;
+   gap: 2rem;
+
+   @media screen and (min-width: responsive_variables.$screen-s-min) {
+      flex-direction: row;
+      gap: 2rem;
+      justify-content: space-between;
+      align-items: stretch;
+   }
+}

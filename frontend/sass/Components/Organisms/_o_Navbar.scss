@@ -1,0 +1,98 @@
+@use "../../Settings/responsive_variables";
+@use "../../Tools/typography";
+@use "../../Tools/mixins";
+
+.o_Navbar {
+   @include mixins.wrapper;
+
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   width: 100%;
+
+   &_menu {
+      display: none;
+   }
+
+   &_links {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1.5rem;
+   }
+
+   &_socials {
+      display: none;
+   }
+
+   &_login {
+      display: none;
+   }
+
+   &_mobileMenu {
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+
+      &-link {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+      }
+
+
+      i {
+         font-size: 2rem;
+      }
+   }
+
+   @media screen and (min-width: responsive_variables.$screen-s-min) {
+      &_menu {
+         display: flex;
+         flex-direction: row;
+         align-items: center;
+         gap: 2.5rem;
+
+         &-link {
+            @include typography.body-bold;
+         }
+      }
+
+      &_mobileMenu {
+         display: none;
+      }
+
+      &_socials {
+         display: flex;
+         flex-direction: row;
+         align-items: center;
+         gap: 1rem;
+
+         &-link {
+            display: flex;
+            align-items: center;
+
+            i {
+               font-size: 1.5rem;
+            }
+         }
+      }
+
+      &_profile {
+         display: flex;
+         align-items: center;
+
+         i {
+            font-size: 2rem;
+         }
+      }
+
+      &_login {
+         display: flex;
+         align-items: center;
+      }
+   }
+}

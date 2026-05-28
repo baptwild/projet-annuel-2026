@@ -1,0 +1,24 @@
+@use "../Settings/variables" as *;
+@use "../Tools/typography";
+
+html,
+body {
+   height: 100%;
+   scroll-behavior: smooth;
+}
+
+body {
+   @include typography.body;
+
+   font-family: $font-text;
+   color: $color-black;
+   background-color: $color-white;
+
+   display: flex;
+   flex-direction: column;
+   min-height: 100%;
+}
+
+.hidden {
+   display: none;
+}

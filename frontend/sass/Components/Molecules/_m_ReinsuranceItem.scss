@@ -1,0 +1,43 @@
+@use "../../Settings/variables" as *;
+@use "../../Settings/responsive_variables";
+@use "../../Tools/typography";
+
+.m_ReinsuranceItem {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   gap: 2rem;
+   width: 100%;
+   color: $color-white;
+
+   &_icon {
+      i {
+         font-size: 3rem;
+      }
+   }
+
+   &_content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+   }
+
+   &_title {
+      @include typography.body-bold;
+      @include typography.fontStyle($size: 24px, $weight: 400);
+      text-transform: uppercase;
+      text-align: center;
+   }
+
+   &_description {
+      text-align: center;
+   }
+
+   @media screen and (min-width: responsive_variables.$screen-s-min) {
+      min-height: 12rem;
+      width: 30%;
+   }
+}

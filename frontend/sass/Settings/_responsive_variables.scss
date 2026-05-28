@@ -1,0 +1,21 @@
+// Screen size trigger
+$screen-xl: 1600px;
+$screen-l: 1200px;
+$screen-m: 992px;
+$screen-s: 768px;
+$screen-xs: 576px;
+$screen-xxs: 375px;
+
+// Break point trigger
+$screen-xl-min: $screen-xl;
+$screen-l-max: $screen-xl-min - 1; // 1599px
+$screen-l-min: $screen-l;
+$screen-m-max: $screen-l-min - 1; // 1199px
+$screen-m-min: $screen-m;
+$screen-s-max: $screen-m-min - 1; // 991px
+$screen-s-min: $screen-s;
+$screen-xs-max: $screen-s-min - 1; // 767px
+$screen-xs-min: $screen-xs;
+$screen-xxs-max: $screen-xs-min - 1; // 575px
+$screen-xxs-min: $screen-xxs;
+$screen-xxxs-max: $screen-xxs-min - 1; // 374px

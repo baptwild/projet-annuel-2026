@@ -1,0 +1,73 @@
+@use '../../Settings/variables' as *;
+@use '../../Settings/responsive_variables';
+@use '../../Tools/typography';
+@use '../../Tools/mixins';
+
+.o_MobileMenu {
+   position: fixed;
+   top: 0;
+   left: -100vw;
+   z-index: 200;
+   width: 100vw;
+   height: 100dvh;
+   background-color: $color-quinery;
+   color: $color-white;
+   padding: 1.25rem 0;
+   transition: left $animation ease-in-out;
+
+   &.open {
+      left: 0;
+   }
+
+   &_content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 100%;
+      height: 100%;
+   }
+
+   &_header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+   }
+
+   &_logo {
+      height: 50px;
+      width: auto;
+      display: block;
+   }
+
+   &_close {
+      font-size: 2rem;
+      cursor: pointer;
+   }
+
+   &_list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      width: 100%;
+   }
+
+   &_footer {
+      display: flex;
+      flex-direction: column;
+      gap: 5rem;
+      margin-bottom: 3rem;
+   }
+
+   &_social {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 2rem;
+
+      &-link {
+         font-size: 2rem;
+      }
+   }
+}

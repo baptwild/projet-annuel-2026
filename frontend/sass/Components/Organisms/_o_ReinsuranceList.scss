@@ -1,0 +1,24 @@
+@use "../../Settings/variables" as *;
+@use "../../Settings/responsive_variables";
+@use "../../Tools/mixins";
+
+.o_ReinsuranceList {
+   @include mixins.padding;
+
+   background-color: $color-quaternary;
+
+   &_list {
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+   }
+
+   @media screen and (min-width: responsive_variables.$screen-s-min) {
+      &_list {
+         flex-direction: row;
+         gap: 2.5rem;
+         justify-content: space-between;
+         align-items: flex-start;
+      }
+   }
+}
