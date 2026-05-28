@@ -1,0 +1,54 @@
+@use "../../Settings/variables" as *;
+@use "../../Settings/responsive_variables";
+@use "../../Tools/mixins";
+@use "../../Tools/typography";
+
+.o_HeroStaticPage {
+   width: 100%;
+   height: 100dvh;
+   background-color: $color-white;
+   background-image: url("../../../public/images/hero-static-page-mobile.webp");
+   background-size: cover;
+   background-position: right;
+   background-repeat: no-repeat;
+
+   display: flex;
+   align-items: center;
+   justify-content: flex-start;
+
+   &_information {
+      @include mixins.wrapper;
+
+      margin-top: 18rem;
+   }
+
+   &_title {
+      @include typography.h1;
+   }
+
+   &_subtitle {
+      @include typography.h2;
+
+      margin-top: 1.5rem;
+   }
+
+   &_scroll {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      cursor: pointer;
+
+      i {
+         font-size: 2rem;
+         color: $color-black;
+      }
+   }
+
+   @media screen and (min-width: responsive_variables.$screen-m-min) {
+      background-image: url("../../../public/images/hero-static-page.webp");
+
+      &_information {
+         margin-top: 0;
+      }
+   }
+}

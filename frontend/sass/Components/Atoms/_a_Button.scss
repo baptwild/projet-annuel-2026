@@ -1,0 +1,26 @@
+@use "../../Settings/variables" as *;
+@use "../../Tools/mixins";
+@use "../../Tools/typography";
+
+.a_Button {
+   @include mixins.buttonDefault;
+   @include typography.body-bold;
+
+   padding: 0.5rem 1.5rem;
+
+   &-primary {
+      @include mixins.buttonColor($color-primary, $color-white, $color-secondary, $color-white);
+   }
+
+   &-secondary {
+      @include mixins.buttonColor($color-white, $color-primary, $color-primary, $color-white);
+   }
+
+   &-tertiary {
+      @include mixins.buttonColor($color-white, $color-primary, $color-secondary, $color-white);
+   }
+
+   &-quarternary {
+      @include mixins.buttonColor($color-secondary, $color-white, $color-primary, $color-white);
+   }
+}

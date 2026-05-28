@@ -1,0 +1,90 @@
+@use "../../Settings/variables" as *;
+@use "../../Settings/responsive_variables";
+@use "../../Tools/mixins";
+@use "../../Tools/typography";
+
+.o_Dashboard {
+   @include mixins.margin;
+
+   display: flex;
+   flex-direction: column;
+
+   &_header {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+
+      &-button {
+         width: max-content;
+         margin-bottom: 3rem;
+      }
+   }
+
+   &_title {
+      @include typography.h2;
+      @include mixins.underline;
+
+      margin-bottom: 3rem;
+   }
+
+   &_section {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      width: 100%;
+      min-height: 10rem;
+      border: 1px solid rgba($color-black, 0.2);
+      border-radius: $border-radius;
+      padding: 2rem;
+      margin-bottom: 3rem;
+
+      &-title {
+         @include typography.h4;
+         @include mixins.underline;
+      }
+
+      &-list {
+         &-bold {
+            @include typography.body-bold;
+            color: $color-secondary;
+         }
+      }
+
+      &-links {
+         display: flex;
+         flex-direction: column;
+         gap: 1rem;
+         max-width: fit-content;
+      }
+
+      &-button {
+         width: max-content;
+      }
+   }
+
+   @media screen and (min-width: responsive_variables.$screen-s-min) {
+      &_header {
+         flex-direction: row;
+         justify-content: space-between;
+         align-items: center;
+
+         &-button {
+            margin-bottom: 0;
+         }
+      }
+
+      &_section {
+         position: relative;
+
+         &-button {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+         }
+
+         &-links {
+            flex-direction: row;
+         }
+      }
+   }
+}

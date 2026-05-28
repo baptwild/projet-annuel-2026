@@ -1,0 +1,31 @@
+// Fonts
+$font-title: var(--font-bellerose), sans-serif;
+$font-text: var(--font-roboto), sans-serif;
+
+// Colors
+$color-primary: #01B4B8;
+$color-secondary: #008EA1;
+$color-tertiary: #00DAC1;
+$color-quaternary: #1D6a80;
+$color-quinery: #2F4858;
+
+$color-black: #181818;
+$color-white: #FFFFFF;
+$color-light: #ddf7f2;
+
+// Radius
+$border-radius-100: 100px;
+$border-radius: 8px;
+$border-radius-half: 4px;
+
+// Border
+$border: 1px solid $color-black;
+
+// Shadow 
+$shadow: drop-shadow(0 4px 4px rgba($color-black, 0.25));
+
+// Animation
+$animation: 300ms;
+
+// Wrapper
+$wrapper: 1512px;

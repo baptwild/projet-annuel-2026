@@ -1,0 +1,31 @@
+@use '../../Settings/variables' as *;
+@use '../../Tools/typography';
+
+.a_MobileMenuLink {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-between;
+   width: 100%;
+   padding-bottom: 2rem;
+   border-bottom: 1px solid $color-white;
+   color: $color-white;
+   transition: color $animation ease-in-out;
+
+   &_label {
+      @include typography.h3;
+   }
+
+   &_icon {
+      font-size: 1.5rem;
+   }
+
+   &:last-child {
+      border-bottom: none;
+   }
+
+   &:hover,
+   &:focus {
+      color: $color-primary;
+   }
+}

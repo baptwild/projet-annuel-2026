@@ -1,0 +1,61 @@
+@use "../../Settings/variables" as *;
+@use "../../Settings/responsive_variables";
+@use "../../Tools/typography";
+@use "../../Tools/mixins";
+
+.o_MethodList {
+   @include mixins.margin;
+
+   display: flex;
+   flex-direction: column;
+   gap: 2rem;
+
+   &_intro {
+
+      &-title {
+         @include typography.h2;
+         @include mixins.underline;
+      }
+
+      &-subtitle {
+         margin-top: 1.5rem;
+      }
+   }
+
+   &_section {
+
+      &-title {
+         @include typography.h4;
+      }
+
+      &-text {
+         margin-top: 1rem;
+      }
+   }
+
+   &_image {
+      margin-top: 1rem;
+      width: 100%;
+
+      img {
+         width: 100%;
+         height: auto;
+         border-radius: $border-radius;
+      }
+   }
+
+   &_cardList {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-top: 3rem;
+   }
+
+   @media screen and (min-width: responsive_variables.$screen-s-min) {
+      &_cardList {
+         flex-direction: row;
+         gap: 2rem;
+         justify-content: space-between;
+      }
+   }
+}

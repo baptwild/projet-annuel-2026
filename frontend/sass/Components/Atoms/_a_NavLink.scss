@@ -1,0 +1,42 @@
+@use '../../Tools/typography';
+@use '../../Settings/variables' as *;
+
+.a_NavLink {
+   display: inline-block;
+   color: inherit;
+   transition: color $animation ease-in-out;
+
+   &-label {
+      @include typography.body-bold;
+      position: relative;
+
+      &::after {
+         content: "";
+         position: absolute;
+         left: 0;
+         top: 1.25rem;
+         width: 0;
+         height: 4px;
+         background-color: currentColor;
+         transition: width $animation ease-in-out;
+      }
+   }
+
+   &:hover,
+   &:focus {
+      color: $color-quaternary;
+   }
+
+   &:hover &-label::after,
+   &:focus &-label::after {
+      width: 100%;
+   }
+
+   &-noUnderline {
+      .a_NavLink-label {
+         &::after {
+            display: none;
+         }
+      }
+   }
+}

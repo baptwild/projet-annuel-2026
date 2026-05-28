@@ -1,0 +1,92 @@
+@use "../Settings/variables" as *;
+@use "../Tools/typography";
+@use "../Settings/responsive_variables";
+
+// Button
+@mixin buttonColor($background, $text, $backgroundHover, $textHover) {
+   background-color: $background;
+   color: $text;
+
+   &:hover {
+      background-color: $backgroundHover;
+      color: $textHover;
+   }
+}
+
+@mixin buttonDefault {
+   cursor: pointer;
+   white-space: nowrap;
+   text-decoration: none;
+   display: inline-flex;
+   justify-content: center;
+   align-items: center;
+   border: none;
+   border-radius: $border-radius-100;
+   transition: all $animation ease-in-out;
+}
+
+// Padding
+@mixin padding($padding: 7.5rem) {
+   padding-top: 5rem;
+   padding-bottom: 5rem;
+
+   @media screen and (min-width: responsive_variables.$screen-m-min) {
+      padding-top: $padding;
+      padding-bottom: $padding;
+   }
+}
+
+@mixin paddingWrapper($padding: 3rem) {
+   padding-right: 1.25rem;
+   padding-left: 1.25rem;
+
+   @media screen and (min-width: responsive_variables.$screen-m-min) {
+      padding-right: $padding;
+      padding-left: $padding;
+   }
+}
+
+// Wrapper
+@mixin wrapper($size: $wrapper, $padding: 3rem) {
+   @include paddingWrapper($padding);
+   margin-left: auto;
+   margin-right: auto;
+   position: relative;
+   z-index: 1;
+   width: 100%;
+   max-width: $size;
+}
+
+// Margin
+@mixin margin($margin: 9rem) {
+   margin-top: 7.5rem;
+   margin-bottom: 7.5rem;
+
+   @media screen and (min-width: responsive_variables.$screen-m-min) {
+      margin-top: $margin;
+      margin-bottom: $margin;
+   }
+}
+
+// Underline
+@mixin underline($color: $color-primary) {
+   &::after {
+      content: "";
+      display: block;
+      width: 8.5rem;
+      height: 1px;
+      background-color: $color;
+      margin-top: 1.25rem;
+   }
+}
+
+@mixin underlineTitle($color: $color-primary) {
+   &::after {
+      content: "";
+      display: block;
+      width: 10rem;
+      height: 4px;
+      background-color: $color;
+      margin: 2rem auto 0 auto;
+   }
+}
