@@ -1,0 +1,64 @@
+@use "../../Settings/variables" as *;
+@use "../../Settings/responsive_variables";
+@use "../../Tools/typography";
+@use "../../Tools/mixins";
+
+.o_AboutMeStatic {
+   @include mixins.padding;
+
+   width: 100%;
+   background-color: $color-secondary;
+
+   &_content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+   }
+
+   &_image {
+      width: 100%;
+      height: auto;
+
+      img {
+         height: 100%;
+         width: 100%;
+         border-radius: $border-radius;
+      }
+   }
+
+   &_text {
+      color: $color-white;
+
+      &-title {
+         @include typography.h2;
+         @include mixins.underline($color-white);
+      }
+
+      &-description {
+         margin-top: 1.5rem;
+      }
+
+      &-button {
+         margin-top: 2rem;
+      }
+   }
+
+   @media screen and (min-width: responsive_variables.$screen-s-min) {
+      &_content {
+         flex-direction: row;
+         gap: 5rem;
+         justify-content: space-between;
+         align-items: center;
+      }
+
+      &_text {
+         max-width: 45%;
+         text-wrap: balance;
+      }
+
+      &_image {
+         max-width: 50%;
+         height: auto;
+      }
+   }
+}

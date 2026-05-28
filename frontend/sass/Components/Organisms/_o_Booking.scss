@@ -1,0 +1,20 @@
+@use '../../Settings/responsive_variables';
+@use '../../Tools/typography';
+@use '../../Tools/mixins';
+
+.o_Booking {
+   @include mixins.margin;
+
+   &_title {
+      @include typography.h2;
+      @include mixins.underline;
+
+      margin-bottom: 3rem;
+   }
+
+   @media screen and (min-width: responsive_variables.$screen-s-min) {
+      overflow-x: visible;
+      display: block;
+      white-space: normal;
+   }
+}

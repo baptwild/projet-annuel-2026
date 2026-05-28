@@ -1,0 +1,79 @@
+@use "../Settings/variables" as *;
+@use "../Settings/responsive_variables";
+
+// Text
+@mixin fontSize($size: 16px,
+   $lineHeight: ($size + 10px,
+   )) {
+   font-size: $size;
+   line-height: $lineHeight;
+}
+
+@mixin fontStyle($size: 16px,
+   $weight: 300,
+   $lineHeight: ($size + 10px,
+   )) {
+   @include fontSize($size, $lineHeight);
+   font-weight: $weight;
+}
+
+@mixin title($weight: 300) {
+   font-family: $font-title;
+   font-weight: $weight;
+   text-transform: uppercase;
+}
+
+@mixin resetTitle($weight: 300) {
+   font-family: $font-text;
+   font-weight: $weight;
+   text-transform: initial;
+}
+
+@mixin h1 {
+   @include title($weight: 300);
+   @include fontSize(36px, 46px);
+
+   @media screen and (min-width: responsive_variables.$screen-m-min) {
+      @include fontSize(48px, 58px);
+   }
+}
+
+@mixin h2 {
+   @include title;
+   @include fontSize(24px, 34px);
+
+   @media screen and (min-width: responsive_variables.$screen-m-min) {
+      @include fontSize(36px, 46px);
+   }
+}
+
+@mixin h3 {
+   @include title;
+   @include fontSize(20px, 30px);
+
+   @media screen and (min-width: responsive_variables.$screen-m-min) {
+      @include fontSize(32px, 42px);
+   }
+}
+
+@mixin h4 {
+   @include title;
+   @include fontSize(16px, 26px);
+
+   @media screen and (min-width: responsive_variables.$screen-m-min) {
+      @include fontSize(24px, 34px);
+   }
+}
+
+@mixin body {
+   @include fontSize(14px, 30px);
+
+   @media screen and (min-width: responsive_variables.$screen-m-min) {
+      @include fontSize(16px, 32px);
+   }
+}
+
+@mixin body-bold($weight: 600) {
+   @include body;
+   font-weight: $weight;
+}

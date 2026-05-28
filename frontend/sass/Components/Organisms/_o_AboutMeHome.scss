@@ -1,0 +1,59 @@
+@use "../../Settings/variables" as *;
+@use "../../Settings/responsive_variables";
+@use "../../Tools/typography";
+@use "../../Tools/mixins";
+
+.o_AboutMeHome {
+   @include mixins.padding;
+
+   width: 100%;
+   background-color: $color-secondary;
+
+   &_content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+   }
+
+   &_image {
+      flex-shrink: 0;
+
+      img {
+         height: 150px;
+         width: 150px;
+         object-fit: cover;
+         border-radius: $border-radius-100;
+      }
+   }
+
+   &_text {
+      color: $color-white;
+
+      &-title {
+         @include typography.h2;
+         @include mixins.underline($color-white);
+      }
+
+      &-description {
+         @include typography.body;
+         margin-top: 2rem;
+      }
+
+      &-button {
+         margin-top: 3rem;
+      }
+   }
+
+   @media screen and (min-width: responsive_variables.$screen-m-min) {
+      &_content {
+         flex-direction: row;
+         gap: 5rem;
+         justify-content: center;
+      }
+
+      &_text {
+         max-width: 45%;
+      }
+   }
+}

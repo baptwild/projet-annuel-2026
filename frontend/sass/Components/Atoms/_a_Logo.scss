@@ -1,0 +1,12 @@
+@use "../../Settings/variables" as *;
+@use "../../Settings/responsive_variables";
+
+.a_Logo {
+   height: 50px;
+   width: auto;
+   display: block;
+
+   &-white {}
+
+   &-color {}
+}

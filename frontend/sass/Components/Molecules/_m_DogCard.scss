@@ -1,0 +1,50 @@
+@use '../../Settings/variables' as *;
+@use '../../Settings/responsive_variables';
+@use '../../Tools/typography';
+@use '../../Tools/mixins';
+
+.m_DogCard {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   width: 100%;
+   max-height: max-content;
+   border: 1px solid rgba($color-black, 0.2);
+   border-radius: $border-radius;
+
+   &_image {
+      width: 100%;
+      height: 50%;
+
+      img {
+         width: 100%;
+         height: 100%;
+         object-fit: cover;
+         border-top-left-radius: $border-radius;
+         border-top-right-radius: $border-radius;
+      }
+   }
+
+   &_content {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      padding: 1.5rem;
+   }
+
+   &_title {
+      @include typography.h3;
+   }
+
+   &_actions {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 2rem;
+   }
+
+   @media screen and (min-width: responsive_variables.$screen-s-min) {
+      width: 48%;
+   }
+}
