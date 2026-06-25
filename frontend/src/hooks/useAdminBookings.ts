@@ -24,7 +24,7 @@ export type AdminBooking = {
 type UseAdminBookingsReturn = {
   bookings: AdminBooking[]
   loading: boolean
-  updateStatus: (iri: string, status: 'confirmed' | 'cancelled') => Promise<void>
+  updateStatus: (iri: string, status: 'confirmed' | 'cancelled' | 'completed') => Promise<void>
 }
 
 export function useAdminBookings(): UseAdminBookingsReturn {
@@ -33,17 +33,28 @@ export function useAdminBookings(): UseAdminBookingsReturn {
 
   const fetchBookings = useCallback(async () => {
     const token = localStorage.getItem('token')
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bookings`, {
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/ld+json' },
-    })
-    const data = await res.json()
-    setBookings(data['member'] ?? data['hydra:member'] ?? [])
+    const API = process.env.NEXT_PUBLIC_API_URL
+    const all: AdminBooking[] = []
+    let url: string | null = `${API}/api/bookings?itemsPerPage=100&page=1`
+
+    while (url) {
+      const res = await fetch(url, {
+        headers: { Authorization: `Bearer ${token}`, Accept: 'application/ld+json' },
+      })
+      const data = await res.json()
+      const members: AdminBooking[] = data['member'] ?? data['hydra:member'] ?? []
+      all.push(...members)
+      const next = data['view']?.['next'] ?? data['hydra:view']?.['hydra:next'] ?? null
+      url = next ? `${API}${next}` : null
+    }
+
+    setBookings(all)
     setLoading(false)
   }, [])
 
   useEffect(() => { fetchBookings() }, [fetchBookings])
 
-  const updateStatus = async (iri: string, status: 'confirmed' | 'cancelled') => {
+  const updateStatus = async (iri: string, status: 'confirmed' | 'cancelled' | 'completed') => {
     const token = localStorage.getItem('token')
     await fetch(`${process.env.NEXT_PUBLIC_API_URL}${iri}`, {
       method: 'PATCH',

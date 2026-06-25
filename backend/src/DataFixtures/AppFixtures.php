@@ -31,11 +31,17 @@ class AppFixtures extends Fixture
             ->setTime((int)$h, (int)$m, 0);
     }
 
-    private function statusFor(int $wk): BookingStatus
+    /**
+     * Statut automatique selon la date du créneau au moment du chargement des fixtures :
+     * - Semaines passées           → completed
+     * - Jours passés cette semaine → confirmed  (l'admin a validé, peut cliquer "Terminer")
+     * - Aujourd'hui et futur       → pending    (l'admin doit encore valider)
+     */
+    private function statusFor(int $wk, int $dow): BookingStatus
     {
-        if ($wk < 0)  return BookingStatus::Completed;
-        if ($wk === 0) return BookingStatus::Confirmed;
-        if ($wk === 1) return BookingStatus::Confirmed;
+        if ($wk < 0) return BookingStatus::Completed;
+        $slotEnd = $this->d($wk, $dow, '23:59');
+        if ($slotEnd < new \DateTimeImmutable()) return BookingStatus::Confirmed;
         return BookingStatus::Pending;
     }
 
@@ -54,7 +60,7 @@ class AppFixtures extends Fixture
         $b->setDaycare($dc);
         $b->setStartDate($this->d($wk, $dow, $start));
         $b->setEndDate($this->d($wk, $dow, $end));
-        $b->setStatus($status ?? $this->statusFor($wk));
+        $b->setStatus($status ?? $this->statusFor($wk, $dow));
         $m->persist($b);
     }
 
