@@ -9,9 +9,11 @@ type Dog = {
 }
 
 type DaycareConfig = {
+  id: number
   openingTime: string
   closingTime: string
   openDays: number[]
+  maxDogsPerDay: number | null
 }
 
 export type AvailableDate = {
@@ -19,13 +21,23 @@ export type AvailableDate = {
   label: string
 }
 
+export type OccupancyInfo = {
+  count: number
+  max: number | null
+  isFull: boolean
+  dogs: { name: string; breed: string | null }[]
+}
+
 type UseBookingReturn = {
   dogs: Dog[]
   config: DaycareConfig
   timeSlots: string[]
   availableDates: AvailableDate[]
+  occupancy: OccupancyInfo | null
+  occupancyLoading: boolean
   loading: boolean
   error: string | null
+  fetchOccupancy: (date: string) => Promise<void>
   submit: (dogIri: string, date: string, startTime: string, endTime: string) => Promise<boolean>
 }
 
@@ -68,14 +80,21 @@ function generateAvailableDates(openDays: number[], count = 30): AvailableDate[]
 
 export function useBooking(): UseBookingReturn {
   const [dogs, setDogs] = useState<Dog[]>([])
-  const [config, setConfig] = useState<DaycareConfig>({ openingTime: '08:00', closingTime: '19:00', openDays: [1, 2, 3, 4, 5] })
+  const [config, setConfig] = useState<DaycareConfig>({
+    id: 0,
+    openingTime: '08:00',
+    closingTime: '19:00',
+    openDays: [1, 2, 3, 4, 5],
+    maxDogsPerDay: null,
+  })
+  const [occupancy, setOccupancy] = useState<OccupancyInfo | null>(null)
+  const [occupancyLoading, setOccupancyLoading] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (!token) { setLoading(false); return }
-
     const api = process.env.NEXT_PUBLIC_API_URL
     const headers = { Authorization: `Bearer ${token}`, Accept: 'application/ld+json' }
 
@@ -83,9 +102,11 @@ export function useBooking(): UseBookingReturn {
       .then(r => r.json())
       .then(me => {
         setConfig({
+          id: me.daycare.id,
           openingTime: me.daycare.openingTime,
           closingTime: me.daycare.closingTime,
           openDays: me.daycare.openDays ?? [1, 2, 3, 4, 5],
+          maxDogsPerDay: me.daycare.maxDogsPerDay ?? null,
         })
         return fetch(`${api}/api/dogs?owner=${me.id}`, { headers })
       })
@@ -94,6 +115,23 @@ export function useBooking(): UseBookingReturn {
       .catch(() => setError('Impossible de charger vos données.'))
       .finally(() => setLoading(false))
   }, [])
+
+  const fetchOccupancy = async (date: string) => {
+    if (!date || !config.id) return
+    setOccupancyLoading(true)
+    try {
+      const token = localStorage.getItem('token')
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/daycares/${config.id}/occupancy?date=${date}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      if (res.ok) setOccupancy(await res.json())
+    } catch {
+      // occupancy is non-blocking
+    } finally {
+      setOccupancyLoading(false)
+    }
+  }
 
   const timeSlots = generateTimeSlots(config.openingTime, config.closingTime)
   const availableDates = generateAvailableDates(config.openDays)
@@ -127,5 +165,5 @@ export function useBooking(): UseBookingReturn {
     }
   }
 
-  return { dogs, config, timeSlots, availableDates, loading, error, submit }
+  return { dogs, config, timeSlots, availableDates, occupancy, occupancyLoading, loading, error, submit, fetchOccupancy }
 }

@@ -8,7 +8,7 @@ import { ColorButton } from '@/enums/ColorButton'
 
 export default function BookingPage() {
   const router = useRouter()
-  const { dogs, timeSlots, availableDates, config, loading, error, submit } = useBooking()
+  const { dogs, timeSlots, availableDates, config, occupancy, occupancyLoading, loading, error, submit, fetchOccupancy } = useBooking()
 
   const [dogIri, setDogIri] = useState('')
   const [date, setDate] = useState('')
@@ -36,6 +36,15 @@ export default function BookingPage() {
   useEffect(() => {
     if (timeSlots.length > 1 && !endTime) setEndTime(timeSlots[1])
   }, [timeSlots, endTime])
+
+  // Fetch occupancy whenever date or config.id changes
+  useEffect(() => {
+    if (date && config.id) fetchOccupancy(date)
+  }, [date, config.id]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleDateChange = (val: string) => {
+    setDate(val)
+  }
 
   const handleStartChange = (val: string) => {
     setStartTime(val)
@@ -72,6 +81,9 @@ export default function BookingPage() {
       </div>
     )
   }
+
+  const isFull = occupancy?.isFull ?? false
+  const hasMax = config.maxDogsPerDay !== null
 
   return (
     <div className={c}>
@@ -111,7 +123,7 @@ export default function BookingPage() {
             <select
               className={`${c}_select`}
               value={date}
-              onChange={e => setDate(e.target.value)}
+              onChange={e => handleDateChange(e.target.value)}
               required
             >
               {availableDates.map(d => (
@@ -119,6 +131,51 @@ export default function BookingPage() {
               ))}
             </select>
           </div>
+
+          {/* ── Occupation du jour ── */}
+          {date && (
+            <div className={`${c}_occupancy${isFull ? ` ${c}_occupancy-full` : ''}`}>
+              {occupancyLoading ? (
+                <span className={`${c}_occupancyLoading`}>Vérification de la disponibilité...</span>
+              ) : occupancy ? (
+                <>
+                  <div className={`${c}_occupancyHeader`}>
+                    <i className={`bi ${isFull ? 'bi-exclamation-circle' : 'bi-people'}`} />
+                    <span className={`${c}_occupancyCount`}>
+                      {hasMax
+                        ? `${occupancy.count} / ${occupancy.max} chien${occupancy.count > 1 ? 's' : ''} ce jour`
+                        : `${occupancy.count} chien${occupancy.count > 1 ? 's' : ''} inscrit${occupancy.count > 1 ? 's' : ''} ce jour`
+                      }
+                    </span>
+                    {hasMax && (
+                      <div className={`${c}_occupancyBar`}>
+                        <div
+                          className={`${c}_occupancyFill${isFull ? ` ${c}_occupancyFill-full` : ''}`}
+                          style={{ width: `${Math.min(100, (occupancy.count / (occupancy.max ?? 1)) * 100)}%` }}
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {occupancy.dogs.length > 0 && (
+                    <div className={`${c}_occupancyDogs`}>
+                      {occupancy.dogs.map((d, i) => (
+                        <span key={i} className={`${c}_occupancyDog`}>
+                          {d.name}{d.breed ? ` (${d.breed})` : ''}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {isFull && (
+                    <p className={`${c}_occupancyFullMsg`}>
+                      <i className='bi bi-info-circle' /> La garderie est complète ce jour-là. Votre demande sera tout de même examinée par l'équipe.
+                    </p>
+                  )}
+                </>
+              ) : null}
+            </div>
+          )}
 
           <div className={`${c}_times`}>
             <div className={`${c}_field`}>

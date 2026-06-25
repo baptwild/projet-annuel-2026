@@ -24,7 +24,14 @@ export type Me = {
   firstName: string | null
   lastName: string | null
   roles: string[]
-  daycare: { id: number; name: string; slug: string; openingTime: string; closingTime: string; openDays: number[] }
+  daycare: {
+    id: number; name: string; slug: string
+    openingTime: string; closingTime: string; openDays: number[]
+    billingMode: string; pricePerUnit: number; priceHalfDay: number
+    tierHoursThreshold: number | null; tierPrice: number | null
+    weeklyDiscountEnabled: boolean; weeklyDiscountThreshold: number; weeklyDiscountPercent: number
+    maxDogsPerDay: number | null
+  }
 }
 
 type UseMeReturn = {

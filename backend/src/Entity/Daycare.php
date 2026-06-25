@@ -36,6 +36,7 @@ class Daycare
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['daycare:list', 'daycare:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -62,6 +63,42 @@ class Daycare
     #[ORM\Column(type: 'json')]
     #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
     private array $openDays = [1, 2, 3, 4, 5];
+
+    #[ORM\Column(length: 20)]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private string $billingMode = 'hourly';
+
+    #[ORM\Column(type: 'float')]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private float $pricePerUnit = 0.0;
+
+    #[ORM\Column(type: 'float')]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private float $priceHalfDay = 0.0;
+
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private ?float $tierHoursThreshold = null;
+
+    #[ORM\Column(type: 'float', nullable: true)]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private ?float $tierPrice = null;
+
+    #[ORM\Column]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private bool $weeklyDiscountEnabled = false;
+
+    #[ORM\Column]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private int $weeklyDiscountThreshold = 3;
+
+    #[ORM\Column(type: 'float')]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private float $weeklyDiscountPercent = 0.0;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private ?int $maxDogsPerDay = null;
 
     #[ORM\Column]
     #[Groups(['daycare:read'])]
@@ -133,6 +170,33 @@ class Daycare
 
     public function getOpenDays(): array { return $this->openDays; }
     public function setOpenDays(array $openDays): static { $this->openDays = $openDays; return $this; }
+
+    public function getBillingMode(): string { return $this->billingMode; }
+    public function setBillingMode(string $billingMode): static { $this->billingMode = $billingMode; return $this; }
+
+    public function getPricePerUnit(): float { return $this->pricePerUnit; }
+    public function setPricePerUnit(float $pricePerUnit): static { $this->pricePerUnit = $pricePerUnit; return $this; }
+
+    public function getPriceHalfDay(): float { return $this->priceHalfDay; }
+    public function setPriceHalfDay(float $priceHalfDay): static { $this->priceHalfDay = $priceHalfDay; return $this; }
+
+    public function getTierHoursThreshold(): ?float { return $this->tierHoursThreshold; }
+    public function setTierHoursThreshold(?float $tierHoursThreshold): static { $this->tierHoursThreshold = $tierHoursThreshold; return $this; }
+
+    public function getTierPrice(): ?float { return $this->tierPrice; }
+    public function setTierPrice(?float $tierPrice): static { $this->tierPrice = $tierPrice; return $this; }
+
+    public function isWeeklyDiscountEnabled(): bool { return $this->weeklyDiscountEnabled; }
+    public function setWeeklyDiscountEnabled(bool $weeklyDiscountEnabled): static { $this->weeklyDiscountEnabled = $weeklyDiscountEnabled; return $this; }
+
+    public function getWeeklyDiscountThreshold(): int { return $this->weeklyDiscountThreshold; }
+    public function setWeeklyDiscountThreshold(int $weeklyDiscountThreshold): static { $this->weeklyDiscountThreshold = $weeklyDiscountThreshold; return $this; }
+
+    public function getWeeklyDiscountPercent(): float { return $this->weeklyDiscountPercent; }
+    public function setWeeklyDiscountPercent(float $weeklyDiscountPercent): static { $this->weeklyDiscountPercent = $weeklyDiscountPercent; return $this; }
+
+    public function getMaxDogsPerDay(): ?int { return $this->maxDogsPerDay; }
+    public function setMaxDogsPerDay(?int $maxDogsPerDay): static { $this->maxDogsPerDay = $maxDogsPerDay; return $this; }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {

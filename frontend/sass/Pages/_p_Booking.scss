@@ -114,6 +114,92 @@
     }
   }
 
+  // ── Occupation du jour ───────────────────────────────────────────
+  &_occupancy {
+    background: $color-light;
+    border: 1.5px solid color.adjust($color-light, $lightness: -8%);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: border-color 0.2s, background 0.2s;
+
+    &-full {
+      background: #fff5f5;
+      border-color: #fc8181;
+    }
+  }
+
+  &_occupancyLoading {
+    @include typography.body;
+    font-size: 0.85rem;
+    color: rgba($color-quinery, 0.5);
+    font-style: italic;
+  }
+
+  &_occupancyHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    i { color: $color-primary; font-size: 1rem; }
+    .p_Booking_occupancy-full & i { color: #e53e3e; }
+  }
+
+  &_occupancyCount {
+    @include typography.body-bold;
+    font-size: 0.9rem;
+    color: $color-quinery;
+    flex: 1;
+  }
+
+  &_occupancyBar {
+    width: 80px;
+    height: 6px;
+    background: color.adjust($color-light, $lightness: -10%);
+    border-radius: 3px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  &_occupancyFill {
+    height: 100%;
+    background: $color-primary;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+
+    &-full { background: #e53e3e; }
+  }
+
+  &_occupancyDogs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  &_occupancyDog {
+    @include typography.body;
+    font-size: 0.8rem;
+    background: $color-white;
+    border: 1px solid color.adjust($color-light, $lightness: -10%);
+    border-radius: 20px;
+    padding: 0.15rem 0.65rem;
+    color: $color-quinery;
+  }
+
+  &_occupancyFullMsg {
+    @include typography.body;
+    font-size: 0.82rem;
+    color: #c53030;
+    display: flex;
+    gap: 0.4rem;
+    align-items: flex-start;
+    margin-top: 0.2rem;
+
+    i { margin-top: 0.1rem; flex-shrink: 0; }
+  }
+
   &_success {
     display: flex;
     flex-direction: column;

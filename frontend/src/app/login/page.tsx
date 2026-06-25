@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, FormEvent } from 'react'
+import { useState, FormEvent, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useLogin } from '@/hooks/useLogin'
+import { useAuth } from '@/hooks/useAuth'
 import Button from '@/components/atoms/Button'
 import { ColorButton } from '@/enums/ColorButton'
 
@@ -11,9 +12,14 @@ export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { login, loading, error } = useLogin()
+  const { isAuthenticated } = useAuth()
   const router = useRouter()
   const searchParams = useSearchParams()
   const justRegistered = searchParams.get('registered') === '1'
+
+  useEffect(() => {
+    if (isAuthenticated) router.replace('/')
+  }, [isAuthenticated, router])
 
   const componentsClass = 'p_Login'
 

@@ -26,6 +26,15 @@ class MeController extends AbstractController
                 'openingTime' => $user->getDaycare()->getOpeningTime(),
                 'closingTime' => $user->getDaycare()->getClosingTime(),
                 'openDays' => $user->getDaycare()->getOpenDays(),
+                'billingMode' => $user->getDaycare()->getBillingMode(),
+                'pricePerUnit' => $user->getDaycare()->getPricePerUnit(),
+                'priceHalfDay' => $user->getDaycare()->getPriceHalfDay(),
+                'tierHoursThreshold' => $user->getDaycare()->getTierHoursThreshold(),
+                'tierPrice' => $user->getDaycare()->getTierPrice(),
+                'weeklyDiscountEnabled' => $user->getDaycare()->isWeeklyDiscountEnabled(),
+                'weeklyDiscountThreshold' => $user->getDaycare()->getWeeklyDiscountThreshold(),
+                'weeklyDiscountPercent' => $user->getDaycare()->getWeeklyDiscountPercent(),
+                'maxDogsPerDay' => $user->getDaycare()->getMaxDogsPerDay(),
             ],
         ]);
     }

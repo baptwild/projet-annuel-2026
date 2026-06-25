@@ -39,6 +39,8 @@ class RegisterController extends AbstractController
         $user->setEmail($data['email']);
         $user->setPassword($this->hasher->hashPassword($user, $data['password']));
         $user->setDaycare($daycare);
+        if (!empty($data['firstName'])) $user->setFirstName($data['firstName']);
+        if (!empty($data['lastName'])) $user->setLastName($data['lastName']);
 
         $errors = $this->validator->validate($user);
         if (count($errors) > 0) {

@@ -2,9 +2,10 @@
 
 import { useState, FormEvent, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useMe, Dog, Booking } from '@/hooks/useMe'
+import { useMe, Dog, Booking, Me } from '@/hooks/useMe'
 import Button from '@/components/atoms/Button'
 import { ColorButton } from '@/enums/ColorButton'
+import { computeBookingCosts, formatCost, getBillingDetail, BillingConfig, BILLING_MODE_LABELS } from '@/utils/billing'
 
 const API = process.env.NEXT_PUBLIC_API_URL
 
@@ -259,6 +260,81 @@ function BookingRow({ booking, refetch }: { booking: Booking; refetch: () => voi
   )
 }
 
+function CostSection({ bookings, me }: { bookings: Booking[]; me: Me }) {
+  const d = me.daycare
+  const config: BillingConfig = {
+    billingMode: d.billingMode as BillingConfig['billingMode'],
+    pricePerUnit: d.pricePerUnit,
+    priceHalfDay: d.priceHalfDay,
+    tierHoursThreshold: d.tierHoursThreshold,
+    tierPrice: d.tierPrice,
+    weeklyDiscountEnabled: d.weeklyDiscountEnabled,
+    weeklyDiscountThreshold: d.weeklyDiscountThreshold,
+    weeklyDiscountPercent: d.weeklyDiscountPercent,
+  }
+
+  if (!d.pricePerUnit && !d.priceHalfDay) return null
+
+  const now = new Date()
+  const monthBookings = bookings.filter(b => {
+    if (b.status === 'cancelled') return false
+    const date = new Date(b.startDate)
+    return date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth()
+  })
+
+  const withCosts = computeBookingCosts(monthBookings, config)
+  const total = withCosts.reduce((sum, b) => sum + b.finalCost, 0)
+  const totalSaving = withCosts.reduce((sum, b) => sum + b.saving, 0)
+  const monthLabel = now.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })
+  const c = 'p_Me_section'
+
+  return (
+    <section className={c}>
+      <h2 className={`${c}-title`}>
+        Estimation — {monthLabel}
+        <span className='p_Me_badge'>{BILLING_MODE_LABELS[config.billingMode]}</span>
+      </h2>
+      {withCosts.length === 0 ? (
+        <p className={`${c}-empty`}>Aucune réservation ce mois-ci.</p>
+      ) : (
+        <>
+          {d.weeklyDiscountEnabled && (
+            <p className='p_Me_costDiscount'>
+              <i className='bi bi-tag' /> Remise de {d.weeklyDiscountPercent}% dès {d.weeklyDiscountThreshold} réservations/semaine
+            </p>
+          )}
+          <div className='p_Me_costList'>
+            {withCosts.map(b => (
+              <div key={b['@id']} className={`p_Me_costRow${b.discounted ? ' p_Me_costRow-discounted' : ''}`}>
+                <span className='p_Me_costDog'>{b.dog.name}</span>
+                <span className='p_Me_costDate'>
+                  {new Date(b.startDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
+                  {' · '}
+                  {new Date(b.startDate).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+                  {' → '}
+                  {new Date(b.endDate).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+                </span>
+                <span className='p_Me_costDetail'>{getBillingDetail(b.startDate, b.endDate, config)}</span>
+                <span className='p_Me_costAmount'>
+                  {b.discounted && <s className='p_Me_costStrike'>{formatCost(b.baseCost)}</s>}
+                  {formatCost(b.finalCost)}
+                </span>
+              </div>
+            ))}
+          </div>
+          <div className='p_Me_costTotal'>
+            <span>
+              Total estimé
+              {totalSaving > 0 && <span className='p_Me_costSaving'> (économie : {formatCost(totalSaving)})</span>}
+            </span>
+            <span className='p_Me_costTotalAmount'>{formatCost(total)}</span>
+          </div>
+        </>
+      )}
+    </section>
+  )
+}
+
 function BookingsSection({ bookings, refetch }: { bookings: Booking[]; refetch: () => void }) {
   const c = 'p_Me_section'
   return (
@@ -298,6 +374,7 @@ export default function MePage() {
         <AccountSection me={me} refetch={refetch} />
         <DogsSection dogs={dogs} me={me} refetch={refetch} />
         <BookingsSection bookings={bookings} refetch={refetch} />
+        <CostSection bookings={bookings} me={me} />
       </div>
     </div>
   )

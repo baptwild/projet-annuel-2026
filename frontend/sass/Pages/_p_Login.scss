@@ -116,4 +116,14 @@
 
 .p_Register {
   @include authPage;
+
+  &_row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    @media (max-width: responsive_variables.$screen-xs-max) {
+      grid-template-columns: 1fr;
+    }
+  }
 }
