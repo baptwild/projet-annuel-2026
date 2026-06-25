@@ -174,19 +174,26 @@ function DogsSection({ dogs, me, refetch }: { dogs: Dog[]; me: NonNullable<Retur
 }
 
 // ── Section réservations ────────────────────────────────────────
+const STATUS_LABELS: Record<string, string> = {
+  pending: 'En attente',
+  confirmed: 'Confirmée',
+  cancelled: 'Annulée',
+  completed: 'Terminée',
+}
+
+function isCancellable(booking: Booking): boolean {
+  return (booking.status === 'pending' || booking.status === 'confirmed')
+    && new Date(booking.startDate) > new Date(Date.now() + 86_400_000)
+}
+
 function BookingRow({ booking, refetch }: { booking: Booking; refetch: () => void }) {
   const isPending = booking.status === 'pending'
+  const canCancel = isCancellable(booking)
   const [startDate, setStartDate] = useState(booking.startDate.slice(0, 10))
   const [endDate, setEndDate] = useState(booking.endDate.slice(0, 10))
   const [open, setOpen] = useState(false)
   const [success, setSuccess] = useState(false)
-
-  const statusLabel: Record<string, string> = {
-    pending: 'En attente',
-    confirmed: 'Confirmée',
-    cancelled: 'Annulée',
-    completed: 'Terminée',
-  }
+  const [cancelling, setCancelling] = useState(false)
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -201,17 +208,38 @@ function BookingRow({ booking, refetch }: { booking: Booking; refetch: () => voi
     if (res.ok) { setSuccess(true); refetch(); setTimeout(() => setOpen(false), 800) }
   }
 
+  const handleCancel = async () => {
+    if (!confirm('Confirmer l\'annulation de cette réservation ?')) return
+    setCancelling(true)
+    await fetch(`${API}${booking['@id']}`, {
+      method: 'PATCH',
+      headers: authHeaders(),
+      body: JSON.stringify({ status: 'cancelled' }),
+    })
+    setCancelling(false)
+    refetch()
+  }
+
   const c = 'p_Me_booking'
   return (
     <div className={`${c} ${c}-${booking.status}`}>
       <div className={`${c}-header`} onClick={() => isPending && setOpen(o => !o)}>
         <span className={`${c}-dog`}>{booking.dog.name}</span>
         <span className={`${c}-dates`}>
-          {new Date(booking.startDate).toLocaleDateString('fr-FR')} →{' '}
-          {new Date(booking.endDate).toLocaleDateString('fr-FR')}
+          {new Date(booking.startDate).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' })}{' '}
+          {new Date(booking.startDate).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+          {' → '}
+          {new Date(booking.endDate).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
         </span>
-        <span className={`${c}-status`}>{statusLabel[booking.status] ?? booking.status}</span>
-        {isPending && <i className={`bi ${open ? 'bi-chevron-up' : 'bi-chevron-down'}`} />}
+        <span className={`${c}-status`}>{STATUS_LABELS[booking.status] ?? booking.status}</span>
+        <div className={`${c}-actions`}>
+          {canCancel && (
+            <button className={`${c}-cancel`} onClick={e => { e.stopPropagation(); handleCancel() }} disabled={cancelling}>
+              {cancelling ? '...' : 'Annuler'}
+            </button>
+          )}
+          {isPending && <i className={`bi ${open ? 'bi-chevron-up' : 'bi-chevron-down'}`} />}
+        </div>
       </div>
       {isPending && open && (
         <form className={`${c}-form`} onSubmit={handleSubmit}>

@@ -185,15 +185,39 @@
 
     &-pending > &-header { cursor: pointer; &:hover { background-color: color.adjust($color-light, $lightness: -3%); } }
 
+    &-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-left: auto;
+    }
+
+    &-cancel {
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      border: 1.5px solid rgba(#c0392b, 0.4);
+      background: rgba(#c0392b, 0.06);
+      color: #c0392b;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      white-space: nowrap;
+
+      &:hover { background: rgba(#c0392b, 0.14); border-color: #c0392b; }
+      &:disabled { opacity: 0.5; cursor: not-allowed; }
+    }
+
     &-dog {
       @include typography.body-bold;
       color: $color-quinery;
-      flex: 1;
+      min-width: 80px;
     }
 
     &-dates {
       @include typography.body;
       color: rgba($color-quinery, 0.7);
+      flex: 1;
     }
 
     &-status {

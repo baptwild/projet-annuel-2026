@@ -44,7 +44,7 @@ class Dog
     private ?string $name = null;
 
     #[ORM\Column(length: 100, nullable: true)]
-    #[Groups(['dog:read', 'dog:write'])]
+    #[Groups(['dog:read', 'dog:write', 'booking:read'])]
     private ?string $breed = null;
 
     #[ORM\Column(nullable: true)]
@@ -53,7 +53,7 @@ class Dog
 
     #[ORM\ManyToOne(inversedBy: 'dogs')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['dog:read'])]
+    #[Groups(['dog:read', 'booking:read'])]
     private ?User $owner = null;
 
     #[ORM\ManyToOne(inversedBy: 'dogs')]

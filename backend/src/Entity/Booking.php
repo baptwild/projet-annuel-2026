@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         new GetCollection(),
         new Get(security: "is_granted('ROLE_ADMIN') or object.getDog().getOwner() == user"),
         new Post(security: "is_granted('ROLE_USER')", processor: 'App\State\BookingProcessor'),
-        new Patch(security: "is_granted('ROLE_ADMIN') or (object.getDog().getOwner() == user and object.isPending())"),
+        new Patch(security: "is_granted('ROLE_ADMIN') or (object.getDog().getOwner() == user and (object.isPending() or object.isCancellable()))"),
         new Delete(security: "is_granted('ROLE_ADMIN')"),
     ],
     normalizationContext: ['groups' => ['booking:read']],
@@ -49,7 +49,7 @@ class Booking
     private ?\DateTimeImmutable $endDate = null;
 
     #[ORM\Column(enumType: BookingStatus::class)]
-    #[Groups(['booking:read'])]
+    #[Groups(['booking:read', 'booking:write'])]
     private BookingStatus $status = BookingStatus::Pending;
 
     #[ORM\Column]
@@ -120,6 +120,12 @@ class Booking
     public function isPending(): bool
     {
         return $this->status === BookingStatus::Pending;
+    }
+
+    public function isCancellable(): bool
+    {
+        return ($this->status === BookingStatus::Pending || $this->status === BookingStatus::Confirmed)
+            && $this->startDate > new \DateTimeImmutable('+1 day');
     }
 
     public function getDog(): ?Dog

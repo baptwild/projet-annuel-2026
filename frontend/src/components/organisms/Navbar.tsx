@@ -57,7 +57,7 @@ const Navbar: FC<NavbarProps> = (props) => {
 
       <div className={`${componentsClass}_links`}>
         <div className={`${componentsClass}_mobileMenu`}>
-          {isAuthenticated && (
+          {isAuthenticated && !isAdmin && (
             <IconButton
               url='/me'
               icon='bi bi-person-circle'
@@ -90,10 +90,17 @@ const Navbar: FC<NavbarProps> = (props) => {
           />
         </div>
 
-        {isAuthenticated && (
+        {isAuthenticated && !isAdmin && (
           <NavLink
             url='/booking'
             label='Réserver'
+            className={`${componentsClass}_menu-link`}
+          />
+        )}
+        {isAuthenticated && !isAdmin && (
+          <NavLink
+            url='/me'
+            label='Mon profil'
             className={`${componentsClass}_menu-link`}
           />
         )}
@@ -101,13 +108,6 @@ const Navbar: FC<NavbarProps> = (props) => {
           <NavLink
             url='/admin'
             label='Admin'
-            className={`${componentsClass}_menu-link`}
-          />
-        )}
-        {isAuthenticated && (
-          <NavLink
-            url='/me'
-            label='Mon profil'
             className={`${componentsClass}_menu-link`}
           />
         )}

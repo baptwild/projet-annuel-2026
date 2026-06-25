@@ -11,9 +11,10 @@ export type Dog = {
 
 export type Booking = {
   '@id': string
+  id: number
   startDate: string
   endDate: string
-  status: string
+  status: 'pending' | 'confirmed' | 'cancelled' | 'completed'
   dog: { '@id': string; name: string }
 }
 
