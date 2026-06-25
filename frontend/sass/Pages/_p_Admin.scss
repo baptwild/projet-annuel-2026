@@ -1,0 +1,147 @@
+@use '../Settings/variables' as *;
+@use '../Settings/responsive_variables';
+@use '../Tools/typography';
+@use '../Tools/mixins';
+@use 'sass:color';
+
+.p_Admin {
+  @include mixins.wrapper;
+  @include mixins.padding(5rem);
+  max-width: 720px;
+
+  &-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    @include typography.body;
+    color: $color-quinery;
+  }
+
+  &_header {
+    margin-bottom: 3rem;
+  }
+
+  &_title {
+    @include typography.h2;
+    color: $color-quinery;
+    margin-bottom: 0.25rem;
+  }
+
+  &_daycare {
+    @include typography.body;
+    color: $color-primary;
+    font-weight: 600;
+  }
+
+  &_section {
+    background: $color-white;
+    border: 1.5px solid color.adjust($color-light, $lightness: -8%);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+
+    &-title {
+      @include typography.h3;
+      color: $color-quinery;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &_form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &_times {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    @media (max-width: responsive_variables.$screen-xs-max) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &_field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &_label {
+    @include typography.body;
+    font-weight: 600;
+    color: $color-quinery;
+    font-size: 0.9rem;
+  }
+
+  &_days {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  &_day {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.85rem;
+    border: 1.5px solid color.adjust($color-light, $lightness: -10%);
+    border-radius: 20px;
+    cursor: pointer;
+    @include typography.body;
+    font-size: 0.9rem;
+    color: $color-quinery;
+    transition: border-color 0.2s, background 0.2s;
+    user-select: none;
+
+    input[type='checkbox'] {
+      accent-color: $color-primary;
+      width: 15px;
+      height: 15px;
+    }
+
+    &:has(input:checked) {
+      border-color: $color-primary;
+      background: color.adjust($color-primary, $lightness: 42%);
+    }
+  }
+
+  &_select {
+    padding: 0.75rem 1rem;
+    border: 1.5px solid color.adjust($color-light, $lightness: -10%);
+    border-radius: 8px;
+    background: $color-white;
+    @include typography.body;
+    color: $color-quinery;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+    }
+  }
+
+  &_success {
+    @include typography.body;
+    color: #276749;
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    background: #f0fff4;
+    border: 1px solid #9ae6b4;
+    border-radius: 8px;
+  }
+
+  &_error {
+    @include typography.body;
+    color: #e53e3e;
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    background: #fff5f5;
+    border: 1px solid #fc8181;
+    border-radius: 8px;
+  }
+}

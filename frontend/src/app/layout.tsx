@@ -4,6 +4,7 @@ import localFont from 'next/font/local'
 
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import { AuthProvider } from '@/hooks/useAuth'
 
 import '../../sass/main.scss'
 
@@ -34,10 +35,12 @@ export default function RootLayout({
   return (
     <html lang='fr' className={`${roboto.variable} ${bellerose.variable}`}>
       <body>
-        <Header />
-        <div id='modal' className='m_Modal'></div>
-        <main className='l_MainContent'>{children}</main>
-        <Footer />
+        <AuthProvider>
+          <Header />
+          <div id='modal' className='m_Modal'></div>
+          <main className='l_MainContent'>{children}</main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   )

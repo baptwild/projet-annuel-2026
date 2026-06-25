@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\DogRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -19,23 +21,25 @@ use Symfony\Component\Validator\Constraints as Assert;
     operations: [
         new GetCollection(),
         new Get(security: "is_granted('ROLE_ADMIN') or object.getOwner() == user"),
-        new Post(security: "is_granted('ROLE_USER')"),
+        new Post(security: "is_granted('ROLE_USER')", processor: 'App\State\DogProcessor'),
         new Patch(security: "is_granted('ROLE_ADMIN') or object.getOwner() == user"),
         new Delete(security: "is_granted('ROLE_ADMIN')"),
     ],
     normalizationContext: ['groups' => ['dog:read']],
     denormalizationContext: ['groups' => ['dog:write']],
 )]
+#[ApiFilter(SearchFilter::class, properties: ['owner' => 'exact'])]
 #[ORM\Entity(repositoryClass: DogRepository::class)]
 class Dog
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['dog:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['dog:read', 'dog:write'])]
+    #[Groups(['dog:read', 'dog:write', 'booking:read'])]
     #[Assert\NotBlank]
     private ?string $name = null;
 

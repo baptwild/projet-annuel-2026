@@ -28,6 +28,10 @@ security:
             stateless: true
             security: false
 
+        docs:
+            pattern: ^/api(/docs|/contexts|/\.well-known|$)
+            security: false
+
         api:
             pattern: ^/
             stateless: true
@@ -37,6 +41,8 @@ security:
     access_control:
         - { path: ^/auth/login, roles: PUBLIC_ACCESS }
         - { path: ^/auth/register, roles: PUBLIC_ACCESS }
+        - { path: ^/api/docs, roles: PUBLIC_ACCESS }
+        - { path: ^/api/contexts, roles: PUBLIC_ACCESS }
         - { path: ^/api/daycares$, roles: PUBLIC_ACCESS, methods: [GET] }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
 

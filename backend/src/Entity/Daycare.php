@@ -51,6 +51,18 @@ class Daycare
     #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
     private ?bool $isActive = null;
 
+    #[ORM\Column(length: 5)]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private string $openingTime = '08:00';
+
+    #[ORM\Column(length: 5)]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private string $closingTime = '19:00';
+
+    #[ORM\Column(type: 'json')]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private array $openDays = [1, 2, 3, 4, 5];
+
     #[ORM\Column]
     #[Groups(['daycare:read'])]
     private ?\DateTimeImmutable $createdAt = null;
@@ -112,6 +124,15 @@ class Daycare
 
         return $this;
     }
+
+    public function getOpeningTime(): string { return $this->openingTime; }
+    public function setOpeningTime(string $openingTime): static { $this->openingTime = $openingTime; return $this; }
+
+    public function getClosingTime(): string { return $this->closingTime; }
+    public function setClosingTime(string $closingTime): static { $this->closingTime = $closingTime; return $this; }
+
+    public function getOpenDays(): array { return $this->openDays; }
+    public function setOpenDays(array $openDays): static { $this->openDays = $openDays; return $this; }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {

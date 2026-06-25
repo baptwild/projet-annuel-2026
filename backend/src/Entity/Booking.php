@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -18,19 +20,21 @@ use Symfony\Component\Validator\Constraints as Assert;
     operations: [
         new GetCollection(),
         new Get(security: "is_granted('ROLE_ADMIN') or object.getDog().getOwner() == user"),
-        new Post(security: "is_granted('ROLE_USER')"),
-        new Patch(security: "is_granted('ROLE_ADMIN')"),
+        new Post(security: "is_granted('ROLE_USER')", processor: 'App\State\BookingProcessor'),
+        new Patch(security: "is_granted('ROLE_ADMIN') or (object.getDog().getOwner() == user and object.isPending())"),
         new Delete(security: "is_granted('ROLE_ADMIN')"),
     ],
     normalizationContext: ['groups' => ['booking:read']],
     denormalizationContext: ['groups' => ['booking:write']],
 )]
+#[ApiFilter(SearchFilter::class, properties: ['dog.owner' => 'exact'])]
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
 class Booking
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['booking:read'])]
     private ?int $id = null;
 
     #[ORM\Column]
@@ -111,6 +115,11 @@ class Booking
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    public function isPending(): bool
+    {
+        return $this->status === BookingStatus::Pending;
     }
 
     public function getDog(): ?Dog

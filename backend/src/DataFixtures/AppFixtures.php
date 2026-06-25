@@ -25,20 +25,24 @@ class AppFixtures extends Fixture
 
         $admin = new User();
         $admin->setEmail('admin@happy-paws.com');
+        $admin->setFirstName('Sophie');
+        $admin->setLastName('Martin');
         $admin->setPassword($this->hasher->hashPassword($admin, 'admin1234'));
         $admin->setRoles(['ROLE_ADMIN']);
         $admin->setDaycare($daycare);
         $manager->persist($admin);
 
         $usersData = [
-            ['alice@example.com', 'Rex', 'Labrador', '2020-03-15', BookingStatus::Confirmed],
-            ['bob@example.com', 'Bella', 'Golden Retriever', '2019-07-22', BookingStatus::Pending],
-            ['carol@example.com', 'Max', 'Beagle', '2021-11-05', BookingStatus::Cancelled],
+            ['alice@example.com', 'Alice', 'Dupont', 'Rex', 'Labrador', '2020-03-15', BookingStatus::Confirmed],
+            ['bob@example.com', 'Bob', 'Bernard', 'Bella', 'Golden Retriever', '2019-07-22', BookingStatus::Pending],
+            ['carol@example.com', 'Carol', 'Leclerc', 'Max', 'Beagle', '2021-11-05', BookingStatus::Cancelled],
         ];
 
-        foreach ($usersData as [$email, $dogName, $breed, $birthDate, $bookingStatus]) {
+        foreach ($usersData as [$email, $firstName, $lastName, $dogName, $breed, $birthDate, $bookingStatus]) {
             $user = new User();
             $user->setEmail($email);
+            $user->setFirstName($firstName);
+            $user->setLastName($lastName);
             $user->setPassword($this->hasher->hashPassword($user, 'password'));
             $user->setDaycare($daycare);
             $manager->persist($user);

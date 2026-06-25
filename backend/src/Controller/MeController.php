@@ -16,11 +16,16 @@ class MeController extends AbstractController
         return $this->json([
             'id' => $user->getId(),
             'email' => $user->getUserIdentifier(),
+            'firstName' => $user->getFirstName(),
+            'lastName' => $user->getLastName(),
             'roles' => $user->getRoles(),
             'daycare' => [
                 'id' => $user->getDaycare()->getId(),
                 'name' => $user->getDaycare()->getName(),
                 'slug' => $user->getDaycare()->getSlug(),
+                'openingTime' => $user->getDaycare()->getOpeningTime(),
+                'closingTime' => $user->getDaycare()->getClosingTime(),
+                'openDays' => $user->getDaycare()->getOpenDays(),
             ],
         ]);
     }

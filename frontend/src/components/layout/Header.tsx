@@ -29,10 +29,6 @@ const Header: FC = () => {
     document.body.style.overflow = isMenuOpen ? 'hidden' : 'unset'
   }, [isMenuOpen])
 
-  // Mock User Data (Until Backend API is ready)
-  const user = null
-  const isAdmin = false
-
   const componentsClass = 'l_Header'
 
   return (
@@ -51,8 +47,6 @@ const Header: FC = () => {
       <MobileMenu
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
-        user={user}
-        isAdmin={isAdmin}
       />
     </>
   )
