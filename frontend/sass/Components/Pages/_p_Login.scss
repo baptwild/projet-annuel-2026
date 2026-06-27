@@ -22,7 +22,7 @@
 
   &_title {
     @include typography.h2;
-    color: $color-quinery;
+    color: $color-tertiary;
     text-align: center;
     margin-bottom: 2rem;
 
@@ -44,7 +44,7 @@
 
   &_label {
     @include typography.body-bold;
-    color: $color-quinery;
+    color: $color-tertiary;
   }
 
   &_input {
@@ -88,7 +88,7 @@
 
   &_daycare {
     @include typography.body;
-    color: $color-quinery;
+    color: $color-tertiary;
     text-align: center;
   }
 
@@ -96,7 +96,7 @@
     @include typography.body;
     text-align: center;
     margin-top: 1.5rem;
-    color: $color-quinery;
+    color: $color-tertiary;
 
     &-link {
       color: $color-primary;

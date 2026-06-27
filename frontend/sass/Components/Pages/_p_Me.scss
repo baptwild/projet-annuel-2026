@@ -14,7 +14,7 @@
     align-items: center;
     min-height: 50vh;
     @include typography.body;
-    color: $color-quinery;
+    color: $color-tertiary;
   }
 
   &_header {
@@ -23,7 +23,7 @@
 
   &_title {
     @include typography.h2;
-    color: $color-quinery;
+    color: $color-tertiary;
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -41,7 +41,7 @@
 
   &_daycare {
     @include typography.body;
-    color: rgba($color-quinery, 0.6);
+    color: rgba($color-tertiary, 0.6);
     margin-top: 0.25rem;
   }
 
@@ -60,7 +60,7 @@
 
     &-title {
       @include typography.h3;
-      color: $color-quinery;
+      color: $color-tertiary;
       margin-bottom: 1.5rem;
       padding-bottom: 1rem;
       border-bottom: 2px solid $color-light;
@@ -80,7 +80,7 @@
 
       label {
         @include typography.body-bold;
-        color: $color-quinery;
+        color: $color-tertiary;
       }
 
       input {
@@ -116,7 +116,7 @@
 
     &-empty {
       @include typography.body;
-      color: rgba($color-quinery, 0.5);
+      color: rgba($color-tertiary, 0.5);
       font-style: italic;
     }
   }
@@ -144,13 +144,13 @@
 
     &-name {
       @include typography.body-bold;
-      color: $color-quinery;
+      color: $color-tertiary;
       flex: 1;
     }
 
     &-breed {
       @include typography.body;
-      color: rgba($color-quinery, 0.6);
+      color: rgba($color-tertiary, 0.6);
     }
 
     &-form {
@@ -211,7 +211,7 @@
   }
 
   &_costStrike {
-    color: rgba($color-quinery, 0.4);
+    color: rgba($color-tertiary, 0.4);
     margin-right: 0.35rem;
     font-size: 0.8rem;
   }
@@ -224,17 +224,17 @@
 
   &_costDog {
     @include typography.body-bold;
-    color: $color-quinery;
+    color: $color-tertiary;
     font-size: 0.88rem;
   }
 
   &_costDate {
-    color: rgba($color-quinery, 0.6);
+    color: rgba($color-tertiary, 0.6);
     font-size: 0.82rem;
   }
 
   &_costDetail {
-    color: rgba($color-quinery, 0.5);
+    color: rgba($color-tertiary, 0.5);
     font-size: 0.8rem;
     font-style: italic;
   }
@@ -256,7 +256,7 @@
 
     span:first-child {
       @include typography.body;
-      color: rgba($color-quinery, 0.6);
+      color: rgba($color-tertiary, 0.6);
       font-size: 0.85rem;
     }
   }
@@ -323,13 +323,13 @@
 
     &-dog {
       @include typography.body-bold;
-      color: $color-quinery;
+      color: $color-tertiary;
       min-width: 80px;
     }
 
     &-dates {
       @include typography.body;
-      color: rgba($color-quinery, 0.7);
+      color: rgba($color-tertiary, 0.7);
       flex: 1;
     }
 

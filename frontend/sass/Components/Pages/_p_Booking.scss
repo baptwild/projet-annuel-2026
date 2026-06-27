@@ -15,7 +15,7 @@
     align-items: center;
     min-height: 50vh;
     @include typography.body;
-    color: $color-quinery;
+    color: $color-tertiary;
   }
 
   &_header {
@@ -24,13 +24,13 @@
 
   &_title {
     @include typography.h2;
-    color: $color-quinery;
+    color: $color-tertiary;
     margin-bottom: 0.5rem;
   }
 
   &_subtitle {
     @include typography.body;
-    color: $color-quinery;
+    color: $color-tertiary;
     opacity: 0.7;
   }
 
@@ -59,7 +59,7 @@
   &_label {
     @include typography.body;
     font-weight: 600;
-    color: $color-quinery;
+    color: $color-tertiary;
     font-size: 0.9rem;
   }
 
@@ -70,7 +70,7 @@
     border-radius: 8px;
     background: $color-white;
     @include typography.body;
-    color: $color-quinery;
+    color: $color-tertiary;
     font-size: 1rem;
     transition: border-color 0.2s;
 
@@ -106,7 +106,7 @@
     background: $color-light;
     border-radius: 12px;
     @include typography.body;
-    color: $color-quinery;
+    color: $color-tertiary;
 
     i {
       font-size: 2rem;
@@ -134,7 +134,7 @@
   &_occupancyLoading {
     @include typography.body;
     font-size: 0.85rem;
-    color: rgba($color-quinery, 0.5);
+    color: rgba($color-tertiary, 0.5);
     font-style: italic;
   }
 
@@ -156,7 +156,7 @@
   &_occupancyCount {
     @include typography.body-bold;
     font-size: 0.9rem;
-    color: $color-quinery;
+    color: $color-tertiary;
     flex: 1;
   }
 
@@ -193,7 +193,7 @@
     border: 1px solid color.adjust($color-light, $lightness: -10%);
     border-radius: 20px;
     padding: 0.15rem 0.65rem;
-    color: $color-quinery;
+    color: $color-tertiary;
   }
 
   &_occupancyFullMsg {

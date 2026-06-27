@@ -1,3 +1,4 @@
+@use "../../Settings/variables" as *;
 @use "../../Settings/responsive_variables";
 @use "../../Tools/typography";
 @use "../../Tools/mixins";
@@ -77,6 +78,10 @@
 
             i {
                font-size: 1.5rem;
+            }
+
+            &:hover {
+               color: $color-secondary;
             }
          }
       }

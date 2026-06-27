@@ -17,11 +17,7 @@
    }
 
    &-tertiary {
-      @include mixins.buttonColor($color-tertiary, $color-black, $color-primary, $color-white);
-   }
-
-   &-quarternary {
-      @include mixins.buttonColor($color-quaternary, $color-black, $color-primary, $color-white);
+      @include mixins.buttonColor($color-tertiary, $color-white, $color-primary, $color-white);
    }
 
    &-outline {

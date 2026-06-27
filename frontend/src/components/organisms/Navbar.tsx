@@ -117,7 +117,7 @@ const Navbar: FC<NavbarProps> = (props) => {
             label={isAuthenticated ? 'Déconnexion' : 'Connexion'}
             url={isAuthenticated ? undefined : '/login'}
             onClick={isAuthenticated ? handleLogout : undefined}
-            color={isTransparent ? ColorButton.SECONDARY : ColorButton.PRIMARY}
+            color={isTransparent ? ColorButton.GHOST : ColorButton.PRIMARY}
             className='o_Navbar_login-button'
           />
         </div>

@@ -11,6 +11,7 @@ import IconButton from '../atoms/IconButton'
 import Wrapper from '../layout/Wrapper'
 import { useAuth } from '@/hooks/useAuth'
 import { useRouter } from 'next/navigation'
+import { ColorButton } from '@/enums/ColorButton'
 
 export type MobileMenuProps = {
   isOpen: boolean
@@ -76,22 +77,25 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
                   <Button
                     label='Tableau de bord'
                     url='/admin'
-                    className='a_Button-secondary'
+                    className={`${componentsClass}_button`}
                     onClick={onClose}
+                    color={ColorButton.GHOST}
                   />
                 )}
                 <Button
                   label='Déconnexion'
-                  className='a_Button-secondary'
+                  className={`${componentsClass}_button`}
                   onClick={handleLogout}
+                  color={ColorButton.GHOST}
                 />
               </>
             ) : (
-              <Button
+             <Button
                 label='Connexion'
                 url='/login'
-                className='a_Button-secondary'
+                className={`${componentsClass}_button`}
                 onClick={onClose}
+                color={ColorButton.GHOST}
               />
             )}
           </div>

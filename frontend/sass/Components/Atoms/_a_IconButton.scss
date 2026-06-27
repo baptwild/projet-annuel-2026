@@ -17,14 +17,6 @@
       @include mixins.buttonColor($color-secondary, $color-white, $color-primary, $color-white);
    }
 
-   &-tertiary {
-      @include mixins.buttonColor($color-tertiary, $color-black, $color-primary, $color-white);
-   }
-
-   &-quarternary {
-      @include mixins.buttonColor($color-quaternary, $color-black, $color-primary, $color-white);
-   }
-
    &-outline {
       @include mixins.buttonColor(transparent, $color-primary, transparent, $color-secondary);
       @include mixins.buttonBorder($color-primary);
