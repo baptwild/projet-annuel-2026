@@ -61,9 +61,10 @@
 @use "./Components/Layout/l_Wrapper";
 
 // Pages
+@use "./Components/Pages/p_Admin";
+@use "./Components/Pages/p_Booking";
+@use "./Components/Pages/p_Error";
 @use "./Components/Pages/p_Home";
-@use "./Components/Pages/p_Static";
 @use "./Components/Pages/p_Login";
 @use "./Components/Pages/p_Me";
-@use "./Components/Pages/p_Booking";
-@use "./Components/Pages/p_Admin";
+@use "./Components/Pages/p_Static";
