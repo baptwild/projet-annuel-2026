@@ -100,16 +100,16 @@
 
     &-success {
       @include typography.body;
-      color: #27ae60;
-      background-color: rgba(#27ae60, 0.08);
+      color: $color-success;
+      background-color: $color-success-light;
       border-radius: $border-radius-half;
       padding: 0.4rem 0.75rem;
     }
 
     &-error {
       @include typography.body;
-      color: #c0392b;
-      background-color: rgba(#c0392b, 0.08);
+      color: $color-error;
+      background-color: $color-error-light;
       border-radius: $border-radius-half;
       padding: 0.4rem 0.75rem;
     }
@@ -173,8 +173,8 @@
   &_costDiscount {
     @include typography.body;
     font-size: 0.85rem;
-    color: #27ae60;
-    background: rgba(#27ae60, 0.08);
+    color: $color-success;
+    background: $color-success-light;
     border-radius: $border-radius-half;
     padding: 0.4rem 0.75rem;
     margin-bottom: 0.75rem;
@@ -202,7 +202,7 @@
     transition: background 0.2s;
 
     &-discounted {
-      background: rgba(#27ae60, 0.06);
+      background: $color-success-light;
     }
 
     @media (max-width: responsive_variables.$screen-xs-max) {
@@ -217,7 +217,7 @@
   }
 
   &_costSaving {
-    color: #27ae60;
+    color: $color-success;
     font-size: 0.82rem;
     font-weight: 600;
   }
@@ -301,9 +301,9 @@
     &-cancel {
       padding: 0.25rem 0.65rem;
       border-radius: 6px;
-      border: 1.5px solid rgba(#c0392b, 0.4);
-      background: rgba(#c0392b, 0.06);
-      color: #c0392b;
+      border: 1.5px solid $color-error-light;
+      background: $color-error-light;
+      color: $color-error;
       font-size: 0.78rem;
       font-weight: 600;
       cursor: pointer;
@@ -311,8 +311,8 @@
       white-space: nowrap;
 
       &:hover {
-        background: rgba(#c0392b, 0.14);
-        border-color: #c0392b;
+        background: rgba($color-error, 0.14);
+        border-color: $color-error;
       }
 
       &:disabled {
@@ -341,18 +341,18 @@
     }
 
     &-pending &-status {
-      background-color: rgba(#f39c12, 0.15);
-      color: #e67e22;
+      background-color: rgba($color-warning, 0.15);
+      color: $color-warning;
     }
 
     &-confirmed &-status {
-      background-color: rgba(#27ae60, 0.15);
-      color: #27ae60;
+      background-color: rgba($color-success, 0.15);
+      color: $color-success;
     }
 
     &-cancelled &-status {
-      background-color: rgba(#c0392b, 0.15);
-      color: #c0392b;
+      background-color: rgba($color-error, 0.15);
+      color: $color-error;
     }
 
     &-completed &-status {

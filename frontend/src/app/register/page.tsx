@@ -8,8 +8,9 @@ import { useAuth } from '@/hooks/useAuth'
 import { useLogin } from '@/hooks/useLogin'
 import Button from '@/components/atoms/Button'
 import { ColorButton } from '@/enums/ColorButton'
-
-const c = 'p_Register'
+import Input from '@/components/atoms/Input'
+import Form from '@/components/molecules/Form'
+import Select from '@/components/atoms/Select'
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -51,109 +52,100 @@ export default function RegisterPage() {
     }
   }
 
+  const componentsClass = 'p_Register'
+
   return (
-    <div className={c}>
-      <div className={`${c}_container`}>
-        <h1 className={`${c}_title`}>Créer un compte</h1>
+    <div className={componentsClass}>
+      <div className={`${componentsClass}_container`}>
+        <h1 className={`${componentsClass}_title`}>Créer un compte</h1>
 
-        <form className={`${c}_form`} onSubmit={handleSubmit}>
-          <div className={`${c}_row`}>
-            <div className={`${c}_field`}>
-              <label className={`${c}_label`}>Prénom</label>
-              <input
-                type='text'
-                autoComplete='given-name'
-                value={firstName}
-                onChange={e => setFirstName(e.target.value)}
-                className={`${c}_input`}
-              />
-            </div>
-            <div className={`${c}_field`}>
-              <label className={`${c}_label`}>Nom</label>
-              <input
-                type='text'
-                autoComplete='family-name'
-                value={lastName}
-                onChange={e => setLastName(e.target.value)}
-                className={`${c}_input`}
-              />
-            </div>
-          </div>
-
-          <div className={`${c}_field`}>
-            <label className={`${c}_label`}>Adresse e-mail *</label>
-            <input
-              type='email'
-              autoComplete='email'
-              required
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              className={`${c}_input`}
+        <Form onSubmit={handleSubmit} className={`${componentsClass}_form`}>
+          <div className={`${componentsClass}_row`}>
+            <Input
+              id="firstName"
+              label="Prénom"
+              type="text"
+              autoComplete="given-name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+            <Input
+              id="lastName"
+              label="Nom"
+              type="text"
+              autoComplete="family-name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
             />
           </div>
 
-          <div className={`${c}_field`}>
-            <label className={`${c}_label`}>Mot de passe *</label>
-            <input
-              type='password'
-              autoComplete='new-password'
-              required
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              className={`${c}_input`}
-            />
-          </div>
+          <Input
+            id="email"
+            label="Adresse e-mail *"
+            type="email"
+            autoComplete="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-          <div className={`${c}_field`}>
-            <label className={`${c}_label`}>Confirmer le mot de passe *</label>
-            <input
-              type='password'
-              autoComplete='new-password'
-              required
-              value={confirmPassword}
-              onChange={e => setConfirmPassword(e.target.value)}
-              className={`${c}_input`}
-            />
-          </div>
+          <Input
+            id="password"
+            label="Mot de passe *"
+            type="password"
+            autoComplete="new-password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-          {daycares.length > 1 && (
-            <div className={`${c}_field`}>
-              <label className={`${c}_label`}>Garderie *</label>
-              <select
-                required
-                value={daycareId}
-                onChange={e => setDaycareId(Number(e.target.value))}
-                className={`${c}_input`}
-              >
-                <option value=''>Choisir une garderie</option>
-                {daycares.map(d => (
-                  <option key={d.id} value={d.id}>{d.name}</option>
-                ))}
-              </select>
-            </div>
-          )}
+          <Input
+            id="confirmPassword"
+            label="Confirmer le mot de passe *"
+            type="password"
+            autoComplete="new-password"
+            required
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+
+         {daycares.length > 1 && (
+          <Select
+            id="daycare"
+            label="Garderie *"
+            required
+            value={daycareId}
+            placeholder="Choisir une garderie"
+            onChange={(e) => setDaycareId(Number(e.target.value))}
+            options={daycares.map((d) => ({
+              value: d.id,
+              label: d.name,
+            }))}
+          />
+        )}
 
           {daycares.length === 1 && (
-            <p className={`${c}_daycare`}>
+            <p className={`${componentsClass}_daycare`}>
               Inscription pour : <strong>{daycares[0].name}</strong>
             </p>
           )}
 
           {(error || passwordError) && (
-            <p className={`${c}_error`}>{passwordError ?? error}</p>
+            <p className={`${componentsClass}_error`}>{passwordError ?? error}</p>
           )}
 
           <Button
             label={loading ? 'Inscription...' : "S'inscrire"}
-            type='submit'
+            type="submit"
             color={ColorButton.PRIMARY}
-            className={`${c}_submit`}
+            className={`${componentsClass}_submit`}
+            disabled={loading}
           />
-        </form>
+        </Form>
 
-        <p className={`${c}_switch`}>
+        <p className={`${componentsClass}_switch`}>
           Déjà un compte ?{' '}
-          <Link href='/login' className={`${c}_switch-link`}>
+          <Link href='/login' className={`${componentsClass}_switch-link`}>
             Se connecter
           </Link>
         </p>

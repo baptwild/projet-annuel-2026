@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { useLogin } from '@/hooks/useLogin'
 import { useAuth } from '@/hooks/useAuth'
 import Button from '@/components/atoms/Button'
+import Input from '@/components/atoms/Input'
+import Form from '@/components/molecules/Form'
 import { ColorButton } from '@/enums/ColorButton'
 
 export default function LoginPage() {
@@ -24,10 +26,9 @@ export default function LoginPage() {
   const componentsClass = 'p_Login'
 
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    const success = await login({ email, password })
-    if (success) router.push('/')
-  }
+  e.preventDefault()
+  await login({ email, password }) 
+}
 
   return (
     <div className={componentsClass}>
@@ -40,50 +41,41 @@ export default function LoginPage() {
           </p>
         )}
 
-        <form className={`${componentsClass}_form`} onSubmit={handleSubmit}>
-          <div className={`${componentsClass}_field`}>
-            <label htmlFor='email' className={`${componentsClass}_label`}>
-              Adresse e-mail
-            </label>
-            <input
-              id='email'
-              type='email'
-              autoComplete='email'
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={`${componentsClass}_input`}
-            />
-          </div>
+        <Form onSubmit={handleSubmit} className={`${componentsClass}_form`}>
+          <Input
+            id="email"
+            label="Adresse e-mail *"
+            type="email"
+            autoComplete="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-          <div className={`${componentsClass}_field`}>
-            <label htmlFor='password' className={`${componentsClass}_label`}>
-              Mot de passe
-            </label>
-            <input
-              id='password'
-              type='password'
-              autoComplete='current-password'
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={`${componentsClass}_input`}
-            />
-          </div>
+          <Input
+            id="password"
+            label="Mot de passe *"
+            type="password"
+            autoComplete="current-password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
           {error && <p className={`${componentsClass}_error`}>{error}</p>}
 
           <Button
             label={loading ? 'Connexion...' : 'Se connecter'}
-            type='submit'
+            type="submit"
             color={ColorButton.PRIMARY}
             className={`${componentsClass}_submit`}
+            disabled={loading}
           />
-        </form>
+        </Form>
 
         <p className={`${componentsClass}_switch`}>
           Pas encore de compte ?{' '}
-          <Link href='/register' className={`${componentsClass}_switch-link`}>
+          <Link href="/register" className={`${componentsClass}_switch-link`}>
             S&apos;inscrire
           </Link>
         </p>

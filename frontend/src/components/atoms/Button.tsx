@@ -10,14 +10,16 @@ export type ButtonProps = {
   className?: string
   onClick?: () => void
   color?: ColorButton
+  disabled?: boolean
 }
 
 const Button: FC<ButtonProps> = (props) => {
-  const { label, url, type = 'button', className, onClick, color } = props
+  const { label, url, type = 'button', className, onClick, color, disabled } = props
 
   const componentsClass = 'a_Button'
   const classes = classNames(componentsClass, className, {
     [`${componentsClass}-${color}`]: color,
+    [`${componentsClass}--disabled`]: disabled,
   })
 
   if (url) {
@@ -29,7 +31,7 @@ const Button: FC<ButtonProps> = (props) => {
   }
 
   return (
-    <button type={type} className={classes} onClick={onClick}>
+    <button type={type} className={classes} onClick={onClick} disabled={disabled}>
       {label}
     </button>
   )
