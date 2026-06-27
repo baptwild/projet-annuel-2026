@@ -7,7 +7,7 @@
    transition: color $animation ease-in-out;
 
    &-label {
-      @include typography.body-bold;
+      @include typography.body-large-bold;
       position: relative;
 
       &::after {
@@ -24,7 +24,7 @@
 
    &:hover,
    &:focus {
-      color: $color-quaternary;
+      color: $color-secondary;
    }
 
    &:hover &-label::after,

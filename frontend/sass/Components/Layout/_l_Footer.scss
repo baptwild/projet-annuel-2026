@@ -1,7 +1,7 @@
-@use "../Settings/variables" as *;
-@use "../Settings/responsive_variables";
-@use "../Tools/mixins";
-@use "../Tools/typography";
+@use "../../Settings/variables" as *;
+@use "../../Settings/responsive_variables";
+@use "../../Tools/mixins";
+@use "../../Tools/typography";
 
 .l_Footer {
    @include mixins.padding;

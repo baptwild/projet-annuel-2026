@@ -25,6 +25,10 @@
    transition: all $animation ease-in-out;
 }
 
+@mixin buttonBorder($color) {
+   border: 2px solid $color;
+}
+
 // Padding
 @mixin padding($padding: 7.5rem) {
    padding-top: 5rem;

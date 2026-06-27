@@ -4,7 +4,7 @@
 
 .a_Button {
    @include mixins.buttonDefault;
-   @include typography.body-bold;
+   @include typography.cta;
 
    padding: 0.5rem 1.5rem;
 
@@ -13,14 +13,32 @@
    }
 
    &-secondary {
-      @include mixins.buttonColor($color-white, $color-primary, $color-primary, $color-white);
+      @include mixins.buttonColor($color-secondary, $color-white, $color-primary, $color-white);
    }
 
    &-tertiary {
-      @include mixins.buttonColor($color-white, $color-primary, $color-secondary, $color-white);
+      @include mixins.buttonColor($color-tertiary, $color-black, $color-primary, $color-white);
    }
 
    &-quarternary {
-      @include mixins.buttonColor($color-secondary, $color-white, $color-primary, $color-white);
+      @include mixins.buttonColor($color-quaternary, $color-black, $color-primary, $color-white);
+   }
+
+   &-outline {
+      @include mixins.buttonColor(transparent, $color-primary, transparent, $color-secondary);
+      @include mixins.buttonBorder($color-primary);
+
+      &:hover {
+         @include mixins.buttonBorder($color-secondary);
+      }
+   }
+
+   &-ghost {
+      @include mixins.buttonColor($color-white, $color-primary, transparent, $color-white);
+      @include mixins.buttonBorder(transparent);
+
+      &:hover {
+         @include mixins.buttonBorder($color-white);
+      }
    }
 }

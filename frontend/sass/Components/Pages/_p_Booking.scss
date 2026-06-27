@@ -1,7 +1,7 @@
-@use '../Settings/variables' as *;
-@use '../Settings/responsive_variables';
-@use '../Tools/typography';
-@use '../Tools/mixins';
+@use '../../Settings/variables' as *;
+@use '../../Settings/responsive_variables';
+@use '../../Tools/typography';
+@use '../../Tools/mixins';
 @use 'sass:color';
 
 .p_Booking {
@@ -143,8 +143,14 @@
     align-items: center;
     gap: 0.6rem;
 
-    i { color: $color-primary; font-size: 1rem; }
-    .p_Booking_occupancy-full & i { color: #e53e3e; }
+    i {
+      color: $color-primary;
+      font-size: 1rem;
+    }
+
+    .p_Booking_occupancy-full & i {
+      color: #e53e3e;
+    }
   }
 
   &_occupancyCount {
@@ -169,7 +175,9 @@
     border-radius: 3px;
     transition: width 0.3s ease;
 
-    &-full { background: #e53e3e; }
+    &-full {
+      background: #e53e3e;
+    }
   }
 
   &_occupancyDogs {
@@ -197,7 +205,10 @@
     align-items: flex-start;
     margin-top: 0.2rem;
 
-    i { margin-top: 0.1rem; flex-shrink: 0; }
+    i {
+      margin-top: 0.1rem;
+      flex-shrink: 0;
+    }
   }
 
   &_success {
