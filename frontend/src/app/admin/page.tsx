@@ -87,38 +87,38 @@ function BookingCard({ booking, onConfirm, onCancel, onComplete }: {
   const isEndPast = new Date(booking.endDate) < new Date(new Date().toDateString())
   const canComplete = booking.status === 'confirmed' && isEndPast
 
-  const c = 'p_Admin_booking'
+  const componentsClass = 'p_Admin_booking'
   return (
-    <div className={`${c} ${c}-${booking.status}`}>
-      <div className={`${c}-dog`}>
-        <span className={`${c}-dogName`}>{booking.dog.name}</span>
-        {booking.dog.breed && <span className={`${c}-breed`}>{booking.dog.breed}</span>}
+    <div className={`${componentsClass} ${componentsClass}-${booking.status}`}>
+      <div className={`${componentsClass}-dog`}>
+        <span className={`${componentsClass}-dogName`}>{booking.dog.name}</span>
+        {booking.dog.breed && <span className={`${componentsClass}-breed`}>{booking.dog.breed}</span>}
       </div>
-      <div className={`${c}-owner`}>
+      <div className={`${componentsClass}-owner`}>
         <i className='bi bi-person' />
         <span>{ownerName}</span>
-        <span className={`${c}-email`}>{owner.email}</span>
+        <span className={`${componentsClass}-email`}>{owner.email}</span>
       </div>
-      <div className={`${c}-schedule`}>
+      <div className={`${componentsClass}-schedule`}>
         <i className='bi bi-calendar3' />
         <span>{start.date}</span>
-        <span className={`${c}-times`}>{start.time} → {end.time}</span>
+        <span className={`${componentsClass}-times`}>{start.time} → {end.time}</span>
       </div>
-      <div className={`${c}-footer`}>
-        <span className={`${c}-status`}>{STATUS_LABELS[booking.status] ?? booking.status}</span>
-        <div className={`${c}-actions`}>
+      <div className={`${componentsClass}-footer`}>
+        <span className={`${componentsClass}-status`}>{STATUS_LABELS[booking.status] ?? booking.status}</span>
+        <div className={`${componentsClass}-actions`}>
           {booking.status === 'pending' && (
-            <button className={`${c}-btn ${c}-btn-confirm`} onClick={onConfirm}>
+            <button className={`${componentsClass}-btn ${componentsClass}-btn-confirm`} onClick={onConfirm}>
               <i className='bi bi-check-lg' /> Confirmer
             </button>
           )}
           {canComplete && (
-            <button className={`${c}-btn ${c}-btn-complete`} onClick={onComplete}>
+            <button className={`${componentsClass}-btn ${componentsClass}-btn-complete`} onClick={onComplete}>
               <i className='bi bi-flag-fill' /> Terminer
             </button>
           )}
           {(booking.status === 'pending' || booking.status === 'confirmed') && (
-            <button className={`${c}-btn ${c}-btn-cancel`} onClick={onCancel}>
+            <button className={`${componentsClass}-btn ${componentsClass}-btn-cancel`} onClick={onCancel}>
               <i className='bi bi-x-lg' /> Annuler
             </button>
           )}
@@ -132,22 +132,22 @@ function BookingCard({ booking, onConfirm, onCancel, onComplete }: {
 function UserCard({ user, dogCount }: { user: AdminUser; dogCount: number }) {
   const displayName = [user.firstName, user.lastName].filter(Boolean).join(' ') || user.email
   const isAdmin = user.roles.includes('ROLE_ADMIN')
-  const c = 'p_Admin_user'
+  const componentsClass = 'p_Admin_user'
   return (
-    <div className={c}>
-      <div className={`${c}-avatar`}>
+    <div className={componentsClass}>
+      <div className={`${componentsClass}-avatar`}>
         <i className={`bi ${isAdmin ? 'bi-shield-check' : 'bi-person'}`} />
       </div>
-      <div className={`${c}-info`}>
-        <span className={`${c}-name`}>{displayName}</span>
-        <span className={`${c}-email`}>{user.email}</span>
+      <div className={`${componentsClass}-info`}>
+        <span className={`${componentsClass}-name`}>{displayName}</span>
+        <span className={`${componentsClass}-email`}>{user.email}</span>
       </div>
-      <div className={`${c}-meta`}>
-        <span className={`${c}-role ${isAdmin ? `${c}-role-admin` : ''}`}>
+      <div className={`${componentsClass}-meta`}>
+        <span className={`${componentsClass}-role ${isAdmin ? `${componentsClass}-role-admin` : ''}`}>
           {isAdmin ? 'Admin' : 'Utilisateur'}
         </span>
         {!isAdmin && (
-          <span className={`${c}-dogs`}>
+          <span className={`${componentsClass}-dogs`}>
             <i className='bi bi-heart' /> {dogCount} chien{dogCount > 1 ? 's' : ''}
           </span>
         )}
@@ -158,25 +158,25 @@ function UserCard({ user, dogCount }: { user: AdminUser; dogCount: number }) {
 
 // ── Dog card ─────────────────────────────────────────────────────
 function DogCard({ dog, ownerName, ownerEmail }: { dog: AdminDog; ownerName: string; ownerEmail: string }) {
-  const c = 'p_Admin_dog'
+  const componentsClass = 'p_Admin_dog'
   return (
-    <div className={c}>
-      <div className={`${c}-avatar`}>
+    <div className={componentsClass}>
+      <div className={`${componentsClass}-avatar`}>
         <i className='bi bi-heart' />
       </div>
-      <div className={`${c}-info`}>
-        <span className={`${c}-name`}>{dog.name}</span>
-        {dog.breed && <span className={`${c}-breed`}>{dog.breed}</span>}
+      <div className={`${componentsClass}-info`}>
+        <span className={`${componentsClass}-name`}>{dog.name}</span>
+        {dog.breed && <span className={`${componentsClass}-breed`}>{dog.breed}</span>}
         {dog.birthDate && (
-          <span className={`${c}-birth`}>
+          <span className={`${componentsClass}-birth`}>
             Né le {new Date(dog.birthDate).toLocaleDateString('fr-FR')}
           </span>
         )}
       </div>
-      <div className={`${c}-owner`}>
+      <div className={`${componentsClass}-owner`}>
         <i className='bi bi-person' />
         <span>{ownerName}</span>
-        <span className={`${c}-ownerEmail`}>{ownerEmail}</span>
+        <span className={`${componentsClass}-ownerEmail`}>{ownerEmail}</span>
       </div>
     </div>
   )
@@ -298,9 +298,9 @@ export default function AdminPage() {
 
   const userMap = new Map(users.map(u => [u['@id'], u]))
 
-  const c = 'p_Admin'
+  const componentsClass = 'p_Admin'
 
-  if (meLoading) return <div className={`${c} ${c}-loading`}>Chargement...</div>
+  if (meLoading) return <div className={`${componentsClass} ${componentsClass}-loading`}>Chargement...</div>
   if (!me) return null
 
   const SECTIONS = [
@@ -311,76 +311,76 @@ export default function AdminPage() {
   ]
 
   return (
-    <div className={c}>
-      <div className={`${c}_header`}>
-        <h1 className={`${c}_title`}>Administration</h1>
-        <p className={`${c}_daycare`}>{me.daycare.name}</p>
+    <div className={componentsClass}>
+      <div className={`${componentsClass}_header`}>
+        <h1 className={`${componentsClass}_title`}>Administration</h1>
+        <p className={`${componentsClass}_daycare`}>{me.daycare.name}</p>
       </div>
 
       {/* ── Navigation sections ── */}
-      <nav className={`${c}_nav`}>
+      <nav className={`${componentsClass}_nav`}>
         {SECTIONS.map(s => (
           <button
             key={s.key}
-            className={`${c}_navBtn${activeSection === s.key ? ` ${c}_navBtn-active` : ''}`}
+            className={`${componentsClass}_navBtn${activeSection === s.key ? ` ${componentsClass}_navBtn-active` : ''}`}
             onClick={() => setActiveSection(s.key)}
           >
             {s.label}
-            {s.badge !== null && <span className={`${c}_badge`}>{s.badge}</span>}
+            {s.badge !== null && <span className={`${componentsClass}_badge`}>{s.badge}</span>}
           </button>
         ))}
       </nav>
 
       {/* ── Réservations ── */}
       {activeSection === 'bookings' && (
-        <section className={`${c}_section`}>
+        <section className={`${componentsClass}_section`}>
           {hasPrice && (
-            <div className={`${c}_revenue`}>
-              <div className={`${c}_revenueTotal`}>{formatCost(totalRevenue)}</div>
-              <div className={`${c}_revenueLabel`}>
+            <div className={`${componentsClass}_revenue`}>
+              <div className={`${componentsClass}_revenueTotal`}>{formatCost(totalRevenue)}</div>
+              <div className={`${componentsClass}_revenueLabel`}>
                 Total du mois · {BILLING_MODE_LABELS[billingMode]}
                 {weeklyDiscountEnabled && ` · remise −${weeklyDiscountPercent}% dès ${weeklyDiscountThreshold} rés./semaine`}
               </div>
-              <div className={`${c}_revenueBreakdown`}>
-                <div className={`${c}_revenueItem`}>
-                  <span className={`${c}_revenueItemLabel`}>Réalisé</span>
-                  <span className={`${c}_revenueItemAmount ${c}_revenueItemAmount-done`}>{formatCost(completedRevenue)}</span>
-                  <span className={`${c}_revenueItemCount`}>{completedCount} terminée{completedCount > 1 ? 's' : ''}</span>
+              <div className={`${componentsClass}_revenueBreakdown`}>
+                <div className={`${componentsClass}_revenueItem`}>
+                  <span className={`${componentsClass}_revenueItemLabel`}>Réalisé</span>
+                  <span className={`${componentsClass}_revenueItemAmount ${componentsClass}_revenueItemAmount-done`}>{formatCost(completedRevenue)}</span>
+                  <span className={`${componentsClass}_revenueItemCount`}>{completedCount} terminée{completedCount > 1 ? 's' : ''}</span>
                 </div>
-                <div className={`${c}_revenueSep`} />
-                <div className={`${c}_revenueItem`}>
-                  <span className={`${c}_revenueItemLabel`}>À venir</span>
-                  <span className={`${c}_revenueItemAmount ${c}_revenueItemAmount-upcoming`}>{formatCost(upcomingRevenue)}</span>
-                  <span className={`${c}_revenueItemCount`}>{upcomingCount} réservation{upcomingCount > 1 ? 's' : ''}</span>
+                <div className={`${componentsClass}_revenueSep`} />
+                <div className={`${componentsClass}_revenueItem`}>
+                  <span className={`${componentsClass}_revenueItemLabel`}>À venir</span>
+                  <span className={`${componentsClass}_revenueItemAmount ${componentsClass}_revenueItemAmount-upcoming`}>{formatCost(upcomingRevenue)}</span>
+                  <span className={`${componentsClass}_revenueItemCount`}>{upcomingCount} réservation{upcomingCount > 1 ? 's' : ''}</span>
                 </div>
               </div>
             </div>
           )}
 
           {/* ── Navigation semaine ── */}
-          <div className={`${c}_weekNav`}>
-            <button className={`${c}_weekBtn`} onClick={() => setWeekOffset(o => o - 1)}>
+          <div className={`${componentsClass}_weekNav`}>
+            <button className={`${componentsClass}_weekBtn`} onClick={() => setWeekOffset(o => o - 1)}>
               <i className='bi bi-chevron-left' />
             </button>
-            <div className={`${c}_weekLabel`}>
+            <div className={`${componentsClass}_weekLabel`}>
               <span>{week.label}</span>
               {weekOffset !== 0 && (
-                <button className={`${c}_weekToday`} onClick={() => setWeekOffset(0)}>
+                <button className={`${componentsClass}_weekToday`} onClick={() => setWeekOffset(0)}>
                   Aujourd'hui
                 </button>
               )}
             </div>
-            <button className={`${c}_weekBtn`} onClick={() => setWeekOffset(o => o + 1)}>
+            <button className={`${componentsClass}_weekBtn`} onClick={() => setWeekOffset(o => o + 1)}>
               <i className='bi bi-chevron-right' />
             </button>
           </div>
 
           {/* ── Onglets statut ── */}
-          <div className={`${c}_tabs`}>
+          <div className={`${componentsClass}_tabs`}>
             {STATUS_TABS.map(tab => (
               <button
                 key={tab.key}
-                className={`${c}_tab${filter === tab.key ? ` ${c}_tab-active` : ''}`}
+                className={`${componentsClass}_tab${filter === tab.key ? ` ${componentsClass}_tab-active` : ''}`}
                 onClick={() => setFilter(tab.key)}
               >
                 {tab.label}
@@ -390,11 +390,11 @@ export default function AdminPage() {
           </div>
 
           {bookingsLoading ? (
-            <p className={`${c}_empty`}>Chargement...</p>
+            <p className={`${componentsClass}_empty`}>Chargement...</p>
           ) : filtered.length === 0 ? (
-            <p className={`${c}_empty`}>Aucune réservation cette semaine.</p>
+            <p className={`${componentsClass}_empty`}>Aucune réservation cette semaine.</p>
           ) : (
-            <div className={`${c}_bookings`}>
+            <div className={`${componentsClass}_bookings`}>
               {filtered.map(b => (
                 <BookingCard
                   key={b['@id']}
@@ -411,13 +411,13 @@ export default function AdminPage() {
 
       {/* ── Utilisateurs ── */}
       {activeSection === 'users' && (
-        <section className={`${c}_section`}>
+        <section className={`${componentsClass}_section`}>
           {usersLoading ? (
-            <p className={`${c}_empty`}>Chargement...</p>
+            <p className={`${componentsClass}_empty`}>Chargement...</p>
           ) : users.length === 0 ? (
-            <p className={`${c}_empty`}>Aucun utilisateur.</p>
+            <p className={`${componentsClass}_empty`}>Aucun utilisateur.</p>
           ) : (
-            <div className={`${c}_list`}>
+            <div className={`${componentsClass}_list`}>
               {users.map(u => (
                 <UserCard
                   key={u['@id']}
@@ -432,13 +432,13 @@ export default function AdminPage() {
 
       {/* ── Chiens ── */}
       {activeSection === 'dogs' && (
-        <section className={`${c}_section`}>
+        <section className={`${componentsClass}_section`}>
           {usersLoading ? (
-            <p className={`${c}_empty`}>Chargement...</p>
+            <p className={`${componentsClass}_empty`}>Chargement...</p>
           ) : dogs.length === 0 ? (
-            <p className={`${c}_empty`}>Aucun chien.</p>
+            <p className={`${componentsClass}_empty`}>Aucun chien.</p>
           ) : (
-            <div className={`${c}_list`}>
+            <div className={`${componentsClass}_list`}>
               {dogs.map(d => {
                 const owner = userMap.get(d.owner)
                 const ownerName = owner ? [owner.firstName, owner.lastName].filter(Boolean).join(' ') || owner.email : '—'
@@ -454,31 +454,31 @@ export default function AdminPage() {
 
       {/* ── Horaires ── */}
       {activeSection === 'schedule' && (
-        <section className={`${c}_section`}>
-          <form className={`${c}_form`} onSubmit={handleSubmit}>
-            <div className={`${c}_times`}>
-              <div className={`${c}_field`}>
-                <label className={`${c}_label`}>Ouverture</label>
-                <select className={`${c}_select`} value={openingTime} onChange={e => setOpeningTime(e.target.value)} required>
+        <section className={`${componentsClass}_section`}>
+          <form className={`${componentsClass}_form`} onSubmit={handleSubmit}>
+            <div className={`${componentsClass}_times`}>
+              <div className={`${componentsClass}_field`}>
+                <label className={`${componentsClass}_label`}>Ouverture</label>
+                <select className={`${componentsClass}_select`} value={openingTime} onChange={e => setOpeningTime(e.target.value)} required>
                   {ALL_SLOTS.filter(t => t < closingTime || !closingTime).map(t => (
                     <option key={t} value={t}>{t}</option>
                   ))}
                 </select>
               </div>
-              <div className={`${c}_field`}>
-                <label className={`${c}_label`}>Fermeture</label>
-                <select className={`${c}_select`} value={closingTime} onChange={e => setClosingTime(e.target.value)} required>
+              <div className={`${componentsClass}_field`}>
+                <label className={`${componentsClass}_label`}>Fermeture</label>
+                <select className={`${componentsClass}_select`} value={closingTime} onChange={e => setClosingTime(e.target.value)} required>
                   {closingSlots.map(t => (
                     <option key={t} value={t}>{t}</option>
                   ))}
                 </select>
               </div>
             </div>
-            <div className={`${c}_field`}>
-              <label className={`${c}_label`}>Jours d'ouverture</label>
-              <div className={`${c}_days`}>
+            <div className={`${componentsClass}_field`}>
+              <label className={`${componentsClass}_label`}>Jours d'ouverture</label>
+              <div className={`${componentsClass}_days`}>
                 {WEEK_DAYS.map(day => (
-                  <label key={day.value} className={`${c}_day`}>
+                  <label key={day.value} className={`${componentsClass}_day`}>
                     <input
                       type='checkbox'
                       checked={openDays.includes(day.value)}
@@ -493,9 +493,9 @@ export default function AdminPage() {
               </div>
             </div>
             {/* ── Mode de facturation ── */}
-            <div className={`${c}_field`}>
-              <label className={`${c}_label`}>Mode de facturation</label>
-              <select className={`${c}_select`} value={billingMode} onChange={e => setBillingMode(e.target.value as BillingMode)}>
+            <div className={`${componentsClass}_field`}>
+              <label className={`${componentsClass}_label`}>Mode de facturation</label>
+              <select className={`${componentsClass}_select`} value={billingMode} onChange={e => setBillingMode(e.target.value as BillingMode)}>
                 {(Object.entries(BILLING_MODE_LABELS) as [BillingMode, string][]).map(([k, v]) => (
                   <option key={k} value={k}>{v}</option>
                 ))}
@@ -504,77 +504,77 @@ export default function AdminPage() {
 
             {billingMode === 'hourly' ? (
               <>
-                <div className={`${c}_field`}>
-                  <label className={`${c}_label`}>Tarif de base</label>
-                  <div className={`${c}_inputRow`}>
-                    <input className={`${c}_select`} type='number' min='0' step='0.5' value={pricePerUnit}
+                <div className={`${componentsClass}_field`}>
+                  <label className={`${componentsClass}_label`}>Tarif de base</label>
+                  <div className={`${componentsClass}_inputRow`}>
+                    <input className={`${componentsClass}_select`} type='number' min='0' step='0.5' value={pricePerUnit}
                       onChange={e => setPricePerUnit(parseFloat(e.target.value) || 0)} />
-                    <span className={`${c}_inputUnit`}>€ / heure</span>
+                    <span className={`${componentsClass}_inputUnit`}>€ / heure</span>
                   </div>
                 </div>
-                <label className={`${c}_toggle`}>
+                <label className={`${componentsClass}_toggle`}>
                   <input type='checkbox' checked={tierEnabled} onChange={e => setTierEnabled(e.target.checked)} />
                   <span>Tarif dégressif au-delà d'un certain nombre d'heures</span>
                 </label>
                 {tierEnabled && (
-                  <div className={`${c}_tier`}>
-                    <span className={`${c}_tierLabel`}>Au-delà de</span>
-                    <input className={`${c}_tierInput`} type='number' min='1' step='0.5' value={tierHoursThreshold}
+                  <div className={`${componentsClass}_tier`}>
+                    <span className={`${componentsClass}_tierLabel`}>Au-delà de</span>
+                    <input className={`${componentsClass}_tierInput`} type='number' min='1' step='0.5' value={tierHoursThreshold}
                       onChange={e => setTierHoursThreshold(parseFloat(e.target.value) || 1)} />
-                    <span className={`${c}_tierLabel`}>h →</span>
-                    <input className={`${c}_tierInput`} type='number' min='0' step='0.5' value={tierPrice}
+                    <span className={`${componentsClass}_tierLabel`}>h →</span>
+                    <input className={`${componentsClass}_tierInput`} type='number' min='0' step='0.5' value={tierPrice}
                       onChange={e => setTierPrice(parseFloat(e.target.value) || 0)} />
-                    <span className={`${c}_tierLabel`}>€ / heure</span>
+                    <span className={`${componentsClass}_tierLabel`}>€ / heure</span>
                   </div>
                 )}
               </>
             ) : (
-              <div className={`${c}_times`}>
-                <div className={`${c}_field`}>
-                  <label className={`${c}_label`}>Demi-journée {'<'} 4h</label>
-                  <div className={`${c}_inputRow`}>
-                    <input className={`${c}_select`} type='number' min='0' step='0.5' value={priceHalfDay}
+              <div className={`${componentsClass}_times`}>
+                <div className={`${componentsClass}_field`}>
+                  <label className={`${componentsClass}_label`}>Demi-journée {'<'} 4h</label>
+                  <div className={`${componentsClass}_inputRow`}>
+                    <input className={`${componentsClass}_select`} type='number' min='0' step='0.5' value={priceHalfDay}
                       onChange={e => setPriceHalfDay(parseFloat(e.target.value) || 0)} />
-                    <span className={`${c}_inputUnit`}>€</span>
+                    <span className={`${componentsClass}_inputUnit`}>€</span>
                   </div>
                 </div>
-                <div className={`${c}_field`}>
-                  <label className={`${c}_label`}>Journée complète ≥ 4h</label>
-                  <div className={`${c}_inputRow`}>
-                    <input className={`${c}_select`} type='number' min='0' step='0.5' value={pricePerUnit}
+                <div className={`${componentsClass}_field`}>
+                  <label className={`${componentsClass}_label`}>Journée complète ≥ 4h</label>
+                  <div className={`${componentsClass}_inputRow`}>
+                    <input className={`${componentsClass}_select`} type='number' min='0' step='0.5' value={pricePerUnit}
                       onChange={e => setPricePerUnit(parseFloat(e.target.value) || 0)} />
-                    <span className={`${c}_inputUnit`}>€</span>
+                    <span className={`${componentsClass}_inputUnit`}>€</span>
                   </div>
                 </div>
               </div>
             )}
 
             {/* ── Remise hebdomadaire ── */}
-            <div className={`${c}_divider`} />
-            <label className={`${c}_toggle`}>
+            <div className={`${componentsClass}_divider`} />
+            <label className={`${componentsClass}_toggle`}>
               <input type='checkbox' checked={weeklyDiscountEnabled}
                 onChange={e => setWeeklyDiscountEnabled(e.target.checked)} />
               <span>Remise hebdomadaire</span>
             </label>
             {weeklyDiscountEnabled && (
-              <div className={`${c}_tier`}>
-                <span className={`${c}_tierLabel`}>À partir de</span>
-                <input className={`${c}_tierInput`} type='number' min='2' step='1' value={weeklyDiscountThreshold}
+              <div className={`${componentsClass}_tier`}>
+                <span className={`${componentsClass}_tierLabel`}>À partir de</span>
+                <input className={`${componentsClass}_tierInput`} type='number' min='2' step='1' value={weeklyDiscountThreshold}
                   onChange={e => setWeeklyDiscountThreshold(parseInt(e.target.value) || 2)} />
-                <span className={`${c}_tierLabel`}>réservations/semaine →</span>
-                <input className={`${c}_tierInput`} type='number' min='0' max='100' step='1' value={weeklyDiscountPercent}
+                <span className={`${componentsClass}_tierLabel`}>réservations/semaine →</span>
+                <input className={`${componentsClass}_tierInput`} type='number' min='0' max='100' step='1' value={weeklyDiscountPercent}
                   onChange={e => setWeeklyDiscountPercent(parseFloat(e.target.value) || 0)} />
-                <span className={`${c}_tierLabel`}>% de remise</span>
+                <span className={`${componentsClass}_tierLabel`}>% de remise</span>
               </div>
             )}
 
             {/* ── Capacité ── */}
-            <div className={`${c}_divider`} />
-            <div className={`${c}_field`}>
-              <label className={`${c}_label`}>Capacité maximale par jour</label>
-              <div className={`${c}_inputRow`}>
+            <div className={`${componentsClass}_divider`} />
+            <div className={`${componentsClass}_field`}>
+              <label className={`${componentsClass}_label`}>Capacité maximale par jour</label>
+              <div className={`${componentsClass}_inputRow`}>
                 <input
-                  className={`${c}_select`}
+                  className={`${componentsClass}_select`}
                   type='number'
                   min='1'
                   step='1'
@@ -582,14 +582,14 @@ export default function AdminPage() {
                   value={maxDogsPerDay ?? ''}
                   onChange={e => setMaxDogsPerDay(e.target.value === '' ? null : parseInt(e.target.value))}
                 />
-                <span className={`${c}_inputUnit`}>chiens / jour</span>
+                <span className={`${componentsClass}_inputUnit`}>chiens / jour</span>
               </div>
-              <span className={`${c}_fieldHint`}>Laisser vide pour aucune limite</span>
+              <span className={`${componentsClass}_fieldHint`}>Laisser vide pour aucune limite</span>
             </div>
 
-            {success && <p className={`${c}_success`}>Paramètres mis à jour.</p>}
-            {error && <p className={`${c}_error`}>{error}</p>}
-            <Button label={saving ? 'Enregistrement...' : 'Enregistrer'} type='submit' color={ColorButton.PRIMARY} />
+            {success && <p className={`${componentsClass}_success`}>Paramètres mis à jour.</p>}
+            {error && <p className={`${componentsClass}_error`}>{error}</p>}
+            <Button label={saving ? 'Enregistrement...' : 'Enregistrer'} type='submit' color={ColorButton.PRIMARY} className={`${componentsClass}_submit`} />
           </form>
         </section>
       )}

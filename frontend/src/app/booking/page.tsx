@@ -62,18 +62,18 @@ export default function BookingPage() {
     if (ok) setSuccess(true)
   }
 
-  const c = 'p_Booking'
+  const componentsClass = 'p_Booking'
 
-  if (loading) return <div className={`${c} ${c}-loading`}>Chargement...</div>
+  if (loading) return <div className={`${componentsClass} ${componentsClass}-loading`}>Chargement...</div>
 
   if (success) {
     return (
-      <div className={c}>
-        <div className={`${c}_success`}>
+      <div className={componentsClass}>
+        <div className={`${componentsClass}_success`}>
           <i className='bi bi-check-circle' />
           <h2>Réservation envoyée !</h2>
           <p>Votre demande est en attente de confirmation par la garderie.</p>
-          <div className={`${c}_success-actions`}>
+          <div className={`${componentsClass}_success-actions`}>
             <Button label='Voir mes réservations' color={ColorButton.PRIMARY} onClick={() => router.push('/me')} />
             <Button label='Nouvelle réservation' color={ColorButton.SECONDARY} onClick={() => { setSuccess(false); setDate('') }} />
           </div>
@@ -86,26 +86,26 @@ export default function BookingPage() {
   const hasMax = config.maxDogsPerDay !== null
 
   return (
-    <div className={c}>
-      <div className={`${c}_header`}>
-        <h1 className={`${c}_title`}>Nouvelle réservation</h1>
-        <p className={`${c}_subtitle`}>
+    <div className={componentsClass}>
+      <div className={`${componentsClass}_header`}>
+        <h1 className={`${componentsClass}_title`}>Nouvelle réservation</h1>
+        <p className={`${componentsClass}_subtitle`}>
           Garderie ouverte de {config.openingTime} à {config.closingTime}
         </p>
       </div>
 
       {dogs.length === 0 ? (
-        <div className={`${c}_empty`}>
+        <div className={`${componentsClass}_empty`}>
           <i className='bi bi-exclamation-circle' />
           <p>Vous n'avez pas encore de chien enregistré.</p>
           <Button label='Ajouter un chien' color={ColorButton.PRIMARY} onClick={() => router.push('/me')} />
         </div>
       ) : (
-        <form className={`${c}_form`} onSubmit={handleSubmit}>
-          <div className={`${c}_field`}>
-            <label className={`${c}_label`}>Chien</label>
+        <form className={`${componentsClass}_form`} onSubmit={handleSubmit}>
+          <div className={`${componentsClass}_field`}>
+            <label className={`${componentsClass}_label`}>Chien</label>
             <select
-              className={`${c}_select`}
+              className={`${componentsClass}_select`}
               value={dogIri}
               onChange={e => setDogIri(e.target.value)}
               required
@@ -118,10 +118,10 @@ export default function BookingPage() {
             </select>
           </div>
 
-          <div className={`${c}_field`}>
-            <label className={`${c}_label`}>Date</label>
+          <div className={`${componentsClass}_field`}>
+            <label className={`${componentsClass}_label`}>Date</label>
             <select
-              className={`${c}_select`}
+              className={`${componentsClass}_select`}
               value={date}
               onChange={e => handleDateChange(e.target.value)}
               required
@@ -134,23 +134,23 @@ export default function BookingPage() {
 
           {/* ── Occupation du jour ── */}
           {date && (
-            <div className={`${c}_occupancy${isFull ? ` ${c}_occupancy-full` : ''}`}>
+            <div className={`${componentsClass}_occupancy${isFull ? ` ${componentsClass}_occupancy-full` : ''}`}>
               {occupancyLoading ? (
-                <span className={`${c}_occupancyLoading`}>Vérification de la disponibilité...</span>
+                <span className={`${componentsClass}_occupancyLoading`}>Vérification de la disponibilité...</span>
               ) : occupancy ? (
                 <>
-                  <div className={`${c}_occupancyHeader`}>
+                  <div className={`${componentsClass}_occupancyHeader`}>
                     <i className={`bi ${isFull ? 'bi-exclamation-circle' : 'bi-people'}`} />
-                    <span className={`${c}_occupancyCount`}>
+                    <span className={`${componentsClass}_occupancyCount`}>
                       {hasMax
                         ? `${occupancy.count} / ${occupancy.max} chien${occupancy.count > 1 ? 's' : ''} ce jour`
                         : `${occupancy.count} chien${occupancy.count > 1 ? 's' : ''} inscrit${occupancy.count > 1 ? 's' : ''} ce jour`
                       }
                     </span>
                     {hasMax && (
-                      <div className={`${c}_occupancyBar`}>
+                      <div className={`${componentsClass}_occupancyBar`}>
                         <div
-                          className={`${c}_occupancyFill${isFull ? ` ${c}_occupancyFill-full` : ''}`}
+                          className={`${componentsClass}_occupancyFill${isFull ? ` ${componentsClass}_occupancyFill-full` : ''}`}
                           style={{ width: `${Math.min(100, (occupancy.count / (occupancy.max ?? 1)) * 100)}%` }}
                         />
                       </div>
@@ -158,9 +158,9 @@ export default function BookingPage() {
                   </div>
 
                   {occupancy.dogs.length > 0 && (
-                    <div className={`${c}_occupancyDogs`}>
+                    <div className={`${componentsClass}_occupancyDogs`}>
                       {occupancy.dogs.map((d, i) => (
-                        <span key={i} className={`${c}_occupancyDog`}>
+                        <span key={i} className={`${componentsClass}_occupancyDog`}>
                           {d.name}{d.breed ? ` (${d.breed})` : ''}
                         </span>
                       ))}
@@ -168,7 +168,7 @@ export default function BookingPage() {
                   )}
 
                   {isFull && (
-                    <p className={`${c}_occupancyFullMsg`}>
+                    <p className={`${componentsClass}_occupancyFullMsg`}>
                       <i className='bi bi-info-circle' /> La garderie est complète ce jour-là. Votre demande sera tout de même examinée par l'équipe.
                     </p>
                   )}
@@ -177,11 +177,11 @@ export default function BookingPage() {
             </div>
           )}
 
-          <div className={`${c}_times`}>
-            <div className={`${c}_field`}>
-              <label className={`${c}_label`}>Heure d'arrivée</label>
+          <div className={`${componentsClass}_times`}>
+            <div className={`${componentsClass}_field`}>
+              <label className={`${componentsClass}_label`}>Heure d'arrivée</label>
               <select
-                className={`${c}_select`}
+                className={`${componentsClass}_select`}
                 value={startTime}
                 onChange={e => handleStartChange(e.target.value)}
                 required
@@ -191,10 +191,10 @@ export default function BookingPage() {
                 ))}
               </select>
             </div>
-            <div className={`${c}_field`}>
-              <label className={`${c}_label`}>Heure de départ</label>
+            <div className={`${componentsClass}_field`}>
+              <label className={`${componentsClass}_label`}>Heure de départ</label>
               <select
-                className={`${c}_select`}
+                className={`${componentsClass}_select`}
                 value={endTime}
                 onChange={e => setEndTime(e.target.value)}
                 required
@@ -206,9 +206,9 @@ export default function BookingPage() {
             </div>
           </div>
 
-          {error && <p className={`${c}_error`}>{error}</p>}
+          {error && <p className={`${componentsClass}_error`}>{error}</p>}
 
-          <div className={`${c}_actions`}>
+          <div className={`${componentsClass}_actions`}>
             <Button
               label={submitting ? 'Envoi...' : 'Réserver'}
               type='submit'

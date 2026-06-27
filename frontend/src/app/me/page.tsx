@@ -16,7 +16,6 @@ function authHeaders() {
   }
 }
 
-// ── Section compte ──────────────────────────────────────────────
 function AccountSection({ me, refetch }: { me: NonNullable<ReturnType<typeof useMe>['me']>; refetch: () => void }) {
   const [firstName, setFirstName] = useState(me.firstName ?? '')
   const [lastName, setLastName] = useState(me.lastName ?? '')
@@ -36,26 +35,27 @@ function AccountSection({ me, refetch }: { me: NonNullable<ReturnType<typeof use
     else setError('Erreur lors de la mise à jour.')
   }
 
-  const c = 'p_Me_section'
+  const componentsClass = 'p_Me_section'
+
   return (
-    <section className={c}>
-      <h2 className={`${c}-title`}>Mon compte</h2>
-      <form className={`${c}-form`} onSubmit={handleSubmit}>
-        <div className={`${c}-row`}>
+    <section className={componentsClass}>
+      <h2 className={`${componentsClass}-title`}>Mon compte</h2>
+      <form className={`${componentsClass}-form`} onSubmit={handleSubmit}>
+        <div className={`${componentsClass}-row`}>
           <label>Prénom</label>
           <input value={firstName} onChange={e => setFirstName(e.target.value)} />
         </div>
-        <div className={`${c}-row`}>
+        <div className={`${componentsClass}-row`}>
           <label>Nom</label>
           <input value={lastName} onChange={e => setLastName(e.target.value)} />
         </div>
-        <div className={`${c}-row`}>
+        <div className={`${componentsClass}-row`}>
           <label>Email</label>
           <input type='email' value={email} onChange={e => setEmail(e.target.value)} />
         </div>
-        {success && <p className={`${c}-success`}>Informations mises à jour.</p>}
-        {error && <p className={`${c}-error`}>{error}</p>}
-        <Button label='Enregistrer' type='submit' color={ColorButton.PRIMARY} />
+        {success && <p className={`${componentsClass}-success`}>Informations mises à jour.</p>}
+        {error && <p className={`${componentsClass}-error`}>{error}</p>}
+        <Button label='Enregistrer' type='submit' color={ColorButton.PRIMARY} className={`${componentsClass}-submit`} />
       </form>
     </section>
   )
@@ -78,16 +78,16 @@ function DogRow({ dog, refetch }: { dog: Dog; refetch: () => void }) {
     if (res.ok) { setSuccess(true); refetch(); setTimeout(() => setOpen(false), 800) }
   }
 
-  const c = 'p_Me_dog'
+  const componentsClass = 'p_Me_dog'
   return (
-    <div className={c}>
-      <div className={`${c}-header`} onClick={() => setOpen(o => !o)}>
-        <span className={`${c}-name`}>{dog.name}</span>
-        <span className={`${c}-breed`}>{dog.breed ?? '—'}</span>
+    <div className={componentsClass}>
+      <div className={`${componentsClass}-header`} onClick={() => setOpen(o => !o)}>
+        <span className={`${componentsClass}-name`}>{dog.name}</span>
+        <span className={`${componentsClass}-breed`}>{dog.breed ?? '—'}</span>
         <i className={`bi ${open ? 'bi-chevron-up' : 'bi-chevron-down'}`} />
       </div>
       {open && (
-        <form className={`${c}-form`} onSubmit={handleSubmit}>
+        <form className={`${componentsClass}-form`} onSubmit={handleSubmit}>
           <div className='p_Me_section-row'>
             <label>Nom</label>
             <input value={name} onChange={e => setName(e.target.value)} required />
@@ -97,7 +97,7 @@ function DogRow({ dog, refetch }: { dog: Dog; refetch: () => void }) {
             <input value={breed} onChange={e => setBreed(e.target.value)} />
           </div>
           {success && <p className='p_Me_section-success'>Enregistré.</p>}
-          <Button label='Enregistrer' type='submit' color={ColorButton.PRIMARY} />
+          <Button label='Enregistrer' type='submit' color={ColorButton.PRIMARY} className='p_Me_section-submit' />
         </form>
       )}
     </div>
@@ -132,16 +132,16 @@ function AddDogForm({ refetch }: { refetch: () => void }) {
     }
   }
 
-  const c = 'p_Me_dog'
+  const componentsClass = 'p_Me_dog'
   return (
-    <div className={`${c} ${c}-add`}>
-      <div className={`${c}-header`} onClick={() => setOpen(o => !o)}>
+    <div className={`${componentsClass} ${componentsClass}-add`}>
+      <div className={`${componentsClass}-header`} onClick={() => setOpen(o => !o)}>
         <i className='bi bi-plus-circle' />
-        <span className={`${c}-name`}>Ajouter un chien</span>
+        <span className={`${componentsClass}-name`}>Ajouter un chien</span>
         <i className={`bi ${open ? 'bi-chevron-up' : 'bi-chevron-down'}`} />
       </div>
       {open && (
-        <form className={`${c}-form`} onSubmit={handleSubmit}>
+        <form className={`${componentsClass}-form`} onSubmit={handleSubmit}>
           <div className='p_Me_section-row'>
             <label>Nom *</label>
             <input value={name} onChange={e => setName(e.target.value)} required />
@@ -155,7 +155,7 @@ function AddDogForm({ refetch }: { refetch: () => void }) {
             <input type='date' value={birthDate} onChange={e => setBirthDate(e.target.value)} />
           </div>
           {error && <p className='p_Me_section-error'>{error}</p>}
-          <Button label='Ajouter' type='submit' color={ColorButton.PRIMARY} />
+          <Button label='Ajouter' type='submit' color={ColorButton.PRIMARY} className='p_Me_section-submit' />
         </form>
       )}
     </div>
@@ -163,11 +163,11 @@ function AddDogForm({ refetch }: { refetch: () => void }) {
 }
 
 function DogsSection({ dogs, me, refetch }: { dogs: Dog[]; me: NonNullable<ReturnType<typeof useMe>['me']>; refetch: () => void }) {
-  const c = 'p_Me_section'
+  const componentsClass = 'p_Me_section'
   return (
-    <section className={c}>
-      <h2 className={`${c}-title`}>Mes chiens</h2>
-      {dogs.length === 0 && <p className={`${c}-empty`}>Aucun chien enregistré.</p>}
+    <section className={componentsClass}>
+      <h2 className={`${componentsClass}-title`}>Mes chiens</h2>
+      {dogs.length === 0 && <p className={`${componentsClass}-empty`}>Aucun chien enregistré.</p>}
       {dogs.map(dog => <DogRow key={dog['@id']} dog={dog} refetch={refetch} />)}
       <AddDogForm refetch={refetch} />
     </section>
@@ -221,21 +221,21 @@ function BookingRow({ booking, refetch }: { booking: Booking; refetch: () => voi
     refetch()
   }
 
-  const c = 'p_Me_booking'
+  const componentsClass = 'p_Me_booking'
   return (
-    <div className={`${c} ${c}-${booking.status}`}>
-      <div className={`${c}-header`} onClick={() => isPending && setOpen(o => !o)}>
-        <span className={`${c}-dog`}>{booking.dog.name}</span>
-        <span className={`${c}-dates`}>
+    <div className={`${componentsClass} ${componentsClass}-${booking.status}`}>
+      <div className={`${componentsClass}-header`} onClick={() => isPending && setOpen(o => !o)}>
+        <span className={`${componentsClass}-dog`}>{booking.dog.name}</span>
+        <span className={`${componentsClass}-dates`}>
           {new Date(booking.startDate).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' })}{' '}
           {new Date(booking.startDate).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
           {' → '}
           {new Date(booking.endDate).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
         </span>
-        <span className={`${c}-status`}>{STATUS_LABELS[booking.status] ?? booking.status}</span>
-        <div className={`${c}-actions`}>
+        <span className={`${componentsClass}-status`}>{STATUS_LABELS[booking.status] ?? booking.status}</span>
+        <div className={`${componentsClass}-actions`}>
           {canCancel && (
-            <button className={`${c}-cancel`} onClick={e => { e.stopPropagation(); handleCancel() }} disabled={cancelling}>
+            <button className={`${componentsClass}-cancel`} onClick={e => { e.stopPropagation(); handleCancel() }} disabled={cancelling}>
               {cancelling ? '...' : 'Annuler'}
             </button>
           )}
@@ -243,7 +243,7 @@ function BookingRow({ booking, refetch }: { booking: Booking; refetch: () => voi
         </div>
       </div>
       {isPending && open && (
-        <form className={`${c}-form`} onSubmit={handleSubmit}>
+        <form className={`${componentsClass}-form`} onSubmit={handleSubmit}>
           <div className='p_Me_section-row'>
             <label>Date de début</label>
             <input type='date' value={startDate} onChange={e => setStartDate(e.target.value)} required />
@@ -253,7 +253,7 @@ function BookingRow({ booking, refetch }: { booking: Booking; refetch: () => voi
             <input type='date' value={endDate} onChange={e => setEndDate(e.target.value)} required />
           </div>
           {success && <p className='p_Me_section-success'>Réservation mise à jour.</p>}
-          <Button label='Enregistrer' type='submit' color={ColorButton.PRIMARY} />
+          <Button label='Enregistrer' type='submit' color={ColorButton.PRIMARY} className='p_Me_section-submit' />
         </form>
       )}
     </div>
@@ -286,16 +286,16 @@ function CostSection({ bookings, me }: { bookings: Booking[]; me: Me }) {
   const total = withCosts.reduce((sum, b) => sum + b.finalCost, 0)
   const totalSaving = withCosts.reduce((sum, b) => sum + b.saving, 0)
   const monthLabel = now.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })
-  const c = 'p_Me_section'
+  const componentsClass = 'p_Me_section'
 
   return (
-    <section className={c}>
-      <h2 className={`${c}-title`}>
+    <section className={componentsClass}>
+      <h2 className={`${componentsClass}-title`}>
         Estimation — {monthLabel}
         <span className='p_Me_badge'>{BILLING_MODE_LABELS[config.billingMode]}</span>
       </h2>
       {withCosts.length === 0 ? (
-        <p className={`${c}-empty`}>Aucune réservation ce mois-ci.</p>
+        <p className={`${componentsClass}-empty`}>Aucune réservation ce mois-ci.</p>
       ) : (
         <>
           {d.weeklyDiscountEnabled && (
@@ -336,12 +336,12 @@ function CostSection({ bookings, me }: { bookings: Booking[]; me: Me }) {
 }
 
 function BookingsSection({ bookings, refetch }: { bookings: Booking[]; refetch: () => void }) {
-  const c = 'p_Me_section'
+  const componentsClass = 'p_Me_section'
   return (
-    <section className={c}>
-      <h2 className={`${c}-title`}>Mes réservations</h2>
+    <section className={componentsClass}>
+      <h2 className={`${componentsClass}-title`}>Mes réservations</h2>
       {bookings.length === 0
-        ? <p className={`${c}-empty`}>Aucune réservation.</p>
+        ? <p className={`${componentsClass}-empty`}>Aucune réservation.</p>
         : bookings.map(b => <BookingRow key={b['@id']} booking={b} refetch={refetch} />)
       }
     </section>
@@ -364,15 +364,17 @@ export default function MePage() {
     <div className='p_Me'>
       <div className='p_Me_header'>
         <h1 className='p_Me_title'>
-          Bonjour, {me.firstName ?? me.email}
+          Bonjour {me.firstName ?? me.email}
           {me.roles.includes('ROLE_ADMIN') && <span className='p_Me_badge'>Admin</span>}
         </h1>
         <p className='p_Me_daycare'>{me.daycare.name}</p>
       </div>
 
       <div className='p_Me_content'>
-        <AccountSection me={me} refetch={refetch} />
-        <DogsSection dogs={dogs} me={me} refetch={refetch} />
+        <div className='p_Me_content-row'>
+          <AccountSection me={me} refetch={refetch} />
+          <DogsSection dogs={dogs} me={me} refetch={refetch} />
+        </div>        
         <BookingsSection bookings={bookings} refetch={refetch} />
         <CostSection bookings={bookings} me={me} />
       </div>
