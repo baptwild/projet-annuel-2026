@@ -83,11 +83,11 @@
 
   &_error {
     @include typography.body;
-    color: #e53e3e;
+    color: $color-error;
     font-size: 0.9rem;
     padding: 0.75rem 1rem;
-    background: #fff5f5;
-    border: 1px solid #fc8181;
+    background-color: $color-error-light;
+    border: 1px solid $color-error;
     border-radius: 8px;
   }
 
@@ -150,7 +150,7 @@
     }
 
     .p_Booking_occupancy-full & i {
-      color: #e53e3e;
+      color: $color-error;
     }
   }
 
@@ -177,7 +177,7 @@
     transition: width 0.3s ease;
 
     &-full {
-      background: #e53e3e;
+      background: $color-warning;
     }
   }
 
@@ -200,7 +200,7 @@
   &_occupancyFullMsg {
     @include typography.body;
     font-size: 0.82rem;
-    color: #c53030;
+    color: $color-error;
     display: flex;
     gap: 0.4rem;
     align-items: flex-start;
@@ -219,23 +219,23 @@
     gap: 1rem;
     padding: 3rem;
     text-align: center;
-    background: #f0fff4;
-    border: 1.5px solid #9ae6b4;
+    background-color: $color-success-light;
+    border: 1.5px solid $color-success;
     border-radius: 16px;
 
     i {
       font-size: 3rem;
-      color: #38a169;
+      color: $color-success;
     }
 
     h2 {
       @include typography.h3;
-      color: #276749;
+      color: $color-success;
     }
 
     p {
       @include typography.body;
-      color: #2f855a;
+      color: $color-success;
     }
 
     &-actions {

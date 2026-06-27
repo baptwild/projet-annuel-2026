@@ -110,11 +110,11 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: color.adjust($color-primary, $lightness: 40%);
+      background-color: $color-primary;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: $color-primary;
+      color: $color-white;
       font-size: 1.1rem;
       flex-shrink: 0;
     }
@@ -189,11 +189,11 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: color.adjust($color-secondary, $lightness: 35%);
+      background-color: $color-primary;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: $color-secondary;
+      color: $color-white;
       font-size: 1.1rem;
       flex-shrink: 0;
     }
@@ -560,8 +560,8 @@
       }
 
       &-confirm {
-        background: #c6f6d5;
-        color: #276749;
+        background-color: $color-success-light;
+        color: $color-success;
       }
 
       &-complete {
@@ -570,8 +570,8 @@
       }
 
       &-cancel {
-        background: #fed7d7;
-        color: #9b2c2c;
+        background-color: $color-error-light;
+        color: $color-error;
       }
     }
   }
@@ -612,28 +612,29 @@
   }
 
   &_day {
+    @include typography.body-small-bold;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.5rem 0.85rem;
-    border: 1.5px solid color.adjust($color-light, $lightness: -10%);
-    border-radius: 20px;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid $color-secondary;
+    color: $color-primary;
+    border-radius: $border-radius;
     cursor: pointer;
-    @include typography.body;
-    font-size: 0.9rem;
     color: $color-tertiary;
-    transition: border-color 0.2s, background 0.2s;
+    transition: all $animation ease-in-out;
     user-select: none;
 
     input[type='checkbox'] {
-      accent-color: $color-primary;
+      accent-color: $color-secondary;
       width: 15px;
       height: 15px;
     }
 
     &:has(input:checked) {
-      border-color: $color-primary;
-      background: color.adjust($color-primary, $lightness: 42%);
+      border-color: $color-secondary;
+      background-color: $color-primary;
+      color: $color-white;
     }
   }
 
@@ -663,8 +664,8 @@
     color: #276749;
     font-size: 0.9rem;
     padding: 0.75rem 1rem;
-    background: #f0fff4;
-    border: 1px solid #9ae6b4;
+    background-color: $color-success-light;
+    border: 1px solid $color-success;
     border-radius: 8px;
   }
 
@@ -746,11 +747,11 @@
 
   &_error {
     @include typography.body;
-    color: #e53e3e;
+    color: $color-error;
     font-size: 0.9rem;
     padding: 0.75rem 1rem;
-    background: #fff5f5;
-    border: 1px solid #fc8181;
+    background-color: $color-error-light;
+    border: 1px solid $color-error;
     border-radius: 8px;
   }
 }
