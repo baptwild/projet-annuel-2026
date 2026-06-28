@@ -22,10 +22,6 @@
       gap: 1.5rem;
    }
 
-   &_socials {
-      display: none;
-   }
-
    &_login {
       display: none;
    }
@@ -64,26 +60,6 @@
 
       &_mobileMenu {
          display: none;
-      }
-
-      &_socials {
-         display: flex;
-         flex-direction: row;
-         align-items: center;
-         gap: 1rem;
-
-         &-link {
-            display: flex;
-            align-items: center;
-
-            i {
-               font-size: 1.5rem;
-            }
-
-            &:hover {
-               color: $color-secondary;
-            }
-         }
       }
 
       &_profile {

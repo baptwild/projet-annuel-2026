@@ -317,7 +317,7 @@ export default function AdminPage() {
     { key: 'users'    as Section, label: 'Utilisateurs', badge: null },
     { key: 'dogs'     as Section, label: 'Chiens',       badge: null },
     { key: 'schedule' as Section, label: 'Horaires', badge: null },
-    { key: 'theme'    as Section, label: 'Thème & Infos', badge: null },
+    { key: 'theme'    as Section, label: 'Personnalisation', badge: null },
   ]
 
   return (
@@ -640,7 +640,7 @@ export default function AdminPage() {
             <div className={`${componentsClass}_times`}>
               <div className={`${componentsClass}_field`}>
                 <label className={`${componentsClass}_label`}>Couleur Primaire</label>
-                <div className={`${componentsClass}_colorWrapper`} style={{ display: 'flex', gap: '1rem' }}>
+                <div className={`${componentsClass}_colorWrapper`}>
                   <input className={`${componentsClass}_colorPicker`} type="color" value={colorPrimary} onChange={e => setColorPrimary(e.target.value)} />
                   <input className={`${componentsClass}_select`} type="text" value={colorPrimary} onChange={e => setColorPrimary(e.target.value)} style={{ flex: 1 }} />
                 </div>
@@ -648,7 +648,7 @@ export default function AdminPage() {
               
               <div className={`${componentsClass}_field`}>
                 <label className={`${componentsClass}_label`}>Couleur Secondaire</label>
-                <div className={`${componentsClass}_colorWrapper`} style={{ display: 'flex', gap: '1rem' }}>
+                <div className={`${componentsClass}_colorWrapper`}>
                   <input className={`${componentsClass}_colorPicker`} type="color" value={colorSecondary} onChange={e => setColorSecondary(e.target.value)} />
                   <input className={`${componentsClass}_select`} type="text" value={colorSecondary} onChange={e => setColorSecondary(e.target.value)} style={{ flex: 1 }} />
                 </div>
@@ -656,7 +656,7 @@ export default function AdminPage() {
 
               <div className={`${componentsClass}_field`}>
                 <label className={`${componentsClass}_label`}>Couleur Tertiaire</label>
-                <div className={`${componentsClass}_colorWrapper`} style={{ display: 'flex', gap: '1rem' }}>
+                <div className={`${componentsClass}_colorWrapper`}>
                   <input className={`${componentsClass}_colorPicker`} type="color" value={colorTertiary} onChange={e => setColorTertiary(e.target.value)} />
                   <input className={`${componentsClass}_select`} type="text" value={colorTertiary} onChange={e => setColorTertiary(e.target.value)} style={{ flex: 1 }} />
                 </div>
