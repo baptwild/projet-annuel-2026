@@ -28,6 +28,11 @@
     margin-bottom: 0.25rem;
   }
 
+  &_subtitle {
+    @include typography.h5;
+    color: $color-tertiary;
+  }
+
   &_daycare {
     @include typography.body-small-bold;
     color: $color-primary;
@@ -753,5 +758,21 @@
     background-color: $color-error-light;
     border: 1px solid $color-error;
     border-radius: 8px;
+  }
+
+  &_colorWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &_colorPicker {
+    cursor: pointer;
+    height: 100%;
+    padding: 0.25rem;
+    border-radius: $border-radius-half;
+    border: $border;
   }
 }

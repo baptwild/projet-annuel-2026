@@ -3,9 +3,9 @@ $font-title: var(--font-bellerose), sans-serif;
 $font-text: var(--font-roboto), sans-serif;
 
 // Colors
-$color-primary: #1D6980;
-$color-secondary: #01B4B8;
-$color-tertiary: #2F4858;
+$color-primary: var(--color-primary, #1D6980);
+$color-secondary: var(--color-secondary, #01B4B8);
+$color-tertiary: var(--color-tertiary, #2F4858);
 
 // Colors global
 $color-black: #181818;

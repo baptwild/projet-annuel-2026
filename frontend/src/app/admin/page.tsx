@@ -41,7 +41,7 @@ const STATUS_TABS = [
 ] as const
 
 type StatusFilter = typeof STATUS_TABS[number]['key']
-type Section = 'bookings' | 'users' | 'dogs' | 'schedule'
+type Section = 'bookings' | 'users' | 'dogs' | 'schedule' | 'theme'
 
 const STATUS_LABELS: Record<string, string> = {
   pending:   'En attente',
@@ -210,6 +210,15 @@ export default function AdminPage() {
   const [filter, setFilter] = useState<StatusFilter>('pending')
   const [weekOffset, setWeekOffset] = useState(0)
 
+  const [address, setAddress] = useState('')
+  const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
+  const [facebook, setFacebook] = useState('')
+  const [instagram, setInstagram] = useState('')
+  const [colorPrimary, setColorPrimary] = useState('#1D6980')
+  const [colorSecondary, setColorSecondary] = useState('#01B4B8')
+  const [colorTertiary, setColorTertiary] = useState('#2F4858')
+
   useEffect(() => {
     if (!meLoading && !me) router.push('/')
     if (!meLoading && me && !me.roles.includes('ROLE_ADMIN')) router.push('/')
@@ -307,7 +316,8 @@ export default function AdminPage() {
     { key: 'bookings' as Section, label: 'Réservations', badge: pendingCount > 0 ? pendingCount : null },
     { key: 'users'    as Section, label: 'Utilisateurs', badge: null },
     { key: 'dogs'     as Section, label: 'Chiens',       badge: null },
-    { key: 'schedule' as Section, label: 'Horaires',     badge: null },
+    { key: 'schedule' as Section, label: 'Horaires', badge: null },
+    { key: 'theme'    as Section, label: 'Thème & Infos', badge: null },
   ]
 
   return (
@@ -585,6 +595,72 @@ export default function AdminPage() {
                 <span className={`${componentsClass}_inputUnit`}>chiens / jour</span>
               </div>
               <span className={`${componentsClass}_fieldHint`}>Laisser vide pour aucune limite</span>
+            </div>
+
+            {success && <p className={`${componentsClass}_success`}>Paramètres mis à jour.</p>}
+            {error && <p className={`${componentsClass}_error`}>{error}</p>}
+            <Button label={saving ? 'Enregistrement...' : 'Enregistrer'} type='submit' color={ColorButton.PRIMARY} className={`${componentsClass}_submit`} />
+          </form>
+        </section>
+      )}
+      {activeSection === 'theme' && (
+        <section className={`${componentsClass}_section`}>
+          <form className={`${componentsClass}_form`} onSubmit={handleSubmit}>
+            <h3 className={`${componentsClass}_subtitle`}>Informations de contact</h3>
+            
+            <div className={`${componentsClass}_field`}>
+              <label className={`${componentsClass}_label`}>Adresse postale</label>
+              <input className={`${componentsClass}_select`} type="text" value={address} onChange={e => setAddress(e.target.value)} />
+            </div>
+            
+            <div className={`${componentsClass}_field`}>
+              <label className={`${componentsClass}_label`}>Téléphone</label>
+              <input className={`${componentsClass}_select`} type="tel" value={phone} onChange={e => setPhone(e.target.value)} />
+            </div>
+            
+            <div className={`${componentsClass}_field`}>
+              <label className={`${componentsClass}_label`}>Email de contact</label>
+              <input className={`${componentsClass}_select`} type="email" value={email} onChange={e => setEmail(e.target.value)} />
+            </div>
+
+            <h3 className={`${componentsClass}_subtitle`}>Réseaux sociaux</h3>
+            
+            <div className={`${componentsClass}_field`}>
+              <label className={`${componentsClass}_label`}>Facebook (URL)</label>
+              <input className={`${componentsClass}_select`} type="url" value={facebook} onChange={e => setFacebook(e.target.value)} />
+            </div>
+            
+            <div className={`${componentsClass}_field`}>
+              <label className={`${componentsClass}_label`}>Instagram (URL)</label>
+              <input className={`${componentsClass}_select`} type="url" value={instagram} onChange={e => setInstagram(e.target.value)} />
+            </div>
+
+            <h3 className={`${componentsClass}_subtitle`}>Couleurs de la plateforme</h3>
+            
+            <div className={`${componentsClass}_times`}>
+              <div className={`${componentsClass}_field`}>
+                <label className={`${componentsClass}_label`}>Couleur Primaire</label>
+                <div className={`${componentsClass}_colorWrapper`} style={{ display: 'flex', gap: '1rem' }}>
+                  <input className={`${componentsClass}_colorPicker`} type="color" value={colorPrimary} onChange={e => setColorPrimary(e.target.value)} />
+                  <input className={`${componentsClass}_select`} type="text" value={colorPrimary} onChange={e => setColorPrimary(e.target.value)} style={{ flex: 1 }} />
+                </div>
+              </div>
+              
+              <div className={`${componentsClass}_field`}>
+                <label className={`${componentsClass}_label`}>Couleur Secondaire</label>
+                <div className={`${componentsClass}_colorWrapper`} style={{ display: 'flex', gap: '1rem' }}>
+                  <input className={`${componentsClass}_colorPicker`} type="color" value={colorSecondary} onChange={e => setColorSecondary(e.target.value)} />
+                  <input className={`${componentsClass}_select`} type="text" value={colorSecondary} onChange={e => setColorSecondary(e.target.value)} style={{ flex: 1 }} />
+                </div>
+              </div>
+
+              <div className={`${componentsClass}_field`}>
+                <label className={`${componentsClass}_label`}>Couleur Tertiaire</label>
+                <div className={`${componentsClass}_colorWrapper`} style={{ display: 'flex', gap: '1rem' }}>
+                  <input className={`${componentsClass}_colorPicker`} type="color" value={colorTertiary} onChange={e => setColorTertiary(e.target.value)} />
+                  <input className={`${componentsClass}_select`} type="text" value={colorTertiary} onChange={e => setColorTertiary(e.target.value)} style={{ flex: 1 }} />
+                </div>
+              </div>
             </div>
 
             {success && <p className={`${componentsClass}_success`}>Paramètres mis à jour.</p>}

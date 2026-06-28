@@ -27,11 +27,12 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+
   return (
     <html lang='fr' className={`${roboto.variable} ${bellerose.variable}`}>
       <body>
