@@ -1,12 +1,12 @@
-@use '../Settings/variables' as *;
-@use '../Settings/responsive_variables';
-@use '../Tools/typography';
-@use '../Tools/mixins';
+@use '../../Settings/variables' as *;
+@use '../../Settings/responsive_variables';
+@use '../../Tools/typography';
+@use '../../Tools/mixins';
 @use 'sass:color';
 
 .p_Admin {
   @include mixins.wrapper;
-  @include mixins.padding(5rem);
+  @include mixins.margin;
   max-width: 720px;
 
   &-loading {
@@ -15,7 +15,7 @@
     align-items: center;
     min-height: 50vh;
     @include typography.body;
-    color: $color-quinery;
+    color: $color-tertiary;
   }
 
   &_header {
@@ -24,27 +24,43 @@
 
   &_title {
     @include typography.h2;
-    color: $color-quinery;
+    color: $color-tertiary;
     margin-bottom: 0.25rem;
   }
 
+  &_subtitle {
+    @include typography.h5;
+    color: $color-tertiary;
+  }
+
   &_daycare {
-    @include typography.body;
+    @include typography.body-small-bold;
     color: $color-primary;
-    font-weight: 600;
+    margin-top: 1.5rem;
   }
 
   &_nav {
     display: flex;
     gap: 0.25rem;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     border-bottom: 2px solid color.adjust($color-light, $lightness: -8%);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    @media screen and (min-width: responsive_variables.$screen-m-min) {
+      overflow: visible;
+    }
   }
 
   &_navBtn {
     @include typography.body;
     font-size: 0.95rem;
-    color: rgba($color-quinery, 0.6);
+    color: rgba($color-tertiary, 0.6);
     background: none;
     border: none;
     padding: 0.75rem 1.25rem;
@@ -55,8 +71,12 @@
     align-items: center;
     gap: 0.5rem;
     transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
 
-    &:hover { color: $color-primary; }
+    &:hover {
+      color: $color-primary;
+    }
 
     &-active {
       color: $color-primary;
@@ -75,7 +95,7 @@
 
     &-title {
       @include typography.h3;
-      color: $color-quinery;
+      color: $color-tertiary;
       margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
@@ -100,17 +120,19 @@
     border-radius: 10px;
     transition: border-color 0.2s;
 
-    &:hover { border-color: rgba($color-primary, 0.3); }
+    &:hover {
+      border-color: rgba($color-primary, 0.3);
+    }
 
     &-avatar {
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: color.adjust($color-primary, $lightness: 40%);
+      background-color: $color-primary;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: $color-primary;
+      color: $color-white;
       font-size: 1.1rem;
       flex-shrink: 0;
     }
@@ -126,12 +148,12 @@
     &-name {
       @include typography.body;
       font-weight: 700;
-      color: $color-quinery;
+      color: $color-tertiary;
     }
 
     &-email {
       font-size: 0.82rem;
-      color: rgba($color-quinery, 0.55);
+      color: rgba($color-tertiary, 0.55);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -149,8 +171,8 @@
       font-weight: 600;
       padding: 0.15rem 0.6rem;
       border-radius: 20px;
-      background: rgba($color-quinery, 0.08);
-      color: rgba($color-quinery, 0.7);
+      background: rgba($color-tertiary, 0.08);
+      color: rgba($color-tertiary, 0.7);
 
       &-admin {
         background: rgba($color-primary, 0.12);
@@ -160,7 +182,7 @@
 
     &-dogs {
       font-size: 0.8rem;
-      color: rgba($color-quinery, 0.5);
+      color: rgba($color-tertiary, 0.5);
       display: flex;
       align-items: center;
       gap: 0.3rem;
@@ -177,17 +199,19 @@
     border-radius: 10px;
     transition: border-color 0.2s;
 
-    &:hover { border-color: rgba($color-primary, 0.3); }
+    &:hover {
+      border-color: rgba($color-primary, 0.3);
+    }
 
     &-avatar {
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: color.adjust($color-secondary, $lightness: 35%);
+      background-color: $color-primary;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: $color-secondary;
+      color: $color-white;
       font-size: 1.1rem;
       flex-shrink: 0;
     }
@@ -202,17 +226,17 @@
     &-name {
       @include typography.body;
       font-weight: 700;
-      color: $color-quinery;
+      color: $color-tertiary;
     }
 
     &-breed {
       font-size: 0.82rem;
-      color: rgba($color-quinery, 0.55);
+      color: rgba($color-tertiary, 0.55);
     }
 
     &-birth {
       font-size: 0.78rem;
-      color: rgba($color-quinery, 0.45);
+      color: rgba($color-tertiary, 0.45);
     }
 
     &-owner {
@@ -222,14 +246,17 @@
       gap: 0.15rem;
       @include typography.body;
       font-size: 0.85rem;
-      color: $color-quinery;
+      color: $color-tertiary;
 
-      i { opacity: 0.4; font-size: 0.8rem; }
+      i {
+        opacity: 0.4;
+        font-size: 0.8rem;
+      }
     }
 
     &-ownerEmail {
       font-size: 0.78rem;
-      color: rgba($color-quinery, 0.5);
+      color: rgba($color-tertiary, 0.5);
     }
   }
 
@@ -303,8 +330,13 @@
     font-weight: 700;
     letter-spacing: -0.01em;
 
-    &-done     { color: #9ae6b4; }
-    &-upcoming { color: rgba($color-white, 0.9); }
+    &-done {
+      color: #9ae6b4;
+    }
+
+    &-upcoming {
+      color: rgba($color-white, 0.9);
+    }
   }
 
   &_revenueItemCount {
@@ -331,12 +363,15 @@
     border-radius: 6px;
     border: 1.5px solid color.adjust($color-light, $lightness: -10%);
     background: $color-white;
-    color: $color-quinery;
+    color: $color-tertiary;
     cursor: pointer;
     flex-shrink: 0;
     transition: border-color 0.2s, color 0.2s;
 
-    &:hover { border-color: $color-primary; color: $color-primary; }
+    &:hover {
+      border-color: $color-primary;
+      color: $color-primary;
+    }
   }
 
   &_weekLabel {
@@ -347,7 +382,7 @@
     gap: 0.75rem;
     @include typography.body-bold;
     font-size: 0.92rem;
-    color: $color-quinery;
+    color: $color-tertiary;
     text-align: center;
   }
 
@@ -362,7 +397,9 @@
     cursor: pointer;
     transition: background 0.2s;
 
-    &:hover { background: rgba($color-primary, 0.18); }
+    &:hover {
+      background: rgba($color-primary, 0.18);
+    }
   }
 
   &_tabs {
@@ -376,7 +413,7 @@
   &_tab {
     @include typography.body;
     font-size: 0.9rem;
-    color: $color-quinery;
+    color: $color-tertiary;
     background: none;
     border: none;
     padding: 0.6rem 1rem;
@@ -385,7 +422,9 @@
     margin-bottom: -2px;
     transition: color 0.2s, border-color 0.2s;
 
-    &:hover { color: $color-primary; }
+    &:hover {
+      color: $color-primary;
+    }
 
     &-active {
       color: $color-primary;
@@ -396,7 +435,7 @@
 
   &_empty {
     @include typography.body;
-    color: $color-quinery;
+    color: $color-tertiary;
     opacity: 0.6;
     padding: 1.5rem 0;
     text-align: center;
@@ -421,14 +460,28 @@
     @media (max-width: responsive_variables.$screen-s-max) {
       grid-template-columns: 1fr 1fr;
     }
+
     @media (max-width: responsive_variables.$screen-xs-max) {
       grid-template-columns: 1fr;
     }
 
-    &-pending  { border-left: 4px solid #d69e2e; }
-    &-confirmed { border-left: 4px solid #38a169; }
-    &-cancelled { border-left: 4px solid #e53e3e; opacity: 0.7; }
-    &-completed { border-left: 4px solid $color-quinery; opacity: 0.6; }
+    &-pending {
+      border-left: 4px solid #d69e2e;
+    }
+
+    &-confirmed {
+      border-left: 4px solid #38a169;
+    }
+
+    &-cancelled {
+      border-left: 4px solid #e53e3e;
+      opacity: 0.7;
+    }
+
+    &-completed {
+      border-left: 4px solid $color-tertiary;
+      opacity: 0.6;
+    }
 
     &-dog {
       display: flex;
@@ -439,12 +492,12 @@
     &-dogName {
       @include typography.body;
       font-weight: 700;
-      color: $color-quinery;
+      color: $color-tertiary;
     }
 
     &-breed {
       font-size: 0.82rem;
-      color: $color-quinery;
+      color: $color-tertiary;
       opacity: 0.6;
     }
 
@@ -454,9 +507,12 @@
       gap: 0.15rem;
       @include typography.body;
       font-size: 0.9rem;
-      color: $color-quinery;
+      color: $color-tertiary;
 
-      i { opacity: 0.5; font-size: 0.8rem; }
+      i {
+        opacity: 0.5;
+        font-size: 0.8rem;
+      }
     }
 
     &-email {
@@ -470,9 +526,12 @@
       gap: 0.15rem;
       @include typography.body;
       font-size: 0.9rem;
-      color: $color-quinery;
+      color: $color-tertiary;
 
-      i { opacity: 0.5; font-size: 0.8rem; }
+      i {
+        opacity: 0.5;
+        font-size: 0.8rem;
+      }
     }
 
     &-times {
@@ -494,7 +553,7 @@
       text-transform: uppercase;
       letter-spacing: 0.04em;
       opacity: 0.6;
-      color: $color-quinery;
+      color: $color-tertiary;
     }
 
     &-actions {
@@ -514,11 +573,13 @@
       cursor: pointer;
       transition: opacity 0.2s;
 
-      &:hover { opacity: 0.8; }
+      &:hover {
+        opacity: 0.8;
+      }
 
       &-confirm {
-        background: #c6f6d5;
-        color: #276749;
+        background-color: $color-success-light;
+        color: $color-success;
       }
 
       &-complete {
@@ -527,8 +588,8 @@
       }
 
       &-cancel {
-        background: #fed7d7;
-        color: #9b2c2c;
+        background-color: $color-error-light;
+        color: $color-error;
       }
     }
   }
@@ -558,7 +619,7 @@
   &_label {
     @include typography.body;
     font-weight: 600;
-    color: $color-quinery;
+    color: $color-tertiary;
     font-size: 0.9rem;
   }
 
@@ -569,45 +630,51 @@
   }
 
   &_day {
+    @include typography.body-small-bold;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    padding: 0.5rem 0.85rem;
-    border: 1.5px solid color.adjust($color-light, $lightness: -10%);
-    border-radius: 20px;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid $color-secondary;
+    color: $color-primary;
+    border-radius: $border-radius;
     cursor: pointer;
-    @include typography.body;
-    font-size: 0.9rem;
-    color: $color-quinery;
-    transition: border-color 0.2s, background 0.2s;
+    color: $color-tertiary;
+    transition: all $animation ease-in-out;
     user-select: none;
 
     input[type='checkbox'] {
-      accent-color: $color-primary;
+      accent-color: $color-secondary;
       width: 15px;
       height: 15px;
     }
 
     &:has(input:checked) {
-      border-color: $color-primary;
-      background: color.adjust($color-primary, $lightness: 42%);
+      border-color: $color-secondary;
+      background-color: $color-primary;
+      color: $color-white;
     }
   }
 
   &_select {
+    border-radius: $border-radius-half;
+    border: 1px solid $color-primary;
+    background-color: $color-white;
     padding: 0.75rem 1rem;
-    border: 1.5px solid color.adjust($color-light, $lightness: -10%);
-    border-radius: 8px;
-    background: $color-white;
+    font-family: $font-text;
     @include typography.body;
-    color: $color-quinery;
-    font-size: 1rem;
-    transition: border-color 0.2s;
+    width: 100%;
+    cursor: pointer;
+    transition: border-color $animation ease-in-out;
 
     &:focus {
       outline: none;
-      border-color: $color-primary;
+      border: 1px solid $color-secondary;
     }
+  }
+
+  &_submit {
+    width: fit-content;
   }
 
   &_success {
@@ -615,8 +682,8 @@
     color: #276749;
     font-size: 0.9rem;
     padding: 0.75rem 1rem;
-    background: #f0fff4;
-    border: 1px solid #9ae6b4;
+    background-color: $color-success-light;
+    border: 1px solid $color-success;
     border-radius: 8px;
   }
 
@@ -633,10 +700,14 @@
     cursor: pointer;
     @include typography.body;
     font-size: 0.92rem;
-    color: $color-quinery;
+    color: $color-tertiary;
     user-select: none;
 
-    input[type='checkbox'] { accent-color: $color-primary; width: 16px; height: 16px; }
+    input[type='checkbox'] {
+      accent-color: $color-primary;
+      width: 16px;
+      height: 16px;
+    }
   }
 
   &_tier {
@@ -652,7 +723,7 @@
   &_tierLabel {
     @include typography.body;
     font-size: 0.88rem;
-    color: rgba($color-quinery, 0.7);
+    color: rgba($color-tertiary, 0.7);
     white-space: nowrap;
   }
 
@@ -664,10 +735,13 @@
     background: $color-white;
     @include typography.body;
     font-size: 0.9rem;
-    color: $color-quinery;
+    color: $color-tertiary;
     text-align: center;
 
-    &:focus { outline: none; border-color: $color-primary; }
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+    }
   }
 
   &_inputRow {
@@ -679,23 +753,39 @@
   &_inputUnit {
     @include typography.body;
     font-size: 0.88rem;
-    color: rgba($color-quinery, 0.6);
+    color: rgba($color-tertiary, 0.6);
     white-space: nowrap;
   }
 
   &_fieldHint {
     font-size: 0.8rem;
-    color: rgba($color-quinery, 0.45);
+    color: rgba($color-tertiary, 0.45);
     margin-top: 0.1rem;
   }
 
   &_error {
     @include typography.body;
-    color: #e53e3e;
+    color: $color-error;
     font-size: 0.9rem;
     padding: 0.75rem 1rem;
-    background: #fff5f5;
-    border: 1px solid #fc8181;
+    background-color: $color-error-light;
+    border: 1px solid $color-error;
     border-radius: 8px;
+  }
+
+  &_colorWrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &_colorPicker {
+    cursor: pointer;
+    height: 100%;
+    padding: 0.25rem;
+    border-radius: $border-radius-half;
+    border: $border;
   }
 }

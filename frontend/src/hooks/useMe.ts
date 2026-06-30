@@ -25,7 +25,9 @@ export type Me = {
   lastName: string | null
   roles: string[]
   daycare: {
-    id: number; name: string; slug: string
+    id: number
+    name: string
+    slug: string
     openingTime: string; closingTime: string; openDays: number[]
     billingMode: string; pricePerUnit: number; priceHalfDay: number
     tierHoursThreshold: number | null; tierPrice: number | null

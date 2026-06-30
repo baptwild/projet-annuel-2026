@@ -39,6 +39,21 @@ const Footer: FC<FooterProps> = (props) => {
       <Wrapper className={`${componentsClass}_content`}>
         <div className={`${componentsClass}_logo`}>
           <Logo isColorInverted={false} />
+          <div className={`${componentsClass}_contact-info`}>
+            <address className={`${componentsClass}_contact-address`}>
+              <strong>Élise Collin</strong>
+              <br />
+              Éducatrice canine
+              <br />
+              Grenoble et son agglomération | Isère
+              <br />
+              Le Café des Chiens
+              <br />
+              Rue des Brassières
+              <br />
+              38420 Le Versoud
+            </address>
+          </div>
         </div>
 
         <div className={`${componentsClass}_menu`}>
@@ -57,8 +72,8 @@ const Footer: FC<FooterProps> = (props) => {
               <Button
                 url={user ? '/logout' : '/login'}
                 label={user ? 'Déconnexion' : 'Connexion'}
-                color={ColorButton.TERTIARY}
-                className={`${componentsClass}_menu_item`}
+                color={ColorButton.GHOST}
+                className={`${componentsClass}_menu_button`}
               />
             </li>
           </ul>
@@ -118,22 +133,6 @@ const Footer: FC<FooterProps> = (props) => {
               isExternal
               className={`${componentsClass}_contact-social-link`}
             />
-          </div>
-
-          <div className={`${componentsClass}_contact-info`}>
-            <address className={`${componentsClass}_contact-address`}>
-              <strong>Élise Collin</strong>
-              <br />
-              Éducatrice canine
-              <br />
-              Grenoble et son agglomération | Isère
-              <br />
-              Le Café des Chiens
-              <br />
-              Rue des Brassières
-              <br />
-              38420 Le Versoud
-            </address>
           </div>
         </div>
       </Wrapper>

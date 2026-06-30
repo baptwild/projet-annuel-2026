@@ -4,49 +4,12 @@
 @use '../../Tools/mixins';
 
 .m_Form {
-   border-radius: $border-radius;
-   border: $border;
-
    display: flex;
    flex-direction: column;
    justify-content: center;
    align-items: center;
-   gap: 2rem;
+   gap: 1.5rem;
    width: 100%;
-
-   &_container {
-      @include mixins.margin;
-      @include mixins.padding(3rem);
-
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-   }
-
-   &_title {
-      @include typography.h1;
-      @include mixins.underlineTitle;
-
-      text-transform: none;
-      text-align: center;
-   }
-
-   form {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-      width: 100%;
-      padding: 1rem;
-   }
-
-   &_button {
-      margin-top: 2rem;
-      margin-bottom: 2rem;
-   }
 
    &_navigate {
       display: flex;

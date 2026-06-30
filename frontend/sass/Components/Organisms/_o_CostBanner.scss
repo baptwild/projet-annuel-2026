@@ -6,7 +6,7 @@
 .o_CostBanner {
    @include mixins.padding;
 
-   background-color: $color-tertiary;
+   background-color: $color-secondary;
 
    &_content {
       display: flex;

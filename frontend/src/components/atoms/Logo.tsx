@@ -3,7 +3,7 @@ import Image from 'next/image'
 import classNames from 'classnames'
 
 import logoWhite from '../../../public/images/logos/logo-white-small.svg'
-import logoColor from '../../../public/images/logos/logo-color.svg'
+import logoColor from '../../../public/images/logos/logo-primary.svg'
 
 export type LogoProps = {
   isColorInverted?: boolean

@@ -56,41 +56,7 @@ const Navbar: FC<NavbarProps> = (props) => {
       </div>
 
       <div className={`${componentsClass}_links`}>
-        <div className={`${componentsClass}_mobileMenu`}>
-          {isAuthenticated && !isAdmin && (
-            <IconButton
-              url='/me'
-              icon='bi bi-person-circle'
-              ariaLabel='Mon Profil'
-              className={`${componentsClass}_mobileMenu-link`}
-            />
-          )}
-          <IconButton
-            icon='bi bi-list'
-            className='m_MobileMenu_open'
-            onClick={onOpenMenu}
-            ariaLabel='Ouvrir le menu mobile'
-          />
-        </div>
-
-        <div className={`${componentsClass}_socials`}>
-          <IconButton
-            className={`${componentsClass}_socials-link`}
-            url='https://www.facebook.com/cafedeschiens'
-            icon='bi bi-facebook'
-            ariaLabel='Facebook'
-            isExternal
-          />
-          <IconButton
-            className={`${componentsClass}_socials-link`}
-            url='https://www.instagram.com/cafedeschiens'
-            icon='bi bi-instagram'
-            ariaLabel='Instagram'
-            isExternal
-          />
-        </div>
-
-        {isAuthenticated && !isAdmin && (
+         {isAuthenticated && !isAdmin && (
           <NavLink
             url='/booking'
             label='Réserver'
@@ -111,13 +77,30 @@ const Navbar: FC<NavbarProps> = (props) => {
             className={`${componentsClass}_menu-link`}
           />
         )}
+        
+        <div className={`${componentsClass}_mobileMenu`}>
+          {isAuthenticated && !isAdmin && (
+            <IconButton
+              url='/me'
+              icon='bi bi-person-circle'
+              ariaLabel='Mon Profil'
+              className={`${componentsClass}_mobileMenu-link`}
+            />
+          )}
+          <IconButton
+            icon='bi bi-list'
+            className='m_MobileMenu_open'
+            onClick={onOpenMenu}
+            ariaLabel='Ouvrir le menu mobile'
+          />
+        </div>
 
         <div className={`${componentsClass}_login`}>
           <Button
             label={isAuthenticated ? 'Déconnexion' : 'Connexion'}
             url={isAuthenticated ? undefined : '/login'}
             onClick={isAuthenticated ? handleLogout : undefined}
-            color={isTransparent ? ColorButton.SECONDARY : ColorButton.PRIMARY}
+            color={isTransparent ? ColorButton.GHOST : ColorButton.PRIMARY}
             className='o_Navbar_login-button'
           />
         </div>

@@ -17,9 +17,10 @@
 @use "./Components/Atoms/a_Button";
 @use "./Components/Atoms/a_IconButton";
 @use "./Components/Atoms/a_Input";
-@use "./Components/Atoms/a_NavLink";
 @use "./Components/Atoms/a_Logo";
 @use "./Components/Atoms/a_MobileMenuLink";
+@use "./Components/Atoms/a_NavLink";
+@use "./Components/Atoms/a_Select";
 @use "./Components/Atoms/a_ToggleSwitch";
 
 // Molecules
@@ -55,15 +56,17 @@
 @use "./Components/Organisms/o_ReinsuranceList";
 
 // Layout
-@use "./Layout/l_Footer";
-@use "./Layout/l_Header";
-@use "./Layout/l_MainContent";
-@use "./Layout/l_Wrapper";
+@use "./Components/Layout/l_Footer";
+@use "./Components/Layout/l_Header";
+@use "./Components/Layout/l_MainContent";
+@use "./Components/Layout/l_Wrapper";
 
 // Pages
-@use "./Pages/p_Home";
-@use "./Pages/p_Static";
-@use "./Pages/p_Login";
-@use "./Pages/p_Me";
-@use "./Pages/p_Booking";
-@use "./Pages/p_Admin";
+@use "./Components/Pages/p_Admin";
+@use "./Components/Pages/p_Booking";
+@use "./Components/Pages/p_Error";
+@use "./Components/Pages/p_Home";
+@use "./Components/Pages/p_Login";
+@use "./Components/Pages/p_Me";
+@use "./Components/Pages/p_Register";
+@use "./Components/Pages/p_Static";

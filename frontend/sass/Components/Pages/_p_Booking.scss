@@ -1,7 +1,7 @@
-@use '../Settings/variables' as *;
-@use '../Settings/responsive_variables';
-@use '../Tools/typography';
-@use '../Tools/mixins';
+@use '../../Settings/variables' as *;
+@use '../../Settings/responsive_variables';
+@use '../../Tools/typography';
+@use '../../Tools/mixins';
 @use 'sass:color';
 
 .p_Booking {
@@ -15,7 +15,7 @@
     align-items: center;
     min-height: 50vh;
     @include typography.body;
-    color: $color-quinery;
+    color: $color-tertiary;
   }
 
   &_header {
@@ -24,13 +24,13 @@
 
   &_title {
     @include typography.h2;
-    color: $color-quinery;
+    color: $color-tertiary;
     margin-bottom: 0.5rem;
   }
 
   &_subtitle {
     @include typography.body;
-    color: $color-quinery;
+    color: $color-tertiary;
     opacity: 0.7;
   }
 
@@ -59,34 +59,35 @@
   &_label {
     @include typography.body;
     font-weight: 600;
-    color: $color-quinery;
+    color: $color-tertiary;
     font-size: 0.9rem;
   }
 
   &_select,
   &_input {
+    border-radius: $border-radius-half;
+    border: 1px solid $color-primary;
+    background-color: $color-white;
     padding: 0.75rem 1rem;
-    border: 1.5px solid color.adjust($color-light, $lightness: -10%);
-    border-radius: 8px;
-    background: $color-white;
+    font-family: $font-text;
     @include typography.body;
-    color: $color-quinery;
-    font-size: 1rem;
-    transition: border-color 0.2s;
+    width: 100%;
+    cursor: pointer;
+    transition: border-color $animation ease-in-out;
 
     &:focus {
       outline: none;
-      border-color: $color-primary;
+      border: 1px solid $color-secondary;
     }
   }
 
   &_error {
     @include typography.body;
-    color: #e53e3e;
+    color: $color-error;
     font-size: 0.9rem;
     padding: 0.75rem 1rem;
-    background: #fff5f5;
-    border: 1px solid #fc8181;
+    background-color: $color-error-light;
+    border: 1px solid $color-error;
     border-radius: 8px;
   }
 
@@ -106,7 +107,7 @@
     background: $color-light;
     border-radius: 12px;
     @include typography.body;
-    color: $color-quinery;
+    color: $color-tertiary;
 
     i {
       font-size: 2rem;
@@ -134,7 +135,7 @@
   &_occupancyLoading {
     @include typography.body;
     font-size: 0.85rem;
-    color: rgba($color-quinery, 0.5);
+    color: rgba($color-tertiary, 0.5);
     font-style: italic;
   }
 
@@ -143,14 +144,20 @@
     align-items: center;
     gap: 0.6rem;
 
-    i { color: $color-primary; font-size: 1rem; }
-    .p_Booking_occupancy-full & i { color: #e53e3e; }
+    i {
+      color: $color-primary;
+      font-size: 1rem;
+    }
+
+    .p_Booking_occupancy-full & i {
+      color: $color-error;
+    }
   }
 
   &_occupancyCount {
     @include typography.body-bold;
     font-size: 0.9rem;
-    color: $color-quinery;
+    color: $color-tertiary;
     flex: 1;
   }
 
@@ -169,7 +176,9 @@
     border-radius: 3px;
     transition: width 0.3s ease;
 
-    &-full { background: #e53e3e; }
+    &-full {
+      background: $color-warning;
+    }
   }
 
   &_occupancyDogs {
@@ -185,19 +194,22 @@
     border: 1px solid color.adjust($color-light, $lightness: -10%);
     border-radius: 20px;
     padding: 0.15rem 0.65rem;
-    color: $color-quinery;
+    color: $color-tertiary;
   }
 
   &_occupancyFullMsg {
     @include typography.body;
     font-size: 0.82rem;
-    color: #c53030;
+    color: $color-error;
     display: flex;
     gap: 0.4rem;
     align-items: flex-start;
     margin-top: 0.2rem;
 
-    i { margin-top: 0.1rem; flex-shrink: 0; }
+    i {
+      margin-top: 0.1rem;
+      flex-shrink: 0;
+    }
   }
 
   &_success {
@@ -207,23 +219,23 @@
     gap: 1rem;
     padding: 3rem;
     text-align: center;
-    background: #f0fff4;
-    border: 1.5px solid #9ae6b4;
+    background-color: $color-success-light;
+    border: 1.5px solid $color-success;
     border-radius: 16px;
 
     i {
       font-size: 3rem;
-      color: #38a169;
+      color: $color-success;
     }
 
     h2 {
       @include typography.h3;
-      color: #276749;
+      color: $color-success;
     }
 
     p {
       @include typography.body;
-      color: #2f855a;
+      color: $color-success;
     }
 
     &-actions {

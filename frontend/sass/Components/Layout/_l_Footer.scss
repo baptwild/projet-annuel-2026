@@ -1,7 +1,7 @@
-@use "../Settings/variables" as *;
-@use "../Settings/responsive_variables";
-@use "../Tools/mixins";
-@use "../Tools/typography";
+@use "../../Settings/variables" as *;
+@use "../../Settings/responsive_variables";
+@use "../../Tools/typography";
+@use "../../Tools/mixins";
 
 .l_Footer {
    @include mixins.padding;
@@ -41,6 +41,10 @@
          &-link {
             @include typography.body-bold;
          }
+      }
+
+      &_button {
+         margin-top: 1.5rem;
       }
    }
 
@@ -94,14 +98,26 @@
          margin-top: 3rem;
 
          &-link {
+            color: $color-white;
+
             i {
                font-size: 2rem;
+            }
+
+            &:hover {
+               color: $color-secondary;
             }
          }
       }
 
       &-info {
          margin-top: 3rem;
+      }
+
+      &-address {
+         strong {
+            font-style: normal;
+         }
       }
    }
 
