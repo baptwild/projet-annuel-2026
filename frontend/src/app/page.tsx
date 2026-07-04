@@ -14,8 +14,8 @@ export default function LandingPage() {
           </h1>
           <p className={`${componentsClass}_hero-description`}>
             Une plateforme conçue pour le bien-être de vos chiens. Choisissez
-            votre centre aéré, consultez les tarifs et réservez vos journées en
-            toute simplicité.
+            votre garderie, consultez les tarifs et réservez vos journées en
+            toute simplicité !
           </p>
         </div>
       </section>
@@ -26,7 +26,7 @@ export default function LandingPage() {
             Nos centres partenaires
           </h2>
           <p className={`${componentsClass}_content-description`}>
-            Sélectionnez un centre pour accéder à son espace dédié
+            Cliquez sur un établissement pour accéder à son espace dédié
           </p>
         </div>
         <Wrapper>
