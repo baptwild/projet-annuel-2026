@@ -85,6 +85,7 @@ const Footer: FC<FooterProps> = (props) => {
               <Button
                 url={user ? `${base}/logout` : `${base}/login`}
                 label={user ? 'Déconnexion' : 'Connexion'}
+                icon={user ? 'bi bi-box-arrow-left' : 'bi bi-box-arrow-in-right'}
                 color={ColorButton.GHOST}
                 className={`${componentsClass}_menu_button`}
               />

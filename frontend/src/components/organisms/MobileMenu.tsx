@@ -38,7 +38,7 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
   const links = [
     { url: '/', label: 'Accueil' },
     { url: '/education', label: 'Éducation' },
-    { url: '/prices', label: 'Tarifs' },
+    { url: '/tarifs', label: 'Tarifs' },
     { url: '/contact', label: 'Contact' },
   ]
 
@@ -78,27 +78,39 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
           <div className={`${componentsClass}_login`}>
             {isOwnDaycare ? (
               <>
-                {isAdmin && (
+                {isAdmin ? (
                   <Button
                     label='Tableau de bord'
                     url={`/${slug}/admin`}
+                    icon='bi bi-shield-lock'
                     className={`${componentsClass}_button`}
                     onClick={onClose}
                     color={ColorButton.GHOST}
                   />
-                )}
-                {!isAdmin && (
-                  <Button
-                    label='Mon profil'
-                    url={`/${slug}/me`}
-                    className={`${componentsClass}_button`}
-                    onClick={onClose}
-                    color={ColorButton.GHOST}
-                  />
+                ) : (
+                  <div className={`${componentsClass}_actions`}>
+                    <Button
+                      label='Réserver'
+                      url={`/${slug}/booking`}
+                      icon='bi bi-calendar-plus'
+                      className={`${componentsClass}_button`}
+                      onClick={onClose}
+                      color={ColorButton.PRIMARY}
+                    />
+                    <Button
+                      label='Mon profil'
+                      url={`/${slug}/me`}
+                      icon='bi bi-person-circle'
+                      className={`${componentsClass}_button`}
+                      onClick={onClose}
+                      color={ColorButton.GHOST}
+                    />
+                  </div>
                 )}
                 <Button
                   label='Déconnexion'
                   className={`${componentsClass}_button`}
+                  icon={'bi bi-box-arrow-left'}
                   onClick={handleLogout}
                   color={ColorButton.GHOST}
                 />
@@ -106,6 +118,7 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
             ) : (
               <Button
                 label='Connexion'
+                icon={'bi bi-box-arrow-in-right'}
                 url={`/${slug}/login`}
                 className={`${componentsClass}_button`}
                 onClick={onClose}

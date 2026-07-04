@@ -6,6 +6,7 @@ import { ColorButton } from '@/enums/ColorButton'
 export type ButtonProps = {
   label: string
   url?: string
+  icon?: string
   type?: 'button' | 'submit' | 'reset'
   className?: string
   onClick?: () => void
@@ -14,7 +15,7 @@ export type ButtonProps = {
 }
 
 const Button: FC<ButtonProps> = (props) => {
-  const { label, url, type = 'button', className, onClick, color, disabled } = props
+  const { label, url, icon, type = 'button', className, onClick, color, disabled } = props
 
   const componentsClass = 'a_Button'
   const classes = classNames(componentsClass, className, {
@@ -22,17 +23,24 @@ const Button: FC<ButtonProps> = (props) => {
     [`${componentsClass}--disabled`]: disabled,
   })
 
+  const content = (
+    <>
+      {icon && <i className={icon} aria-hidden='true' />}
+      <span>{label}</span>
+    </>
+  )
+
   if (url) {
     return (
       <Link href={url} className={classes} onClick={onClick}>
-        {label}
+        {content}
       </Link>
     )
   }
 
   return (
     <button type={type} className={classes} onClick={onClick} disabled={disabled}>
-      {label}
+      {content}
     </button>
   )
 }

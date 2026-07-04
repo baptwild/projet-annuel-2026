@@ -14,7 +14,6 @@ import AdminDogSection from '@/components/organisms/admin/AdminDogSection'
 import AdminScheduleSection from '@/components/organisms/admin/AdminScheduleSection'
 import AdminThemeSection from '@/components/organisms/admin/AdminThemeSection'
 
-
 const API = process.env.NEXT_PUBLIC_API_URL
 
 const DEFAULT_PRIMARY = '#1D6980'
