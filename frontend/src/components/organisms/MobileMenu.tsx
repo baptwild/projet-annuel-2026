@@ -10,24 +10,29 @@ import NavLink from '../atoms/NavLink'
 import IconButton from '../atoms/IconButton'
 import Wrapper from '../layout/Wrapper'
 import { useAuth } from '@/hooks/useAuth'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { ColorButton } from '@/enums/ColorButton'
+import { useDaycare } from '@/hooks/useDaycare'
 
 export type MobileMenuProps = {
   isOpen: boolean
   onClose: () => void
-  isAdmin?: boolean
 }
 
 const MobileMenu: FC<MobileMenuProps> = (props) => {
-  const { isOpen, onClose, isAdmin } = props
-  const { isAuthenticated, logout } = useAuth()
+  const { isOpen, onClose } = props
+  const { isAuthenticated, isAdmin, userDaycareSlug, logout } = useAuth()
+  const daycare = useDaycare()
   const router = useRouter()
+  const params = useParams()
+  const slug = params.slug as string
+
+  const isOwnDaycare = isAuthenticated && userDaycareSlug === slug
 
   const handleLogout = () => {
     logout()
     onClose()
-    router.push('/')
+    router.push(`/${slug}`)
   }
 
   const links = [
@@ -43,7 +48,7 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
     <div className={classNames('o_MobileMenu', { open: isOpen })}>
       <Wrapper className={`${componentsClass}_content`}>
         <div className={`${componentsClass}_header`}>
-          <Link href={'/'} onClick={onClose}>
+          <Link href={`/${slug}`} onClick={onClose}>
             <Logo
               isColorInverted={false}
               className={`${componentsClass}_logo`}
@@ -61,7 +66,7 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
           {links.map((link) => (
             <li key={link.url}>
               <MobileMenuLink
-                url={link.url}
+                url={`/${slug}${link.url}`}
                 label={link.label}
                 onClick={onClose}
               />
@@ -71,12 +76,21 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
 
         <div className={`${componentsClass}_footer`}>
           <div className={`${componentsClass}_login`}>
-            {isAuthenticated ? (
+            {isOwnDaycare ? (
               <>
                 {isAdmin && (
                   <Button
                     label='Tableau de bord'
-                    url='/admin'
+                    url={`/${slug}/admin`}
+                    className={`${componentsClass}_button`}
+                    onClick={onClose}
+                    color={ColorButton.GHOST}
+                  />
+                )}
+                {!isAdmin && (
+                  <Button
+                    label='Mon profil'
+                    url={`/${slug}/me`}
                     className={`${componentsClass}_button`}
                     onClick={onClose}
                     color={ColorButton.GHOST}
@@ -90,31 +104,33 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
                 />
               </>
             ) : (
-             <Button
+              <Button
                 label='Connexion'
-                url='/login'
+                url={`/${slug}/login`}
                 className={`${componentsClass}_button`}
                 onClick={onClose}
                 color={ColorButton.GHOST}
               />
             )}
           </div>
-          <div className={`${componentsClass}_social`}>
-            <NavLink
-              url='https://www.facebook.com/cafedeschiens'
-              icon='bi bi-facebook'
-              className={`${componentsClass}_social-link`}
-              isExternal
-              target='_blank'
-            />
-            <NavLink
-              url='https://www.instagram.com/cafedeschiens'
-              icon='bi bi-instagram'
-              className={`${componentsClass}_social-link`}
-              isExternal
-              target='_blank'
-            />
-          </div>
+           {(daycare.facebook || daycare.instagram) && (
+            <div className={`${componentsClass}_social`}>
+              <NavLink
+                url={daycare.facebook ?? ''}
+                icon='bi bi-facebook'
+                className={`${componentsClass}_social-link`}
+                isExternal
+                target='_blank'
+              />
+              <NavLink
+                url={daycare.instagram ?? ''}
+                icon='bi bi-instagram'
+                className={`${componentsClass}_social-link`}
+                isExternal
+                target='_blank'
+              />
+            </div>
+          )}
         </div>
       </Wrapper>
     </div>

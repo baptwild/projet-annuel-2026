@@ -1,74 +1,115 @@
+'use client'
+
 import React from 'react'
 import Wrapper from '../layout/Wrapper'
+import { useDaycare } from '@/hooks/useDaycare'
+import { Daycare } from '@/types/Daycare'
+import { FormattedAddress } from '../molecules/ContactInformation'
+
+const ORDERED_DAYS: { value: number; label: string }[] = [
+  { value: 1, label: 'Lundi' },
+  { value: 2, label: 'Mardi' },
+  { value: 3, label: 'Mercredi' },
+  { value: 4, label: 'Jeudi' },
+  { value: 5, label: 'Vendredi' },
+  { value: 6, label: 'Samedi' },
+  { value: 0, label: 'Dimanche' },
+]
+
+function formatTime(time: string): string {
+  const [h, m] = time.split(':')
+  return m === '00' ? `${parseInt(h, 10)}h` : `${parseInt(h, 10)}h${m}`
+}
+
+function buildOpeningHours(daycare: Daycare) {
+  if (!daycare.openingTime || !daycare.closingTime) {
+    return ORDERED_DAYS.map(({ label }) => ({
+      day: label,
+      time: 'Non renseigné',
+    }))
+  }
+
+  const range = `${formatTime(daycare.openingTime)} – ${formatTime(daycare.closingTime)}`
+  return ORDERED_DAYS.map(({ value, label }) => ({
+    day: label,
+    time: daycare.openDays.includes(value) ? range : 'Fermé',
+  }))
+}
 
 const ContactSection: React.FC = () => {
+  const daycare = useDaycare()
   const componentsClass = 'o_ContactSection'
-
-  const openingHours = [
-    { day: 'Lundi', time: 'Fermé' },
-    { day: 'Mardi', time: '8h - 19h' },
-    { day: 'Mercredi', time: '8h - 19h' },
-    { day: 'Jeudi', time: '8h - 19h' },
-    { day: 'Vendredi', time: '8h - 19h' },
-    { day: 'Samedi', time: 'Fermé' },
-    { day: 'Dimanche', time: 'Fermé' },
-  ]
+  const openingHours = buildOpeningHours(daycare)
 
   return (
     <Wrapper as='section' className={componentsClass} id='a-propos'>
       <div className={`${componentsClass}_contact`}>
-        <h2 className={`${componentsClass}_contact-title`}>Éducation canine</h2>
+        <h2 className={`${componentsClass}_contact-title`}>{daycare.name}</h2>
         <h3 className={`${componentsClass}_contact-subtitle`}>
-          Élise Collin - Éducatrice canine
+          Coordonnées & Informations
         </h3>
-        <p className={`${componentsClass}_contact-info`}>
-          Grenoble et son agglomération | Isère
-        </p>
+        {daycare.address && (
+          <p className={`${componentsClass}_contact-info`}>
+            <FormattedAddress address={daycare.address} />
+          </p>
+        )}
 
         <ul className={`${componentsClass}_contact-list`}>
-          <li className={`${componentsClass}_contact-item`}>
-            <a
-              href='tel:+33630209394'
-              className={`${componentsClass}_contact-link`}
-            >
-              <i className='bi bi-telephone-fill' />
-              <span>06 30 20 93 94</span>
-            </a>
-          </li>
-          <li className={`${componentsClass}_contact-item`}>
-            <a
-              href='mailto:contact@cafedeschiens.com'
-              className={`${componentsClass}_contact-link`}
-            >
-              <i className='bi bi-envelope-fill' />
-              <span>contact@cafedeschiens.com</span>
-            </a>
-          </li>
+          {daycare.phone && (
+            <li className={`${componentsClass}_contact-item`}>
+              <a
+                href={`tel:${daycare.phone.replace(/\s+/g, '')}`}
+                className={`${componentsClass}_contact-link`}
+              >
+                <i className='bi bi-telephone-fill' />
+                <span>{daycare.phone}</span>
+              </a>
+            </li>
+          )}
+          {daycare.email && (
+            <li className={`${componentsClass}_contact-item`}>
+              <a
+                href={`mailto:${daycare.email}`}
+                className={`${componentsClass}_contact-link`}
+              >
+                <i className='bi bi-envelope-fill' />
+                <span>{daycare.email}</span>
+              </a>
+            </li>
+          )}
         </ul>
 
-        <div className={`${componentsClass}_contact-social`}>
-          <a
-            href='https://www.facebook.com/cafedeschiens'
-            target='_blank'
-            rel='noopener noreferrer'
-            className={`${componentsClass}_contact-social-link`}
-          >
-            <i className='bi bi-facebook' />
-          </a>
-          <a
-            href='https://www.instagram.com/cafedeschiens'
-            target='_blank'
-            rel='noopener noreferrer'
-            className={`${componentsClass}_contact-social-link`}
-          >
-            <i className='bi bi-instagram' />
-          </a>
-        </div>
+        {(daycare.facebook || daycare.instagram) && (
+          <div className={`${componentsClass}_contact-social`}>
+            {daycare.facebook && (
+              <a
+                href={daycare.facebook}
+                target='_blank'
+                rel='noopener noreferrer'
+                className={`${componentsClass}_contact-social-link`}
+                aria-label='Facebook'
+              >
+                <i className='bi bi-facebook' />
+              </a>
+            )}
+            {daycare.instagram && (
+              <a
+                href={daycare.instagram}
+                target='_blank'
+                rel='noopener noreferrer'
+                className={`${componentsClass}_contact-social-link`}
+                aria-label='Instagram'
+              >
+                <i className='bi bi-instagram' />
+              </a>
+            )}
+          </div>
+        )}
       </div>
 
       <div className={`${componentsClass}_contact`}>
         <h2 className={`${componentsClass}_contact-title`}>
-          Le Café des Chiens
+          {daycare.name}
         </h2>
         <h3 className={`${componentsClass}_contact-subtitle`}>
           Horaires d&rsquo;ouverture

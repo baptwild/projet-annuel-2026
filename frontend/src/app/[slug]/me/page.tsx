@@ -1,11 +1,12 @@
 'use client'
 
 import { useState, FormEvent, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useMe, Dog, Booking, Me } from '@/hooks/useMe'
 import Button from '@/components/atoms/Button'
 import { ColorButton } from '@/enums/ColorButton'
 import { computeBookingCosts, formatCost, getBillingDetail, BillingConfig, BILLING_MODE_LABELS } from '@/utils/billing'
+import { useAuth } from '@/hooks/useAuth'
 
 const API = process.env.NEXT_PUBLIC_API_URL
 
@@ -25,13 +26,17 @@ function AccountSection({ me, refetch }: { me: NonNullable<ReturnType<typeof use
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    setSuccess(false); setError(null)
+    setSuccess(false)
+    setError(null)
     const res = await fetch(`${API}/api/users/${me.id}`, {
       method: 'PATCH',
       headers: authHeaders(),
       body: JSON.stringify({ firstName, lastName, email }),
     })
-    if (res.ok) { setSuccess(true); refetch() }
+    if (res.ok) {
+      setSuccess(true)
+      refetch()
+    }
     else setError('Erreur lors de la mise à jour.')
   }
 
@@ -124,7 +129,9 @@ function AddDogForm({ refetch }: { refetch: () => void }) {
       }),
     })
     if (res.ok) {
-      setName(''); setBreed(''); setBirthDate('')
+      setName('')
+      setBreed('')
+      setBirthDate('')
       setOpen(false)
       refetch()
     } else {
@@ -350,15 +357,34 @@ function BookingsSection({ bookings, refetch }: { bookings: Booking[]; refetch: 
 
 // ── Page principale ─────────────────────────────────────────────
 export default function MePage() {
-  const router = useRouter()
+  const { userDaycareSlug, isAuthenticated, logout } = useAuth()
   const { me, dogs, bookings, loading, refetch } = useMe()
+  const router = useRouter()
+  const params = useParams()
+  const slug = params.slug as string
 
   useEffect(() => {
-    if (!loading && !me) router.push('/login')
-  }, [loading, me, router])
+    if (!isAuthenticated) {
+      router.replace(`/${slug}/login`)
+      return
+    }
+    if (userDaycareSlug && userDaycareSlug !== slug) {
+      logout()
+      router.replace(`/${slug}/login`)
+      return
+    }
+  }, [isAuthenticated, userDaycareSlug, slug, router, logout])
+  
+  useEffect(() => {
+    if (loading || !me) return
+    if (me.daycare.slug !== slug) {
+      logout()
+      router.replace(`/${slug}/login`)
+    }
+  }, [loading, me, slug, router, logout])
 
-  if (loading) return <div className='p_Me p_Me-loading'>Chargement...</div>
-  if (!me) return null
+  if (!isAuthenticated || (userDaycareSlug && userDaycareSlug !== slug)) return null
+  if (loading || !me) return null
 
   return (
     <div className='p_Me'>

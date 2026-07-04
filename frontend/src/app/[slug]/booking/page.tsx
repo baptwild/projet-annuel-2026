@@ -1,13 +1,16 @@
 'use client'
 
 import { useState, FormEvent, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useBooking } from '@/hooks/useBooking'
 import Button from '@/components/atoms/Button'
 import { ColorButton } from '@/enums/ColorButton'
 
 export default function BookingPage() {
   const router = useRouter()
+  const params = useParams()
+  const slug = params.slug as string
+
   const { dogs, timeSlots, availableDates, config, occupancy, occupancyLoading, loading, error, submit, fetchOccupancy } = useBooking()
 
   const [dogIri, setDogIri] = useState('')
@@ -18,7 +21,9 @@ export default function BookingPage() {
   const [submitting, setSubmitting] = useState(false)
 
   useEffect(() => {
-    if (!localStorage.getItem('token')) router.push('/login')
+    if (!localStorage.getItem('token')) {
+      router.push(`/${slug}/login`)
+    }
   }, [router])
 
   useEffect(() => {
@@ -98,7 +103,7 @@ export default function BookingPage() {
         <div className={`${componentsClass}_empty`}>
           <i className='bi bi-exclamation-circle' />
           <p>Vous n'avez pas encore de chien enregistré.</p>
-          <Button label='Ajouter un chien' color={ColorButton.PRIMARY} onClick={() => router.push('/me')} />
+          <Button label='Ajouter un chien' color={ColorButton.PRIMARY} onClick={() => router.push(`/${slug}/me`)} />
         </div>
       ) : (
         <form className={`${componentsClass}_form`} onSubmit={handleSubmit}>
@@ -217,7 +222,7 @@ export default function BookingPage() {
             <Button
               label='Mes réservations'
               color={ColorButton.SECONDARY}
-              onClick={() => router.push('/me')}
+              onClick={() => router.push(`/${slug}/me`)}
             />
           </div>
         </form>

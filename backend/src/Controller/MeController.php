@@ -35,6 +35,14 @@ class MeController extends AbstractController
                 'weeklyDiscountThreshold' => $user->getDaycare()->getWeeklyDiscountThreshold(),
                 'weeklyDiscountPercent' => $user->getDaycare()->getWeeklyDiscountPercent(),
                 'maxDogsPerDay' => $user->getDaycare()->getMaxDogsPerDay(),
+                'address' => $user->getDaycare()->getAddress(),
+                'phone' => $user->getDaycare()->getPhone(),
+                'email' => $user->getDaycare()->getEmail(),
+                'facebook' => $user->getDaycare()->getFacebook(),
+                'instagram' => $user->getDaycare()->getInstagram(),
+                'colorPrimary' => $user->getDaycare()->getColorPrimary(),
+                'colorSecondary' => $user->getDaycare()->getColorSecondary(),
+                'colorTertiary' => $user->getDaycare()->getColorTertiary(),
             ],
         ]);
     }

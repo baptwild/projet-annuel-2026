@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, FormEvent, useEffect, useRef } from 'react'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useRegister } from '@/hooks/useRegister'
 import { useAuth } from '@/hooks/useAuth'
@@ -14,14 +14,16 @@ import Select from '@/components/atoms/Select'
 
 export default function RegisterPage() {
   const router = useRouter()
+   const params = useParams()
+  const slug = params.slug as string
   const { isAuthenticated } = useAuth()
   const { register, daycares, loading, error } = useRegister()
   const { login } = useLogin()
   const justRegistered = useRef(false)
 
   useEffect(() => {
-    if (isAuthenticated && !justRegistered.current) router.replace('/')
-  }, [isAuthenticated, router])
+    if (isAuthenticated && !justRegistered.current) router.replace(`/${slug}`)
+  }, [isAuthenticated, router, slug])
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -47,8 +49,13 @@ export default function RegisterPage() {
     const success = await register({ email, password, firstName, lastName, daycareId: selectedDaycareId })
     if (success) {
       justRegistered.current = true
-      await login({ email, password })
-      router.push('/me')
+      // await login({ email, password })
+      // router.push('/me')
+      
+      const { success: loginOk, slug: userSlug } = await login({ email, password })
+      if (loginOk) {
+        router.push(`/${userSlug ?? slug}`)
+      }
     }
   }
 

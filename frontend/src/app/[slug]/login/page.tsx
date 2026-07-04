@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, FormEvent, useEffect } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { useLogin } from '@/hooks/useLogin'
 import { useAuth } from '@/hooks/useAuth'
@@ -16,19 +16,25 @@ export default function LoginPage() {
   const { login, loading, error } = useLogin()
   const { isAuthenticated } = useAuth()
   const router = useRouter()
+  const params = useParams()
   const searchParams = useSearchParams()
+  const slug = params.slug as string
   const justRegistered = searchParams.get('registered') === '1'
 
   useEffect(() => {
-    if (isAuthenticated) router.replace('/')
-  }, [isAuthenticated, router])
-
-  const componentsClass = 'p_Login'
+    if (isAuthenticated) router.replace(`/${slug}`)
+  }, [isAuthenticated, router, slug])
 
   const handleSubmit = async (e: FormEvent) => {
-  e.preventDefault()
-  await login({ email, password }) 
-}
+    e.preventDefault()
+    const { success, slug: userSlug } = await login({ email, password })
+
+    if (success) {
+      router.replace(`/${userSlug ?? slug}`)
+    }
+  }
+  
+  const componentsClass = 'p_Login'
 
   return (
     <div className={componentsClass}>
@@ -75,7 +81,7 @@ export default function LoginPage() {
 
         <p className={`${componentsClass}_switch`}>
           Pas encore de compte ?{' '}
-          <Link href="/register" className={`${componentsClass}_switch-link`}>
+          <Link href={`/${slug}/register`} className={`${componentsClass}_switch-link`}>
             S&apos;inscrire
           </Link>
         </p>

@@ -773,7 +773,23 @@
     border-radius: 8px;
   }
 
-  &_colorWrapper {
+  // &_colorWrapper {
+  //   display: flex;
+  //   flex-direction: row;
+  //   gap: 0.5rem;
+  //   justify-content: space-between;
+  //   align-items: center;
+  // }
+
+  // &_colorPicker {
+  //   cursor: pointer;
+  //   height: 100%;
+  //   padding: 0.25rem;
+  //   border-radius: $border-radius-half;
+  //   border: $border;
+  // }
+
+  &_colorGrid {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
@@ -781,11 +797,74 @@
     align-items: center;
   }
 
+  // ── Color row: [color swatch input] [hex text input] [swatch] ─
+  &_colorRow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  // Native <input type="color"> — styled as a square pill
   &_colorPicker {
+    width: 44px;
+    height: 44px;
+    padding: 2px;
+    border: 1.5px solid color.adjust($color-light, $lightness: -10%);
+    border-radius: $border-radius;
+    background: $color-white;
     cursor: pointer;
-    height: 100%;
-    padding: 0.25rem;
-    border-radius: $border-radius-half;
-    border: $border;
+    flex-shrink: 0;
+
+    &::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    &::-webkit-color-swatch {
+      border: none;
+      border-radius: 4px;
+    }
+
+    &::-moz-color-swatch {
+      border: none;
+      border-radius: 4px;
+    }
+  }
+
+  // Small colored square showing the current value
+  &_colorSwatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1.5px solid color.adjust($color-light, $lightness: -10%);
+    flex-shrink: 0;
+    transition: background $animation ease-in-out;
+  }
+
+  // ── Color preview strip ────────────────────────────────────────
+  &_colorPreview {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: color.adjust($color-light, $lightness: -3%);
+    border-radius: $border-radius;
+    margin-top: 0.5rem;
+  }
+
+  &_colorPreviewChip {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid rgba($color-white, 0.6);
+    box-shadow: 0 1px 3px rgba($color-black, 0.15);
+    transition: background $animation ease-in-out;
+  }
+
+  &_colorPreviewLabel {
+    @include typography.body;
+    font-size: 0.82rem;
+    color: rgba($color-tertiary, 0.55);
+    margin-left: 0.25rem;
   }
 }
