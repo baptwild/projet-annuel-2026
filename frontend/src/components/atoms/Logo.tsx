@@ -3,7 +3,7 @@
 import React, { FC } from 'react'
 import Image from 'next/image'
 import classNames from 'classnames'
-import logoWhite from '../../../public/images/logos/logo-white-small.svg'
+import logoWhite from '../../../public/images/logos/logo-small.svg'
 
 export type LogoProps = {
   isColorInverted?: boolean

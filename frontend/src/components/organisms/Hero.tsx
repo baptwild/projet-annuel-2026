@@ -4,7 +4,7 @@ import React, { FC } from 'react'
 import NavLink from '../atoms/NavLink'
 import Image from 'next/image'
 
-import logoLarge from '../../../public/images/logos/logo-white-large.svg'
+import logoLarge from '../../../public/images/logos/logo-large.svg'
 import useMediaQuery from '@/hooks/useMediaQuery'
 import { ResponsiveSize } from '@/enums/MediaQuery'
 import { useDaycareSafe } from '@/hooks/useDaycare'
@@ -43,7 +43,7 @@ const Hero: FC<HeroProps> = (props) => {
           </div>
         )}
 
-       <div className={`${componentsClass}_information`}>
+        <div className={`${componentsClass}_information`}>
           <h1 className={`${componentsClass}_title`}>{title}</h1>
           {displaySubtitle && <h2 className={`${componentsClass}_subtitle`}>{displaySubtitle}</h2>}
           {isHome && displayAddress && (
