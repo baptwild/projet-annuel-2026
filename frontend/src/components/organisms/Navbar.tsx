@@ -9,8 +9,6 @@ import IconButton from '../atoms/IconButton'
 import { ColorButton } from '@/enums/ColorButton'
 import { useAuth } from '@/hooks/useAuth'
 import { useParams, useRouter } from 'next/navigation'
-import { ResponsiveSize } from '@/enums/MediaQuery'
-import useMediaQuery from '@/hooks/useMediaQuery'
 
 export type NavbarProps = {
   isTransparent?: boolean
