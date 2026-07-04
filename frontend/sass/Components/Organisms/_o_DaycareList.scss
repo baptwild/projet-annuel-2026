@@ -1,0 +1,168 @@
+@use "../../Settings/variables" as *;
+@use "../../Settings/responsive_variables";
+@use "../../Tools/mixins";
+@use "../../Tools/typography";
+
+.o_DaycareList {
+  width: 100%;
+
+  &_empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    text-align: center;
+    background-color: $color-white;
+    padding: 5rem 2rem;
+    border-radius: $border-radius;
+    border: 1px dashed rgba($color-primary, 0.4);
+
+    i {
+      font-size: 3rem;
+      color: $color-primary;
+      opacity: 0.8;
+    }
+
+    p {
+      @include typography.body-bold;
+      color: $color-primary;
+    }
+  }
+
+  &_list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  &_card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: $color-white;
+    border-radius: $border-radius;
+    border: 1px solid transparent;
+    text-decoration: none;
+
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+      box-shadow 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+      background-color 0.25s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+      background-color: var(--card-bg-hover, #f4f9FA);
+
+      .o_DaycareList_card-button span i {
+        transform: translateX(4px);
+      }
+    }
+
+    &-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 2rem;
+      flex: 1;
+    }
+
+    &-information {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    &-title {
+      @include typography.h4;
+      color: $color-black;
+      margin: 0;
+      transition: color 0.2s ease;
+    }
+
+    &-status {
+      @include typography.body-small-bold;
+      padding: 0.35rem 0.85rem;
+      border-radius: $border-radius-100;
+      background-color: $color-warning-light;
+      color: $color-warning;
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+
+      &-active {
+        background-color: $color-success-light;
+        color: $color-success;
+      }
+    }
+
+    &-address,
+    &-hours {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+
+      i {
+        font-size: 1.25rem;
+        flex-shrink: 0;
+        margin-top: 0.1rem;
+      }
+
+      &-content {
+        @include typography.body;
+        color: #4A5568;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        line-height: 1.5;
+      }
+    }
+
+    &-address {
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    &-button {
+      margin-top: auto;
+      padding-top: 1.5rem;
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      span {
+        @include typography.cta;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        padding: 0.6rem 1.25rem;
+        border-radius: $border-radius-100;
+        border: 1px solid transparent;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+
+        i {
+          transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: responsive_variables.$screen-m-min) {
+    &_list {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    &_card {
+      width: calc(50% - 1rem);
+    }
+  }
+}

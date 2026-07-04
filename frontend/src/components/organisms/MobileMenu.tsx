@@ -36,7 +36,7 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
   }
 
   const links = [
-    { url: '/', label: 'Parc' },
+    { url: '/', label: 'Accueil' },
     { url: '/education', label: 'Éducation' },
     { url: '/prices', label: 'Tarifs' },
     { url: '/contact', label: 'Contact' },
@@ -48,7 +48,7 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
     <div className={classNames('o_MobileMenu', { open: isOpen })}>
       <Wrapper className={`${componentsClass}_content`}>
         <div className={`${componentsClass}_header`}>
-          <Link href={`/${slug}`} onClick={onClose}>
+          <Link href={`/`} onClick={onClose}>
             <Logo
               isColorInverted={false}
               className={`${componentsClass}_logo`}
@@ -113,7 +113,7 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
               />
             )}
           </div>
-           {(daycare.facebook || daycare.instagram) && (
+          {(daycare.facebook || daycare.instagram) && (
             <div className={`${componentsClass}_social`}>
               <NavLink
                 url={daycare.facebook ?? ''}

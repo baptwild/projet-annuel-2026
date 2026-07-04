@@ -33,13 +33,13 @@ const Navbar: FC<NavbarProps> = (props) => {
 
   return (
     <nav className={componentsClass}>
-      <Link href={`/${slug}`}>
+      <Link href={`/`}>
         <Logo isColorInverted={!isTransparent} />
       </Link>
       <div className={`${componentsClass}_menu`}>
         <NavLink
           url={`/${slug}`}
-          label='Parc'
+          label='Accueil'
           className={`${componentsClass}_menu-link`}
         />
         <NavLink
@@ -60,7 +60,7 @@ const Navbar: FC<NavbarProps> = (props) => {
       </div>
 
       <div className={`${componentsClass}_links`}>
-         {isOwnDaycare && !isAdmin && (
+        {isOwnDaycare && !isAdmin && (
           <>
             <NavLink
               url={`/${slug}/booking`}
@@ -81,7 +81,7 @@ const Navbar: FC<NavbarProps> = (props) => {
             className={`${componentsClass}_menu-link`}
           />
         )}
-        
+
         <div className={`${componentsClass}_mobileMenu`}>
           {isOwnDaycare && !isAdmin && (
             <IconButton

@@ -43,6 +43,7 @@
 @use "./Components/Organisms/o_ContactSection";
 @use "./Components/Organisms/o_CostBanner";
 @use "./Components/Organisms/o_Dashboard";
+@use "./Components/Organisms/o_DaycareList";
 @use "./Components/Organisms/o_Dogs";
 @use "./Components/Organisms/o_ErrorPage";
 @use "./Components/Organisms/o_HeroHome";
@@ -66,6 +67,7 @@
 @use "./Components/Pages/p_Booking";
 @use "./Components/Pages/p_Error";
 @use "./Components/Pages/p_Home";
+@use "./Components/Pages/p_Landing";
 @use "./Components/Pages/p_Login";
 @use "./Components/Pages/p_Me";
 @use "./Components/Pages/p_Register";

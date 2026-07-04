@@ -39,7 +39,7 @@ function buildOpeningHours(daycare: Daycare) {
 }
 
 const SITEMAP_LINKS = [
-  { label: 'Le Parc', path: '' },
+  { label: 'Accueil', path: '' },
   { label: 'Éducation canine', path: '/education' },
   { label: 'Tarifs', path: '/tarifs' },
   { label: 'Contact', path: '/contact' },
@@ -47,7 +47,7 @@ const SITEMAP_LINKS = [
 
 const Footer: FC<FooterProps> = (props) => {
   const { user, daycare } = props
-  
+
   const openingHours = buildOpeningHours(daycare)
   const base = `/${daycare.slug}`
 
@@ -64,7 +64,7 @@ const Footer: FC<FooterProps> = (props) => {
               <br />
               {daycare.address && (
                 <FormattedAddress address={daycare.address} />
-                )}
+              )}
             </address>
           </div>
         </div>
@@ -111,7 +111,7 @@ const Footer: FC<FooterProps> = (props) => {
         <div className={`${componentsClass}_contact`}>
           <h4 className={`${componentsClass}_title`}>Contact</h4>
           <ul className={`${componentsClass}_contact-list`}>
-           {daycare.phone && (
+            {daycare.phone && (
               <li className={`${componentsClass}_contact-item`}>
                 <NavLink
                   url={`tel:${daycare.phone.replace(/\s+/g, '')}`}
