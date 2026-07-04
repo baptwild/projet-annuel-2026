@@ -39,51 +39,7 @@
     margin-top: 1.5rem;
   }
 
-  &_nav {
-    display: flex;
-    gap: 0.25rem;
-    margin-bottom: 2.5rem;
-    border-bottom: 2px solid color.adjust($color-light, $lightness: -8%);
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
 
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    @media screen and (min-width: responsive_variables.$screen-m-min) {
-      overflow: visible;
-    }
-  }
-
-  &_navBtn {
-    @include typography.body;
-    font-size: 0.95rem;
-    color: rgba($color-tertiary, 0.6);
-    background: none;
-    border: none;
-    padding: 0.75rem 1.25rem;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -2px;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: color 0.2s, border-color 0.2s;
-    white-space: nowrap;
-    flex-shrink: 0;
-
-    &:hover {
-      color: $color-primary;
-    }
-
-    &-active {
-      color: $color-primary;
-      border-bottom-color: $color-primary;
-      font-weight: 600;
-    }
-  }
 
   &_section {
     background: $color-white;
@@ -103,161 +59,10 @@
     }
   }
 
-  // ── Liste générique (users / dogs) ──
   &_list {
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-  }
-
-  // ── User card ──
-  &_user {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.25rem;
-    border: 1.5px solid color.adjust($color-light, $lightness: -8%);
-    border-radius: 10px;
-    transition: border-color 0.2s;
-
-    &:hover {
-      border-color: rgba($color-primary, 0.3);
-    }
-
-    &-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: $color-primary;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: $color-white;
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
-
-    &-info {
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-      flex: 1;
-      min-width: 0;
-    }
-
-    &-name {
-      @include typography.body;
-      font-weight: 700;
-      color: $color-tertiary;
-    }
-
-    &-email {
-      font-size: 0.82rem;
-      color: rgba($color-tertiary, 0.55);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    &-meta {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.25rem;
-    }
-
-    &-role {
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 0.15rem 0.6rem;
-      border-radius: 20px;
-      background: rgba($color-tertiary, 0.08);
-      color: rgba($color-tertiary, 0.7);
-
-      &-admin {
-        background: rgba($color-primary, 0.12);
-        color: $color-primary;
-      }
-    }
-
-    &-dogs {
-      font-size: 0.8rem;
-      color: rgba($color-tertiary, 0.5);
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-  }
-
-  // ── Dog card ──
-  &_dog {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.25rem;
-    border: 1.5px solid color.adjust($color-light, $lightness: -8%);
-    border-radius: 10px;
-    transition: border-color 0.2s;
-
-    &:hover {
-      border-color: rgba($color-primary, 0.3);
-    }
-
-    &-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: $color-primary;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: $color-white;
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
-
-    &-info {
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-      flex: 1;
-    }
-
-    &-name {
-      @include typography.body;
-      font-weight: 700;
-      color: $color-tertiary;
-    }
-
-    &-breed {
-      font-size: 0.82rem;
-      color: rgba($color-tertiary, 0.55);
-    }
-
-    &-birth {
-      font-size: 0.78rem;
-      color: rgba($color-tertiary, 0.45);
-    }
-
-    &-owner {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.15rem;
-      @include typography.body;
-      font-size: 0.85rem;
-      color: $color-tertiary;
-
-      i {
-        opacity: 0.4;
-        font-size: 0.8rem;
-      }
-    }
-
-    &-ownerEmail {
-      font-size: 0.78rem;
-      color: rgba($color-tertiary, 0.5);
-    }
   }
 
   &_badge {
@@ -273,325 +78,12 @@
     min-width: 22px;
   }
 
-  &_revenue {
-    background: linear-gradient(135deg, $color-primary, $color-secondary);
-    border-radius: 12px;
-    padding: 1.25rem 1.5rem;
-    margin-bottom: 1.5rem;
-    color: $color-white;
-  }
-
-  &_revenueTotal {
-    font-size: 2.2rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1;
-    margin-bottom: 0.3rem;
-  }
-
-  &_revenueLabel {
-    font-size: 0.82rem;
-    opacity: 0.8;
-    margin-bottom: 1rem;
-  }
-
-  &_revenueBreakdown {
-    display: flex;
-    align-items: stretch;
-    gap: 0;
-    background: rgba($color-white, 0.12);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  &_revenueItem {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-    padding: 0.6rem 1rem;
-  }
-
-  &_revenueSep {
-    width: 1px;
-    background: rgba($color-white, 0.2);
-    margin: 0.5rem 0;
-  }
-
-  &_revenueItemLabel {
-    font-size: 0.75rem;
-    opacity: 0.75;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  &_revenueItemAmount {
-    font-size: 1.25rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-
-    &-done {
-      color: #9ae6b4;
-    }
-
-    &-upcoming {
-      color: rgba($color-white, 0.9);
-    }
-  }
-
-  &_revenueItemCount {
-    font-size: 0.75rem;
-    opacity: 0.65;
-  }
-
-  &_weekNav {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-    background: $color-light;
-    border-radius: 10px;
-    padding: 0.5rem 0.75rem;
-  }
-
-  &_weekBtn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
-    border: 1.5px solid color.adjust($color-light, $lightness: -10%);
-    background: $color-white;
-    color: $color-tertiary;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: border-color 0.2s, color 0.2s;
-
-    &:hover {
-      border-color: $color-primary;
-      color: $color-primary;
-    }
-  }
-
-  &_weekLabel {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    @include typography.body-bold;
-    font-size: 0.92rem;
-    color: $color-tertiary;
-    text-align: center;
-  }
-
-  &_weekToday {
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: $color-primary;
-    background: rgba($color-primary, 0.1);
-    border: none;
-    border-radius: 20px;
-    padding: 0.15rem 0.65rem;
-    cursor: pointer;
-    transition: background 0.2s;
-
-    &:hover {
-      background: rgba($color-primary, 0.18);
-    }
-  }
-
-  &_tabs {
-    display: flex;
-    gap: 0.25rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid color.adjust($color-light, $lightness: -8%);
-    padding-bottom: 0;
-  }
-
-  &_tab {
-    @include typography.body;
-    font-size: 0.9rem;
-    color: $color-tertiary;
-    background: none;
-    border: none;
-    padding: 0.6rem 1rem;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -2px;
-    transition: color 0.2s, border-color 0.2s;
-
-    &:hover {
-      color: $color-primary;
-    }
-
-    &-active {
-      color: $color-primary;
-      border-bottom-color: $color-primary;
-      font-weight: 600;
-    }
-  }
-
   &_empty {
     @include typography.body;
     color: $color-tertiary;
     opacity: 0.6;
     padding: 1.5rem 0;
     text-align: center;
-  }
-
-  &_bookings {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  &_booking {
-    border: 1.5px solid color.adjust($color-light, $lightness: -8%);
-    border-radius: 10px;
-    padding: 1rem 1.25rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr auto;
-    align-items: center;
-    gap: 1rem;
-    transition: border-color 0.2s;
-
-    @media (max-width: responsive_variables.$screen-s-max) {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    @media (max-width: responsive_variables.$screen-xs-max) {
-      grid-template-columns: 1fr;
-    }
-
-    &-pending {
-      border-left: 4px solid #d69e2e;
-    }
-
-    &-confirmed {
-      border-left: 4px solid #38a169;
-    }
-
-    &-cancelled {
-      border-left: 4px solid #e53e3e;
-      opacity: 0.7;
-    }
-
-    &-completed {
-      border-left: 4px solid $color-tertiary;
-      opacity: 0.6;
-    }
-
-    &-dog {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-    }
-
-    &-dogName {
-      @include typography.body;
-      font-weight: 700;
-      color: $color-tertiary;
-    }
-
-    &-breed {
-      font-size: 0.82rem;
-      color: $color-tertiary;
-      opacity: 0.6;
-    }
-
-    &-owner {
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-      @include typography.body;
-      font-size: 0.9rem;
-      color: $color-tertiary;
-
-      i {
-        opacity: 0.5;
-        font-size: 0.8rem;
-      }
-    }
-
-    &-email {
-      font-size: 0.78rem;
-      opacity: 0.55;
-    }
-
-    &-schedule {
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-      @include typography.body;
-      font-size: 0.9rem;
-      color: $color-tertiary;
-
-      i {
-        opacity: 0.5;
-        font-size: 0.8rem;
-      }
-    }
-
-    &-times {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: $color-primary;
-    }
-
-    &-footer {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.5rem;
-    }
-
-    &-status {
-      font-size: 0.78rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      opacity: 0.6;
-      color: $color-tertiary;
-    }
-
-    &-actions {
-      display: flex;
-      gap: 0.4rem;
-    }
-
-    &-btn {
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.4rem 0.75rem;
-      border-radius: 6px;
-      border: none;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.2s;
-
-      &:hover {
-        opacity: 0.8;
-      }
-
-      &-confirm {
-        background-color: $color-success-light;
-        color: $color-success;
-      }
-
-      &-complete {
-        background: #e9d8fd;
-        color: #553c9a;
-      }
-
-      &-cancel {
-        background-color: $color-error-light;
-        color: $color-error;
-      }
-    }
   }
 
   &_form {
@@ -773,22 +265,6 @@
     border-radius: 8px;
   }
 
-  // &_colorWrapper {
-  //   display: flex;
-  //   flex-direction: row;
-  //   gap: 0.5rem;
-  //   justify-content: space-between;
-  //   align-items: center;
-  // }
-
-  // &_colorPicker {
-  //   cursor: pointer;
-  //   height: 100%;
-  //   padding: 0.25rem;
-  //   border-radius: $border-radius-half;
-  //   border: $border;
-  // }
-
   &_colorGrid {
     display: flex;
     flex-direction: row;
@@ -797,14 +273,12 @@
     align-items: center;
   }
 
-  // ── Color row: [color swatch input] [hex text input] [swatch] ─
   &_colorRow {
     display: flex;
     align-items: center;
     gap: 0.75rem;
   }
 
-  // Native <input type="color"> — styled as a square pill
   &_colorPicker {
     width: 44px;
     height: 44px;
@@ -830,7 +304,6 @@
     }
   }
 
-  // Small colored square showing the current value
   &_colorSwatch {
     width: 28px;
     height: 28px;
@@ -840,7 +313,6 @@
     transition: background $animation ease-in-out;
   }
 
-  // ── Color preview strip ────────────────────────────────────────
   &_colorPreview {
     display: flex;
     align-items: center;

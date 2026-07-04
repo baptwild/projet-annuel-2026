@@ -42,7 +42,6 @@ export default function BookingPage() {
     if (timeSlots.length > 1 && !endTime) setEndTime(timeSlots[1])
   }, [timeSlots, endTime])
 
-  // Fetch occupancy whenever date or config.id changes
   useEffect(() => {
     if (date && config.id) fetchOccupancy(date)
   }, [date, config.id]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -79,8 +78,16 @@ export default function BookingPage() {
           <h2>Réservation envoyée !</h2>
           <p>Votre demande est en attente de confirmation par la garderie.</p>
           <div className={`${componentsClass}_success-actions`}>
-            <Button label='Voir mes réservations' color={ColorButton.PRIMARY} onClick={() => router.push('/me')} />
-            <Button label='Nouvelle réservation' color={ColorButton.SECONDARY} onClick={() => { setSuccess(false); setDate('') }} />
+            <Button
+              label='Voir mes réservations'
+              color={ColorButton.PRIMARY}
+              onClick={() => router.push('/me')}
+            />
+            <Button
+              label='Nouvelle réservation'
+              color={ColorButton.SECONDARY}
+              onClick={() => { setSuccess(false); setDate('') }}
+            />
           </div>
         </div>
       </div>
@@ -103,7 +110,11 @@ export default function BookingPage() {
         <div className={`${componentsClass}_empty`}>
           <i className='bi bi-exclamation-circle' />
           <p>Vous n'avez pas encore de chien enregistré.</p>
-          <Button label='Ajouter un chien' color={ColorButton.PRIMARY} onClick={() => router.push(`/${slug}/me`)} />
+          <Button
+            label='Ajouter un chien'
+            color={ColorButton.PRIMARY}
+            onClick={() => router.push(`/${slug}/me`)}
+          />
         </div>
       ) : (
         <form className={`${componentsClass}_form`} onSubmit={handleSubmit}>
@@ -137,7 +148,6 @@ export default function BookingPage() {
             </select>
           </div>
 
-          {/* ── Occupation du jour ── */}
           {date && (
             <div className={`${componentsClass}_occupancy${isFull ? ` ${componentsClass}_occupancy-full` : ''}`}>
               {occupancyLoading ? (

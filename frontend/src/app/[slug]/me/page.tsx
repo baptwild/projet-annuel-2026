@@ -4,10 +4,10 @@ import { useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { useMe } from '@/hooks/useMe'
 import { useAuth } from '@/hooks/useAuth'
-import AccountSection from '@/components/organisms/account/AccountSection'
-import DogsSection from '@/components/organisms/account/DogSection'
-import BookingsSection from '@/components/organisms/account/BookingSection'
-import CostSection from '@/components/organisms/account/CostSection'
+import AccountSection from '@/components/organisms/me/AccountSection'
+import DogsSection from '@/components/organisms/me/DogSection'
+import BookingsSection from '@/components/organisms/me/BookingSection'
+import CostSection from '@/components/organisms/me/CostSection'
 
 export default function MePage() {
   const { userDaycareSlug, isAuthenticated, logout } = useAuth()

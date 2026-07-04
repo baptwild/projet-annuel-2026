@@ -1,0 +1,173 @@
+@use "../../Settings/variables" as *;
+@use "../../Settings/responsive_variables";
+@use "../../Tools/typography";
+@use 'sass:color';
+
+.o_AdminBookingSection {
+
+  &_bookings {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &_revenue {
+    background: linear-gradient(135deg, $color-primary, $color-secondary);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    color: $color-white;
+  }
+
+  &_revenueTotal {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  &_revenueLabel {
+    font-size: 0.82rem;
+    opacity: 0.8;
+    margin-bottom: 1rem;
+  }
+
+  &_revenueBreakdown {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    background: rgba($color-white, 0.12);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  &_revenueItem {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.6rem 1rem;
+  }
+
+  &_revenueSep {
+    width: 1px;
+    background: rgba($color-white, 0.2);
+    margin: 0.5rem 0;
+  }
+
+  &_revenueItemLabel {
+    font-size: 0.75rem;
+    opacity: 0.75;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &_revenueItemAmount {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+
+    &-done {
+      color: #9ae6b4;
+    }
+
+    &-upcoming {
+      color: rgba($color-white, 0.9);
+    }
+  }
+
+  &_revenueItemCount {
+    font-size: 0.75rem;
+    opacity: 0.65;
+  }
+
+  &_weekNav {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    background: $color-light;
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
+  }
+
+  &_weekBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1.5px solid color.adjust($color-light, $lightness: -10%);
+    background: $color-white;
+    color: $color-tertiary;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: border-color 0.2s, color 0.2s;
+
+    &:hover {
+      border-color: $color-primary;
+      color: $color-primary;
+    }
+  }
+
+  &_weekLabel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    @include typography.body-bold;
+    font-size: 0.92rem;
+    color: $color-tertiary;
+    text-align: center;
+  }
+
+  &_weekToday {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: $color-primary;
+    background: rgba($color-primary, 0.1);
+    border: none;
+    border-radius: 20px;
+    padding: 0.15rem 0.65rem;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: rgba($color-primary, 0.18);
+    }
+  }
+
+  &_tabs {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid color.adjust($color-light, $lightness: -8%);
+    padding-bottom: 0;
+  }
+
+  &_tab {
+    @include typography.body;
+    font-size: 0.9rem;
+    color: $color-tertiary;
+    background: none;
+    border: none;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.2s, border-color 0.2s;
+
+    &:hover {
+      color: $color-primary;
+    }
+
+    &-active {
+      color: $color-primary;
+      border-bottom-color: $color-primary;
+      font-weight: 600;
+    }
+  }
+}

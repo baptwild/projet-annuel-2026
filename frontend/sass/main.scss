@@ -24,6 +24,8 @@
 @use "./Components/Atoms/a_ToggleSwitch";
 
 // Molecules
+@use "./Components/Molecules/m_AdminDogCard";
+@use "./Components/Molecules/m_BookingCard";
 @use "./Components/Molecules/m_Card";
 @use "./Components/Molecules/m_DogCard";
 @use "./Components/Molecules/m_Form";
@@ -33,11 +35,14 @@
 @use "./Components/Molecules/m_ReinsuranceItem";
 @use "./Components/Molecules/m_Table";
 @use "./Components/Molecules/m_TextImageBlock";
+@use "./Components/Molecules/m_UserCard";
 
 // Organisms
 @use "./Components/Organisms/o_AboutMeHome";
 @use "./Components/Organisms/o_AboutMeStatic";
 @use "./Components/Organisms/o_AboutSection";
+@use "./Components/Organisms/o_AdminBookingSection";
+@use "./Components/Organisms/o_AdminTabs";
 @use "./Components/Organisms/o_Booking";
 @use "./Components/Organisms/o_BookingSection";
 @use "./Components/Organisms/o_CardList";
