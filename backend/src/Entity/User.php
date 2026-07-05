@@ -42,6 +42,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank]
     private ?string $email = null;
 
+    #[ORM\Column(nullable: true)]
+    #[Groups(['user:read'])]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups(['user:read'])]
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups(['user:read', 'user:write'])]
+    private ?\DateTimeImmutable $consentAcceptedAt = null;
+
     #[ORM\Column(length: 100, nullable: true)]
     #[Groups(['user:read', 'user:write', 'booking:read'])]
     private ?string $firstName = null;
@@ -55,6 +67,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private array $roles = [];
 
     #[ORM\Column]
+    #[Assert\Length(min: 8, groups: ['registration'])]
     private ?string $password = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
@@ -68,6 +81,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->dogs = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -178,6 +192,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $dog->setOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getConsentAcceptedAt(): ?\DateTimeImmutable
+    {
+        return $this->consentAcceptedAt;
+    }
+
+    public function setConsentAcceptedAt(?\DateTimeImmutable $consentAcceptedAt): static
+    {
+        $this->consentAcceptedAt = $consentAcceptedAt;
 
         return $this;
     }
