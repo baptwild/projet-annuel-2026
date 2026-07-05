@@ -7,6 +7,8 @@ import NavLink from '../atoms/NavLink'
 import Button from '../atoms/Button'
 import IconButton from '../atoms/IconButton'
 import { ColorButton } from '@/enums/ColorButton'
+import { useAuth } from '@/hooks/useAuth'
+import { useRouter } from 'next/navigation'
 
 export type NavbarProps = {
   isTransparent?: boolean
@@ -15,8 +17,13 @@ export type NavbarProps = {
 
 const Navbar: FC<NavbarProps> = (props) => {
   const { isTransparent, onOpenMenu } = props
+  const { isAuthenticated, isAdmin, logout } = useAuth()
+  const router = useRouter()
 
-  const user = null
+  const handleLogout = () => {
+    logout()
+    router.push('/')
+  }
 
   const componentsClass = 'o_Navbar'
 
@@ -50,9 +57,9 @@ const Navbar: FC<NavbarProps> = (props) => {
 
       <div className={`${componentsClass}_links`}>
         <div className={`${componentsClass}_mobileMenu`}>
-          {user && (
+          {isAuthenticated && !isAdmin && (
             <IconButton
-              url='/profile'
+              url='/me'
               icon='bi bi-person-circle'
               ariaLabel='Mon Profil'
               className={`${componentsClass}_mobileMenu-link`}
@@ -83,10 +90,33 @@ const Navbar: FC<NavbarProps> = (props) => {
           />
         </div>
 
+        {isAuthenticated && !isAdmin && (
+          <NavLink
+            url='/booking'
+            label='Réserver'
+            className={`${componentsClass}_menu-link`}
+          />
+        )}
+        {isAuthenticated && !isAdmin && (
+          <NavLink
+            url='/me'
+            label='Mon profil'
+            className={`${componentsClass}_menu-link`}
+          />
+        )}
+        {isAdmin && (
+          <NavLink
+            url='/admin'
+            label='Admin'
+            className={`${componentsClass}_menu-link`}
+          />
+        )}
+
         <div className={`${componentsClass}_login`}>
           <Button
-            label={user ? 'Déconnexion' : 'Connexion'}
-            url={user ? '/logout' : '/login'}
+            label={isAuthenticated ? 'Déconnexion' : 'Connexion'}
+            url={isAuthenticated ? undefined : '/login'}
+            onClick={isAuthenticated ? handleLogout : undefined}
             color={isTransparent ? ColorButton.SECONDARY : ColorButton.PRIMARY}
             className='o_Navbar_login-button'
           />

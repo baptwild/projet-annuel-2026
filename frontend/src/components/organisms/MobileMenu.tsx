@@ -9,16 +9,25 @@ import Button from '../atoms/Button'
 import NavLink from '../atoms/NavLink'
 import IconButton from '../atoms/IconButton'
 import Wrapper from '../layout/Wrapper'
+import { useAuth } from '@/hooks/useAuth'
+import { useRouter } from 'next/navigation'
 
 export type MobileMenuProps = {
   isOpen: boolean
   onClose: () => void
-  user?: any
   isAdmin?: boolean
 }
 
 const MobileMenu: FC<MobileMenuProps> = (props) => {
-  const { isOpen, onClose, user, isAdmin } = props
+  const { isOpen, onClose, isAdmin } = props
+  const { isAuthenticated, logout } = useAuth()
+  const router = useRouter()
+
+  const handleLogout = () => {
+    logout()
+    onClose()
+    router.push('/')
+  }
 
   const links = [
     { url: '/', label: 'Parc' },
@@ -61,7 +70,7 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
 
         <div className={`${componentsClass}_footer`}>
           <div className={`${componentsClass}_login`}>
-            {user ? (
+            {isAuthenticated ? (
               <>
                 {isAdmin && (
                   <Button
@@ -73,9 +82,8 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
                 )}
                 <Button
                   label='Déconnexion'
-                  url='/logout'
                   className='a_Button-secondary'
-                  onClick={onClose}
+                  onClick={handleLogout}
                 />
               </>
             ) : (

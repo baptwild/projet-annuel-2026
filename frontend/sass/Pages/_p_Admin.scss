@@ -1,0 +1,701 @@
+@use '../Settings/variables' as *;
+@use '../Settings/responsive_variables';
+@use '../Tools/typography';
+@use '../Tools/mixins';
+@use 'sass:color';
+
+.p_Admin {
+  @include mixins.wrapper;
+  @include mixins.padding(5rem);
+  max-width: 720px;
+
+  &-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    @include typography.body;
+    color: $color-quinery;
+  }
+
+  &_header {
+    margin-bottom: 3rem;
+  }
+
+  &_title {
+    @include typography.h2;
+    color: $color-quinery;
+    margin-bottom: 0.25rem;
+  }
+
+  &_daycare {
+    @include typography.body;
+    color: $color-primary;
+    font-weight: 600;
+  }
+
+  &_nav {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid color.adjust($color-light, $lightness: -8%);
+  }
+
+  &_navBtn {
+    @include typography.body;
+    font-size: 0.95rem;
+    color: rgba($color-quinery, 0.6);
+    background: none;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.2s, border-color 0.2s;
+
+    &:hover { color: $color-primary; }
+
+    &-active {
+      color: $color-primary;
+      border-bottom-color: $color-primary;
+      font-weight: 600;
+    }
+  }
+
+  &_section {
+    background: $color-white;
+    border: 1.5px solid color.adjust($color-light, $lightness: -8%);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    max-width: 900px;
+
+    &-title {
+      @include typography.h3;
+      color: $color-quinery;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+  }
+
+  // ── Liste générique (users / dogs) ──
+  &_list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  // ── User card ──
+  &_user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border: 1.5px solid color.adjust($color-light, $lightness: -8%);
+    border-radius: 10px;
+    transition: border-color 0.2s;
+
+    &:hover { border-color: rgba($color-primary, 0.3); }
+
+    &-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: color.adjust($color-primary, $lightness: 40%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $color-primary;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      flex: 1;
+      min-width: 0;
+    }
+
+    &-name {
+      @include typography.body;
+      font-weight: 700;
+      color: $color-quinery;
+    }
+
+    &-email {
+      font-size: 0.82rem;
+      color: rgba($color-quinery, 0.55);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.25rem;
+    }
+
+    &-role {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.15rem 0.6rem;
+      border-radius: 20px;
+      background: rgba($color-quinery, 0.08);
+      color: rgba($color-quinery, 0.7);
+
+      &-admin {
+        background: rgba($color-primary, 0.12);
+        color: $color-primary;
+      }
+    }
+
+    &-dogs {
+      font-size: 0.8rem;
+      color: rgba($color-quinery, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+  }
+
+  // ── Dog card ──
+  &_dog {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border: 1.5px solid color.adjust($color-light, $lightness: -8%);
+    border-radius: 10px;
+    transition: border-color 0.2s;
+
+    &:hover { border-color: rgba($color-primary, 0.3); }
+
+    &-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: color.adjust($color-secondary, $lightness: 35%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $color-secondary;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      flex: 1;
+    }
+
+    &-name {
+      @include typography.body;
+      font-weight: 700;
+      color: $color-quinery;
+    }
+
+    &-breed {
+      font-size: 0.82rem;
+      color: rgba($color-quinery, 0.55);
+    }
+
+    &-birth {
+      font-size: 0.78rem;
+      color: rgba($color-quinery, 0.45);
+    }
+
+    &-owner {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.15rem;
+      @include typography.body;
+      font-size: 0.85rem;
+      color: $color-quinery;
+
+      i { opacity: 0.4; font-size: 0.8rem; }
+    }
+
+    &-ownerEmail {
+      font-size: 0.78rem;
+      color: rgba($color-quinery, 0.5);
+    }
+  }
+
+  &_badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: $color-primary;
+    color: $color-white;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.15rem 0.55rem;
+    min-width: 22px;
+  }
+
+  &_revenue {
+    background: linear-gradient(135deg, $color-primary, $color-secondary);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    color: $color-white;
+  }
+
+  &_revenueTotal {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  &_revenueLabel {
+    font-size: 0.82rem;
+    opacity: 0.8;
+    margin-bottom: 1rem;
+  }
+
+  &_revenueBreakdown {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    background: rgba($color-white, 0.12);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  &_revenueItem {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.6rem 1rem;
+  }
+
+  &_revenueSep {
+    width: 1px;
+    background: rgba($color-white, 0.2);
+    margin: 0.5rem 0;
+  }
+
+  &_revenueItemLabel {
+    font-size: 0.75rem;
+    opacity: 0.75;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &_revenueItemAmount {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+
+    &-done     { color: #9ae6b4; }
+    &-upcoming { color: rgba($color-white, 0.9); }
+  }
+
+  &_revenueItemCount {
+    font-size: 0.75rem;
+    opacity: 0.65;
+  }
+
+  &_weekNav {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    background: $color-light;
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
+  }
+
+  &_weekBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1.5px solid color.adjust($color-light, $lightness: -10%);
+    background: $color-white;
+    color: $color-quinery;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: border-color 0.2s, color 0.2s;
+
+    &:hover { border-color: $color-primary; color: $color-primary; }
+  }
+
+  &_weekLabel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    @include typography.body-bold;
+    font-size: 0.92rem;
+    color: $color-quinery;
+    text-align: center;
+  }
+
+  &_weekToday {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: $color-primary;
+    background: rgba($color-primary, 0.1);
+    border: none;
+    border-radius: 20px;
+    padding: 0.15rem 0.65rem;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover { background: rgba($color-primary, 0.18); }
+  }
+
+  &_tabs {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid color.adjust($color-light, $lightness: -8%);
+    padding-bottom: 0;
+  }
+
+  &_tab {
+    @include typography.body;
+    font-size: 0.9rem;
+    color: $color-quinery;
+    background: none;
+    border: none;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.2s, border-color 0.2s;
+
+    &:hover { color: $color-primary; }
+
+    &-active {
+      color: $color-primary;
+      border-bottom-color: $color-primary;
+      font-weight: 600;
+    }
+  }
+
+  &_empty {
+    @include typography.body;
+    color: $color-quinery;
+    opacity: 0.6;
+    padding: 1.5rem 0;
+    text-align: center;
+  }
+
+  &_bookings {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &_booking {
+    border: 1.5px solid color.adjust($color-light, $lightness: -8%);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    transition: border-color 0.2s;
+
+    @media (max-width: responsive_variables.$screen-s-max) {
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: responsive_variables.$screen-xs-max) {
+      grid-template-columns: 1fr;
+    }
+
+    &-pending  { border-left: 4px solid #d69e2e; }
+    &-confirmed { border-left: 4px solid #38a169; }
+    &-cancelled { border-left: 4px solid #e53e3e; opacity: 0.7; }
+    &-completed { border-left: 4px solid $color-quinery; opacity: 0.6; }
+
+    &-dog {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    &-dogName {
+      @include typography.body;
+      font-weight: 700;
+      color: $color-quinery;
+    }
+
+    &-breed {
+      font-size: 0.82rem;
+      color: $color-quinery;
+      opacity: 0.6;
+    }
+
+    &-owner {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      @include typography.body;
+      font-size: 0.9rem;
+      color: $color-quinery;
+
+      i { opacity: 0.5; font-size: 0.8rem; }
+    }
+
+    &-email {
+      font-size: 0.78rem;
+      opacity: 0.55;
+    }
+
+    &-schedule {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      @include typography.body;
+      font-size: 0.9rem;
+      color: $color-quinery;
+
+      i { opacity: 0.5; font-size: 0.8rem; }
+    }
+
+    &-times {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: $color-primary;
+    }
+
+    &-footer {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.5rem;
+    }
+
+    &-status {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      opacity: 0.6;
+      color: $color-quinery;
+    }
+
+    &-actions {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    &-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      border: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+
+      &:hover { opacity: 0.8; }
+
+      &-confirm {
+        background: #c6f6d5;
+        color: #276749;
+      }
+
+      &-complete {
+        background: #e9d8fd;
+        color: #553c9a;
+      }
+
+      &-cancel {
+        background: #fed7d7;
+        color: #9b2c2c;
+      }
+    }
+  }
+
+  &_form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &_times {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    @media (max-width: responsive_variables.$screen-xs-max) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &_field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &_label {
+    @include typography.body;
+    font-weight: 600;
+    color: $color-quinery;
+    font-size: 0.9rem;
+  }
+
+  &_days {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  &_day {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.85rem;
+    border: 1.5px solid color.adjust($color-light, $lightness: -10%);
+    border-radius: 20px;
+    cursor: pointer;
+    @include typography.body;
+    font-size: 0.9rem;
+    color: $color-quinery;
+    transition: border-color 0.2s, background 0.2s;
+    user-select: none;
+
+    input[type='checkbox'] {
+      accent-color: $color-primary;
+      width: 15px;
+      height: 15px;
+    }
+
+    &:has(input:checked) {
+      border-color: $color-primary;
+      background: color.adjust($color-primary, $lightness: 42%);
+    }
+  }
+
+  &_select {
+    padding: 0.75rem 1rem;
+    border: 1.5px solid color.adjust($color-light, $lightness: -10%);
+    border-radius: 8px;
+    background: $color-white;
+    @include typography.body;
+    color: $color-quinery;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+    }
+  }
+
+  &_success {
+    @include typography.body;
+    color: #276749;
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    background: #f0fff4;
+    border: 1px solid #9ae6b4;
+    border-radius: 8px;
+  }
+
+  &_divider {
+    border: none;
+    border-top: 1px solid color.adjust($color-light, $lightness: -8%);
+    margin: 0.5rem 0;
+  }
+
+  &_toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    @include typography.body;
+    font-size: 0.92rem;
+    color: $color-quinery;
+    user-select: none;
+
+    input[type='checkbox'] { accent-color: $color-primary; width: 16px; height: 16px; }
+  }
+
+  &_tier {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1rem;
+    background: color.adjust($color-light, $lightness: -3%);
+    border-radius: 8px;
+    flex-wrap: wrap;
+  }
+
+  &_tierLabel {
+    @include typography.body;
+    font-size: 0.88rem;
+    color: rgba($color-quinery, 0.7);
+    white-space: nowrap;
+  }
+
+  &_tierInput {
+    width: 70px;
+    padding: 0.4rem 0.6rem;
+    border: 1.5px solid color.adjust($color-light, $lightness: -10%);
+    border-radius: 6px;
+    background: $color-white;
+    @include typography.body;
+    font-size: 0.9rem;
+    color: $color-quinery;
+    text-align: center;
+
+    &:focus { outline: none; border-color: $color-primary; }
+  }
+
+  &_inputRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &_inputUnit {
+    @include typography.body;
+    font-size: 0.88rem;
+    color: rgba($color-quinery, 0.6);
+    white-space: nowrap;
+  }
+
+  &_fieldHint {
+    font-size: 0.8rem;
+    color: rgba($color-quinery, 0.45);
+    margin-top: 0.1rem;
+  }
+
+  &_error {
+    @include typography.body;
+    color: #e53e3e;
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    background: #fff5f5;
+    border: 1px solid #fc8181;
+    border-radius: 8px;
+  }
+}

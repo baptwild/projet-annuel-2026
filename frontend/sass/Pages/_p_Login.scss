@@ -1,0 +1,129 @@
+@use '../Settings/variables' as *;
+@use '../Settings/responsive_variables';
+@use '../Tools/typography';
+@use '../Tools/mixins';
+
+@mixin authPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  @include mixins.paddingWrapper;
+
+  &_container {
+    background-color: $color-white;
+    border: 1px solid rgba($color-primary, 0.3);
+    border-radius: $border-radius;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 480px;
+    filter: $shadow;
+  }
+
+  &_title {
+    @include typography.h2;
+    color: $color-quinery;
+    text-align: center;
+    margin-bottom: 2rem;
+
+    @include mixins.underlineTitle($color-primary);
+  }
+
+  &_form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  &_field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &_label {
+    @include typography.body-bold;
+    color: $color-quinery;
+  }
+
+  &_input {
+    border-radius: $border-radius-half;
+    border: 1px solid $color-primary;
+    padding: 0.75rem 1rem;
+    font-family: $font-text;
+    @include typography.body;
+    transition: border-color $animation ease-in-out;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+      border: 2px solid $color-secondary;
+    }
+  }
+
+  &_success {
+    @include typography.body;
+    color: #27ae60;
+    background-color: rgba(#27ae60, 0.08);
+    border-radius: $border-radius-half;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  &_error {
+    @include typography.body;
+    color: #c0392b;
+    background-color: rgba(#c0392b, 0.08);
+    border-radius: $border-radius-half;
+    padding: 0.5rem 1rem;
+  }
+
+  &_submit {
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  &_daycare {
+    @include typography.body;
+    color: $color-quinery;
+    text-align: center;
+  }
+
+  &_switch {
+    @include typography.body;
+    text-align: center;
+    margin-top: 1.5rem;
+    color: $color-quinery;
+
+    &-link {
+      color: $color-primary;
+      font-weight: 600;
+      text-decoration: none;
+
+      &:hover {
+        color: $color-secondary;
+      }
+    }
+  }
+}
+
+.p_Login {
+  @include authPage;
+}
+
+.p_Register {
+  @include authPage;
+
+  &_row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    @media (max-width: responsive_variables.$screen-xs-max) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
