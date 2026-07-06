@@ -102,7 +102,7 @@ export default async function DaycareList() {
 
               <div className={`${componentsClass}_card-button`} >
                 <span style={{ color: primaryColor, borderColor: primaryColor }} >
-                  Visiter la garderie <i className='bi bi-arrow-right'></i>
+                  Visiter {daycare.name} <i className='bi bi-arrow-right'></i>
                 </span>
               </div>
             </div>

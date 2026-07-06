@@ -70,7 +70,7 @@ export default function AdminPage() {
       return
     }
     if (me.daycare?.slug !== params.slug) {
-      console.warn("Accès refusé: Vous n'êtes pas l'administrateur de ce parc.")
+      console.warn("Accès refusé: Vous n'êtes pas l'administrateur de cet établissement !")
       router.push(`/${me.daycare.slug}/admin`)
       return
     }
@@ -121,7 +121,10 @@ export default function AdminPage() {
       }),
     })
     setScheduleSaving(false)
-    if (res.ok) setScheduleSuccess(true)
+    if (res.ok) {
+      setScheduleSuccess(true)
+      router.refresh()
+    }
     else setScheduleError('Erreur lors de la mise à jour.')
   }
 
