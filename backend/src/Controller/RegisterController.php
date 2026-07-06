@@ -30,6 +30,10 @@ class RegisterController extends AbstractController
             return $this->json(['message' => 'email, password and daycareId are required'], Response::HTTP_BAD_REQUEST);
         }
 
+        if (strlen($data['password']) < 8) {
+            return $this->json(['message' => 'Password must be at least 8 characters'], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         $daycare = $this->em->find(Daycare::class, $data['daycareId']);
         if (!$daycare || !$daycare->isActive()) {
             return $this->json(['message' => 'Daycare not found or inactive'], Response::HTTP_NOT_FOUND);
@@ -41,6 +45,7 @@ class RegisterController extends AbstractController
         $user->setDaycare($daycare);
         if (!empty($data['firstName'])) $user->setFirstName($data['firstName']);
         if (!empty($data['lastName'])) $user->setLastName($data['lastName']);
+        if (!empty($data['consentAccepted'])) $user->setConsentAcceptedAt(new \DateTimeImmutable());
 
         $errors = $this->validator->validate($user);
         if (count($errors) > 0) {

@@ -3,6 +3,8 @@
 /config/jwt/public.pem
 ###< lexik/jwt-authentication-bundle ###
 
+/config/reference.php
+
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
