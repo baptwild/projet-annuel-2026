@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20260705092653 extends AbstractMigration
+final class Version20260706185654 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,7 +21,7 @@ final class Version20260705092653 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE booking (id INT AUTO_INCREMENT NOT NULL, start_date DATETIME NOT NULL, end_date DATETIME NOT NULL, status VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, dog_id INT NOT NULL, daycare_id INT NOT NULL, INDEX IDX_E00CEDDE634DFEB (dog_id), INDEX IDX_E00CEDDEAC9DF11B (daycare_id), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
-        $this->addSql('CREATE TABLE daycare (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, slug VARCHAR(100) DEFAULT NULL, is_active TINYINT NOT NULL, opening_time VARCHAR(5) NOT NULL, closing_time VARCHAR(5) NOT NULL, open_days JSON NOT NULL, billing_mode VARCHAR(20) NOT NULL, price_per_unit DOUBLE PRECISION NOT NULL, price_half_day DOUBLE PRECISION NOT NULL, tier_hours_threshold DOUBLE PRECISION DEFAULT NULL, tier_price DOUBLE PRECISION DEFAULT NULL, weekly_discount_enabled TINYINT NOT NULL, weekly_discount_threshold INT NOT NULL, weekly_discount_percent DOUBLE PRECISION NOT NULL, max_dogs_per_day INT DEFAULT NULL, created_at DATETIME NOT NULL, PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
+        $this->addSql('CREATE TABLE daycare (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, slug VARCHAR(100) DEFAULT NULL, is_active TINYINT NOT NULL, opening_time VARCHAR(5) NOT NULL, closing_time VARCHAR(5) NOT NULL, open_days JSON NOT NULL, billing_mode VARCHAR(20) NOT NULL, price_per_unit DOUBLE PRECISION NOT NULL, price_half_day DOUBLE PRECISION NOT NULL, tier_hours_threshold DOUBLE PRECISION DEFAULT NULL, tier_price DOUBLE PRECISION DEFAULT NULL, weekly_discount_enabled TINYINT NOT NULL, weekly_discount_threshold INT NOT NULL, weekly_discount_percent DOUBLE PRECISION NOT NULL, max_dogs_per_day INT DEFAULT NULL, address VARCHAR(255) DEFAULT NULL, phone VARCHAR(50) DEFAULT NULL, email VARCHAR(255) DEFAULT NULL, facebook VARCHAR(255) DEFAULT NULL, instagram VARCHAR(255) DEFAULT NULL, color_primary VARCHAR(20) DEFAULT NULL, color_secondary VARCHAR(20) DEFAULT NULL, color_tertiary VARCHAR(20) DEFAULT NULL, created_at DATETIME NOT NULL, PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE dog (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, breed VARCHAR(100) DEFAULT NULL, birth_date DATETIME DEFAULT NULL, owner_id INT NOT NULL, daycare_id INT NOT NULL, INDEX IDX_812C397D7E3C61F9 (owner_id), INDEX IDX_812C397DAC9DF11B (daycare_id), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, created_at DATETIME DEFAULT NULL, updated_at DATETIME DEFAULT NULL, consent_accepted_at DATETIME DEFAULT NULL, first_name VARCHAR(100) DEFAULT NULL, last_name VARCHAR(100) DEFAULT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, daycare_id INT NOT NULL, INDEX IDX_8D93D649AC9DF11B (daycare_id), UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL (email), PRIMARY KEY (id)) DEFAULT CHARACTER SET utf8mb4');
         $this->addSql('ALTER TABLE booking ADD CONSTRAINT FK_E00CEDDE634DFEB FOREIGN KEY (dog_id) REFERENCES dog (id)');
