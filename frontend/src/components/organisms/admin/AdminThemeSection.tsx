@@ -111,10 +111,10 @@ export default function AdminThemeSection({
         </div>
 
         <div className={`${componentsClass}_colorPreview`}>
+          <span className={`${componentsClass}_colorPreviewLabel`}>Aperçu</span>
           <span className={`${componentsClass}_colorPreviewChip`} style={{ background: colorPrimary }} title='Primaire' />
           <span className={`${componentsClass}_colorPreviewChip`} style={{ background: colorSecondary }} title='Secondaire' />
           <span className={`${componentsClass}_colorPreviewChip`} style={{ background: colorTertiary }} title='Tertiaire' />
-          <span className={`${componentsClass}_colorPreviewLabel`}>Aperçu</span>
         </div>
 
         {success && <p className={`${componentsClass}_success`}>Thème mis à jour.</p>}

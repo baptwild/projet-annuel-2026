@@ -271,10 +271,17 @@
     gap: 0.5rem;
     justify-content: space-between;
     align-items: center;
+
+    .p_Admin_field {
+      .p_Admin_label {
+        text-align: center;
+      }
+    }
   }
 
   &_colorRow {
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 0.75rem;
   }
@@ -318,7 +325,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1rem;
-    background: color.adjust($color-light, $lightness: -3%);
+    background: $color-gray-light;
     border-radius: $border-radius;
     margin-top: 0.5rem;
   }
@@ -334,9 +341,23 @@
   }
 
   &_colorPreviewLabel {
-    @include typography.body;
-    font-size: 0.82rem;
-    color: rgba($color-tertiary, 0.55);
+    @include typography.body-small;
+    color: $color-black;
     margin-left: 0.25rem;
+    margin-right: 1rem;
+  }
+
+  @media screen and (min-width: responsive_variables.$screen-m-min) {
+    &_colorGrid {
+      .p_Admin_field {
+        .p_Admin_label {
+          text-align: left;
+        }
+      }
+    }
+
+    &_colorRow {
+      flex-direction: row;
+    }
   }
 }
