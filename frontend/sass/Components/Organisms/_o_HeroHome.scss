@@ -58,9 +58,9 @@
    }
 
    &_scroll {
-      position: absolute;
-      bottom: 1.5rem;
-      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       i {
          font-size: 2rem;

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -30,6 +32,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     normalizationContext: ['groups' => ['daycare:read']],
     denormalizationContext: ['groups' => ['daycare:write']],
 )]
+#[ApiFilter(SearchFilter::class, properties: ['slug' => 'exact'])]
 #[ORM\Entity(repositoryClass: DaycareRepository::class)]
 class Daycare
 {
@@ -99,6 +102,38 @@ class Daycare
     #[ORM\Column(nullable: true)]
     #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
     private ?int $maxDogsPerDay = null;
+
+        #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private ?string $address = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private ?string $phone = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private ?string $email = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private ?string $facebook = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private ?string $instagram = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private ?string $colorPrimary = '#1D6980';
+
+    #[ORM\Column(length: 20, nullable: true)]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private ?string $colorSecondary = '#01B4B8';
+
+    #[ORM\Column(length: 20, nullable: true)]
+    #[Groups(['daycare:list', 'daycare:read', 'daycare:write'])]
+    private ?string $colorTertiary = '#2F4858';
 
     #[ORM\Column]
     #[Groups(['daycare:read'])]
@@ -170,7 +205,7 @@ class Daycare
 
     public function getOpenDays(): array { return $this->openDays; }
     public function setOpenDays(array $openDays): static { $this->openDays = $openDays; return $this; }
-
+    
     public function getBillingMode(): string { return $this->billingMode; }
     public function setBillingMode(string $billingMode): static { $this->billingMode = $billingMode; return $this; }
 
@@ -197,6 +232,30 @@ class Daycare
 
     public function getMaxDogsPerDay(): ?int { return $this->maxDogsPerDay; }
     public function setMaxDogsPerDay(?int $maxDogsPerDay): static { $this->maxDogsPerDay = $maxDogsPerDay; return $this; }
+
+    public function getAddress(): ?string { return $this->address; }
+    public function setAddress(?string $address): static { $this->address = $address; return $this; }
+
+    public function getPhone(): ?string { return $this->phone; }
+    public function setPhone(?string $phone): static { $this->phone = $phone; return $this; }
+
+    public function getEmail(): ?string { return $this->email; }
+    public function setEmail(?string $email): static { $this->email = $email; return $this; }
+
+    public function getFacebook(): ?string { return $this->facebook; }
+    public function setFacebook(?string $facebook): static { $this->facebook = $facebook; return $this; }
+
+    public function getInstagram(): ?string { return $this->instagram; }
+    public function setInstagram(?string $instagram): static { $this->instagram = $instagram; return $this; }
+
+    public function getColorPrimary(): ?string { return $this->colorPrimary; }
+    public function setColorPrimary(?string $colorPrimary): static { $this->colorPrimary = $colorPrimary; return $this; }
+
+    public function getColorSecondary(): ?string { return $this->colorSecondary; }
+    public function setColorSecondary(?string $colorSecondary): static { $this->colorSecondary = $colorSecondary; return $this; }
+
+    public function getColorTertiary(): ?string { return $this->colorTertiary; }
+    public function setColorTertiary(?string $colorTertiary): static { $this->colorTertiary = $colorTertiary; return $this; }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {

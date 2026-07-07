@@ -1,0 +1,249 @@
+@use '../../Settings/variables' as *;
+@use '../../Settings/responsive_variables';
+@use '../../Tools/typography';
+@use '../../Tools/mixins';
+@use 'sass:color';
+
+.p_Booking {
+  @include mixins.wrapper;
+  @include mixins.padding(5rem);
+  max-width: 640px;
+
+  &-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    @include typography.body;
+    color: $color-tertiary;
+  }
+
+  &_header {
+    margin-bottom: 2.5rem;
+  }
+
+  &_title {
+    @include typography.h2;
+    color: $color-tertiary;
+    margin-bottom: 0.5rem;
+  }
+
+  &_subtitle {
+    @include typography.body;
+    color: $color-tertiary;
+    opacity: 0.7;
+  }
+
+  &_form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &_times {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    @media (max-width: responsive_variables.$screen-xs-max) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &_field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &_label {
+    @include typography.body;
+    font-weight: 600;
+    color: $color-tertiary;
+    font-size: 0.9rem;
+  }
+
+  &_select,
+  &_input {
+    border-radius: $border-radius-half;
+    border: 1px solid $color-primary;
+    background-color: $color-white;
+    padding: 0.75rem 1rem;
+    font-family: $font-text;
+    @include typography.body;
+    width: 100%;
+    cursor: pointer;
+    transition: border-color $animation ease-in-out;
+
+    &:focus {
+      outline: none;
+      border: 1px solid $color-secondary;
+    }
+  }
+
+  &_error {
+    @include typography.body;
+    color: $color-error;
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    background-color: $color-error-light;
+    border: 1px solid $color-error;
+    border-radius: 8px;
+  }
+
+  &_actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  &_empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 3rem;
+    text-align: center;
+    background: $color-light;
+    border-radius: 12px;
+    @include typography.body;
+    color: $color-tertiary;
+
+    i {
+      font-size: 2rem;
+      opacity: 0.4;
+    }
+  }
+
+  // ── Occupation du jour ───────────────────────────────────────────
+  &_occupancy {
+    background: $color-light;
+    border: 1.5px solid color.adjust($color-light, $lightness: -8%);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: border-color 0.2s, background 0.2s;
+
+    &-full {
+      background: #fff5f5;
+      border-color: #fc8181;
+    }
+  }
+
+  &_occupancyLoading {
+    @include typography.body;
+    font-size: 0.85rem;
+    color: rgba($color-tertiary, 0.5);
+    font-style: italic;
+  }
+
+  &_occupancyHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    i {
+      color: $color-primary;
+      font-size: 1rem;
+    }
+
+    .p_Booking_occupancy-full & i {
+      color: $color-error;
+    }
+  }
+
+  &_occupancyCount {
+    @include typography.body-bold;
+    font-size: 0.9rem;
+    color: $color-tertiary;
+    flex: 1;
+  }
+
+  &_occupancyBar {
+    width: 80px;
+    height: 6px;
+    background: color.adjust($color-light, $lightness: -10%);
+    border-radius: 3px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  &_occupancyFill {
+    height: 100%;
+    background: $color-primary;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+
+    &-full {
+      background: $color-warning;
+    }
+  }
+
+  &_occupancyDogs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  &_occupancyDog {
+    @include typography.body;
+    font-size: 0.8rem;
+    background: $color-white;
+    border: 1px solid color.adjust($color-light, $lightness: -10%);
+    border-radius: 20px;
+    padding: 0.15rem 0.65rem;
+    color: $color-tertiary;
+  }
+
+  &_occupancyFullMsg {
+    @include typography.body;
+    font-size: 0.82rem;
+    color: $color-error;
+    display: flex;
+    gap: 0.4rem;
+    align-items: flex-start;
+    margin-top: 0.2rem;
+
+    i {
+      margin-top: 0.1rem;
+      flex-shrink: 0;
+    }
+  }
+
+  &_success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 3rem;
+    text-align: center;
+    background-color: $color-success-light;
+    border: 1.5px solid $color-success;
+    border-radius: 16px;
+
+    i {
+      font-size: 3rem;
+      color: $color-success;
+    }
+
+    h2 {
+      @include typography.h3;
+      color: $color-success;
+    }
+
+    p {
+      @include typography.body;
+      color: $color-success;
+    }
+
+    &-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+  }
+}

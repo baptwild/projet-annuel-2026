@@ -1,0 +1,59 @@
+@use "../../Settings/variables" as *;
+
+.l_Header {
+   $navbar: '.o_Navbar';
+
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   padding: 1.25rem 0;
+   z-index: 100;
+   backdrop-filter: blur(8px);
+   filter: $shadow;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background-color: $color-white;
+   color: $color-primary;
+
+   #{$navbar} {
+      &_logo {
+         &-color {
+            display: block;
+         }
+
+         &-white {
+            display: none;
+         }
+      }
+
+   }
+
+   &-transparent {
+      background-color: transparent;
+      color: $color-white;
+      backdrop-filter: none;
+      filter: none;
+
+      #{$navbar} {
+         &_logo {
+            &-color {
+               display: none;
+            }
+
+            &-white {
+               display: block;
+            }
+         }
+
+         &_socials-link {
+            color: $color-white;
+
+            &:hover {
+               color: $color-secondary;
+            }
+         }
+      }
+   }
+}

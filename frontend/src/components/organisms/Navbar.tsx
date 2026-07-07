@@ -8,7 +8,7 @@ import Button from '../atoms/Button'
 import IconButton from '../atoms/IconButton'
 import { ColorButton } from '@/enums/ColorButton'
 import { useAuth } from '@/hooks/useAuth'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 
 export type NavbarProps = {
   isTransparent?: boolean
@@ -17,49 +17,103 @@ export type NavbarProps = {
 
 const Navbar: FC<NavbarProps> = (props) => {
   const { isTransparent, onOpenMenu } = props
-  const { isAuthenticated, isAdmin, logout } = useAuth()
+  const { isAuthenticated, isAdmin, userDaycareSlug, logout } = useAuth()
   const router = useRouter()
+  const params = useParams()
+  const slug = params.slug as string
+
+  const isOwnDaycare = isAuthenticated && userDaycareSlug === slug
 
   const handleLogout = () => {
     logout()
-    router.push('/')
+    router.push(`/${slug}`)
   }
 
   const componentsClass = 'o_Navbar'
 
   return (
     <nav className={componentsClass}>
-      <Link href={'/'}>
+      <Link href={`/`}>
         <Logo isColorInverted={!isTransparent} />
       </Link>
       <div className={`${componentsClass}_menu`}>
         <NavLink
-          url='/'
-          label='Parc'
+          url={`/${slug}`}
+          label='Accueil'
           className={`${componentsClass}_menu-link`}
         />
         <NavLink
-          url='/education'
+          url={`/${slug}/education`}
           label='Éducation'
           className={`${componentsClass}_menu-link`}
         />
         <NavLink
-          url='/tarifs'
+          url={`/${slug}/tarifs`}
           label='Tarifs'
           className={`${componentsClass}_menu-link`}
         />
         <NavLink
-          url='/contact'
+          url={`/${slug}/contact`}
           label='Contact'
           className={`${componentsClass}_menu-link`}
         />
       </div>
 
       <div className={`${componentsClass}_links`}>
+        <div className={`${componentsClass}_desktopActions`}>
+          {isOwnDaycare && !isAdmin && (
+            <>
+              <IconButton
+                url={`/${slug}/me`}
+                icon='bi bi-person-circle'
+                ariaLabel='Mon profil'
+                className={`${componentsClass}_profileIcon`}
+              />
+              <Button
+                label='Réserver'
+                url={`/${slug}/booking`}
+                icon='bi bi-calendar-plus'
+                color={isTransparent ? ColorButton.GHOST : ColorButton.OUTLINE}
+                className={`${componentsClass}_action-button`}
+              />
+
+            </>
+          )}
+
+          {isOwnDaycare && isAdmin && (
+            <Button
+              label='Admin'
+              url={`/${slug}/admin`}
+              icon='bi bi-shield-lock'
+              color={isTransparent ? ColorButton.SECONDARY : ColorButton.OUTLINE}
+              className={`${componentsClass}_action-button`}
+            />
+          )}
+
+          <div className={`${componentsClass}_login`}>
+            {isOwnDaycare ? (
+              <Button
+                label='Déconnexion'
+                icon={'bi bi-box-arrow-left'}
+                onClick={handleLogout}
+                color={isTransparent ? ColorButton.GHOST : ColorButton.PRIMARY}
+                className={`${componentsClass}_login-button`}
+              />
+            ) : (
+              <Button
+                label='Connexion'
+                icon={'bi bi-box-arrow-in-right'}
+                url={`/${slug}/login`}
+                color={isTransparent ? ColorButton.GHOST : ColorButton.PRIMARY}
+                className={`${componentsClass}_login-button`}
+              />
+            )}
+          </div>
+        </div>
         <div className={`${componentsClass}_mobileMenu`}>
-          {isAuthenticated && !isAdmin && (
+          {isOwnDaycare && !isAdmin && (
             <IconButton
-              url='/me'
+              url={`/${slug}/me`}
               icon='bi bi-person-circle'
               ariaLabel='Mon Profil'
               className={`${componentsClass}_mobileMenu-link`}
@@ -70,55 +124,6 @@ const Navbar: FC<NavbarProps> = (props) => {
             className='m_MobileMenu_open'
             onClick={onOpenMenu}
             ariaLabel='Ouvrir le menu mobile'
-          />
-        </div>
-
-        <div className={`${componentsClass}_socials`}>
-          <IconButton
-            className={`${componentsClass}_socials-link`}
-            url='https://www.facebook.com/cafedeschiens'
-            icon='bi bi-facebook'
-            ariaLabel='Facebook'
-            isExternal
-          />
-          <IconButton
-            className={`${componentsClass}_socials-link`}
-            url='https://www.instagram.com/cafedeschiens'
-            icon='bi bi-instagram'
-            ariaLabel='Instagram'
-            isExternal
-          />
-        </div>
-
-        {isAuthenticated && !isAdmin && (
-          <NavLink
-            url='/booking'
-            label='Réserver'
-            className={`${componentsClass}_menu-link`}
-          />
-        )}
-        {isAuthenticated && !isAdmin && (
-          <NavLink
-            url='/me'
-            label='Mon profil'
-            className={`${componentsClass}_menu-link`}
-          />
-        )}
-        {isAdmin && (
-          <NavLink
-            url='/admin'
-            label='Admin'
-            className={`${componentsClass}_menu-link`}
-          />
-        )}
-
-        <div className={`${componentsClass}_login`}>
-          <Button
-            label={isAuthenticated ? 'Déconnexion' : 'Connexion'}
-            url={isAuthenticated ? undefined : '/login'}
-            onClick={isAuthenticated ? handleLogout : undefined}
-            color={isTransparent ? ColorButton.SECONDARY : ColorButton.PRIMARY}
-            className='o_Navbar_login-button'
           />
         </div>
       </div>

@@ -1,0 +1,82 @@
+@use "../../Settings/variables" as *;
+@use "../../Settings/responsive_variables";
+@use "../../Tools/typography";
+@use 'sass:color';
+
+.m_UserCard {
+   display: flex;
+   align-items: center;
+   gap: 1rem;
+   padding: 1rem 1.25rem;
+   border: 1.5px solid color.adjust($color-light, $lightness: -8%);
+   border-radius: 10px;
+   transition: border-color 0.2s;
+
+   &:hover {
+      border-color: rgba($color-primary, 0.3);
+   }
+
+   &-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: $color-primary;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $color-white;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+   }
+
+   &-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      flex: 1;
+      min-width: 0;
+   }
+
+   &-name {
+      @include typography.body;
+      font-weight: 700;
+      color: $color-tertiary;
+   }
+
+   &-email {
+      font-size: 0.82rem;
+      color: rgba($color-tertiary, 0.55);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+   }
+
+   &-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.25rem;
+   }
+
+   &-role {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.15rem 0.6rem;
+      border-radius: 20px;
+      background: rgba($color-tertiary, 0.08);
+      color: rgba($color-tertiary, 0.7);
+
+      &-admin {
+         background: rgba($color-primary, 0.12);
+         color: $color-primary;
+      }
+   }
+
+   &-dogs {
+      font-size: 0.8rem;
+      color: rgba($color-tertiary, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+   }
+}

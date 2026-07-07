@@ -10,29 +10,35 @@ import NavLink from '../atoms/NavLink'
 import IconButton from '../atoms/IconButton'
 import Wrapper from '../layout/Wrapper'
 import { useAuth } from '@/hooks/useAuth'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
+import { ColorButton } from '@/enums/ColorButton'
+import { useDaycare } from '@/hooks/useDaycare'
 
 export type MobileMenuProps = {
   isOpen: boolean
   onClose: () => void
-  isAdmin?: boolean
 }
 
 const MobileMenu: FC<MobileMenuProps> = (props) => {
-  const { isOpen, onClose, isAdmin } = props
-  const { isAuthenticated, logout } = useAuth()
+  const { isOpen, onClose } = props
+  const { isAuthenticated, isAdmin, userDaycareSlug, logout } = useAuth()
+  const daycare = useDaycare()
   const router = useRouter()
+  const params = useParams()
+  const slug = params.slug as string
+
+  const isOwnDaycare = isAuthenticated && userDaycareSlug === slug
 
   const handleLogout = () => {
     logout()
     onClose()
-    router.push('/')
+    router.push(`/${slug}`)
   }
 
   const links = [
-    { url: '/', label: 'Parc' },
+    { url: '/', label: 'Accueil' },
     { url: '/education', label: 'Éducation' },
-    { url: '/prices', label: 'Tarifs' },
+    { url: '/tarifs', label: 'Tarifs' },
     { url: '/contact', label: 'Contact' },
   ]
 
@@ -42,7 +48,7 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
     <div className={classNames('o_MobileMenu', { open: isOpen })}>
       <Wrapper className={`${componentsClass}_content`}>
         <div className={`${componentsClass}_header`}>
-          <Link href={'/'} onClick={onClose}>
+          <Link href={`/`} onClick={onClose}>
             <Logo
               isColorInverted={false}
               className={`${componentsClass}_logo`}
@@ -60,7 +66,7 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
           {links.map((link) => (
             <li key={link.url}>
               <MobileMenuLink
-                url={link.url}
+                url={`/${slug}${link.url}`}
                 label={link.label}
                 onClick={onClose}
               />
@@ -70,47 +76,74 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
 
         <div className={`${componentsClass}_footer`}>
           <div className={`${componentsClass}_login`}>
-            {isAuthenticated ? (
+            {isOwnDaycare ? (
               <>
-                {isAdmin && (
+                {isAdmin ? (
                   <Button
                     label='Tableau de bord'
-                    url='/admin'
-                    className='a_Button-secondary'
+                    url={`/${slug}/admin`}
+                    icon='bi bi-shield-lock'
+                    className={`${componentsClass}_button`}
                     onClick={onClose}
+                    color={ColorButton.GHOST}
                   />
+                ) : (
+                  <div className={`${componentsClass}_actions`}>
+                    <Button
+                      label='Réserver'
+                      url={`/${slug}/booking`}
+                      icon='bi bi-calendar-plus'
+                      className={`${componentsClass}_button`}
+                      onClick={onClose}
+                      color={ColorButton.PRIMARY}
+                    />
+                    <Button
+                      label='Mon profil'
+                      url={`/${slug}/me`}
+                      icon='bi bi-person-circle'
+                      className={`${componentsClass}_button`}
+                      onClick={onClose}
+                      color={ColorButton.GHOST}
+                    />
+                  </div>
                 )}
                 <Button
                   label='Déconnexion'
-                  className='a_Button-secondary'
+                  className={`${componentsClass}_button`}
+                  icon={'bi bi-box-arrow-left'}
                   onClick={handleLogout}
+                  color={ColorButton.GHOST}
                 />
               </>
             ) : (
               <Button
                 label='Connexion'
-                url='/login'
-                className='a_Button-secondary'
+                icon={'bi bi-box-arrow-in-right'}
+                url={`/${slug}/login`}
+                className={`${componentsClass}_button`}
                 onClick={onClose}
+                color={ColorButton.GHOST}
               />
             )}
           </div>
-          <div className={`${componentsClass}_social`}>
-            <NavLink
-              url='https://www.facebook.com/cafedeschiens'
-              icon='bi bi-facebook'
-              className={`${componentsClass}_social-link`}
-              isExternal
-              target='_blank'
-            />
-            <NavLink
-              url='https://www.instagram.com/cafedeschiens'
-              icon='bi bi-instagram'
-              className={`${componentsClass}_social-link`}
-              isExternal
-              target='_blank'
-            />
-          </div>
+          {(daycare.facebook || daycare.instagram) && (
+            <div className={`${componentsClass}_social`}>
+              <NavLink
+                url={daycare.facebook ?? ''}
+                icon='bi bi-facebook'
+                className={`${componentsClass}_social-link`}
+                isExternal
+                target='_blank'
+              />
+              <NavLink
+                url={daycare.instagram ?? ''}
+                icon='bi bi-instagram'
+                className={`${componentsClass}_social-link`}
+                isExternal
+                target='_blank'
+              />
+            </div>
+          )}
         </div>
       </Wrapper>
     </div>

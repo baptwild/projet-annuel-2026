@@ -4,13 +4,15 @@ import React, { FC } from 'react'
 import NavLink from '../atoms/NavLink'
 import Image from 'next/image'
 
-import logoLarge from '../../../public/images/logos/logo-white-large.svg'
+import logoLarge from '../../../public/images/logos/logo-large.svg'
 import useMediaQuery from '@/hooks/useMediaQuery'
 import { ResponsiveSize } from '@/enums/MediaQuery'
+import { useDaycareSafe } from '@/hooks/useDaycare'
+import { FormattedAddress } from '../molecules/ContactInformation'
 
 export type HeroProps = {
-  title: string
-  subtitle: string
+  title?: string
+  subtitle?: string
   address?: string
   showLogo?: boolean
   isHome?: boolean
@@ -18,6 +20,9 @@ export type HeroProps = {
 
 const Hero: FC<HeroProps> = (props) => {
   const { title, subtitle, address, showLogo = false, isHome } = props
+  const daycare = useDaycareSafe()
+  const displaySubtitle = subtitle ?? daycare?.name ?? ''
+  const displayAddress = address ?? daycare?.address
 
   const isDesktop = useMediaQuery(ResponsiveSize.SCREEN_S_MIN)
 
@@ -30,7 +35,7 @@ const Hero: FC<HeroProps> = (props) => {
           <div className={`${componentsClass}_logo`}>
             <Image
               src={logoLarge}
-              alt='Logo Café des Chiens'
+              alt={daycare ? `Logo ${daycare.name}` : 'Logo'}
               width={isDesktop ? 576 : 307}
               height={isDesktop ? 315 : 168}
               priority
@@ -40,9 +45,11 @@ const Hero: FC<HeroProps> = (props) => {
 
         <div className={`${componentsClass}_information`}>
           <h1 className={`${componentsClass}_title`}>{title}</h1>
-          <h2 className={`${componentsClass}_subtitle`}>{subtitle}</h2>
-          {isHome && address && (
-            <h3 className={`${componentsClass}_address`}>{address}</h3>
+          {displaySubtitle && <h2 className={`${componentsClass}_subtitle`}>{displaySubtitle}</h2>}
+          {isHome && displayAddress && (
+            <h3 className={`${componentsClass}_address`}>
+              <FormattedAddress address={displayAddress} />
+            </h3>
           )}
         </div>
       </div>

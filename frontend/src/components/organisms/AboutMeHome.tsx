@@ -33,7 +33,7 @@ const AboutMeHome: React.FC = () => {
 
             <Button
               label='En savoir plus'
-              color={ColorButton.SECONDARY}
+              color={ColorButton.GHOST}
               url='/education'
               className={`${componentsClass}_text-button`}
             />

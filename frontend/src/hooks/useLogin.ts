@@ -8,8 +8,13 @@ type LoginPayload = {
   password: string
 }
 
+type LoginResult = {
+  success: boolean
+  slug: string | null
+}
+
 type UseLoginReturn = {
-  login: (payload: LoginPayload) => Promise<boolean>
+  login: (payload: LoginPayload) => Promise<LoginResult>
   loading: boolean
   error: string | null
 }
@@ -19,7 +24,7 @@ export function useLogin(): UseLoginReturn {
   const [error, setError] = useState<string | null>(null)
   const { setToken } = useAuth()
 
-  const login = async ({ email, password }: LoginPayload): Promise<boolean> => {
+  const login = async ({ email, password }: LoginPayload): Promise<LoginResult> => {
     setLoading(true)
     setError(null)
 
@@ -36,19 +41,21 @@ export function useLogin(): UseLoginReturn {
 
       if (!response.ok) {
         setError(data.message ?? 'Identifiants incorrects.')
-        return false
+        return { success: false, slug: null }
       }
 
       const meRes = await fetch(`${api}/auth/me`, {
         headers: { Authorization: `Bearer ${data.token}` },
       })
       const me = await meRes.json()
+      const daycareSlug: string = me.daycare?.slug ?? ''
 
-      setToken(data.token, me.roles ?? [])
-      return true
+      setToken(data.token, me.roles ?? [], daycareSlug)
+
+      return { success: true, slug: daycareSlug || null }
     } catch {
       setError('Impossible de contacter le serveur.')
-      return false
+      return { success: false, slug: null }
     } finally {
       setLoading(false)
     }

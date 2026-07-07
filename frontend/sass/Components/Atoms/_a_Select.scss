@@ -1,0 +1,52 @@
+@use '../../Settings/variables' as *;
+@use '../../Settings/responsive_variables';
+@use '../../Tools/typography';
+@use '../../Tools/mixins';
+
+.a_Select {
+   $self: &;
+
+   display: flex;
+   flex-direction: column;
+   gap: 1.5rem;
+   width: 100%;
+
+   label {
+      @include typography.h6;
+      text-transform: none;
+   }
+
+   &_select {
+      border-radius: $border-radius-half;
+      border: 1px solid $color-primary;
+      background-color: $color-white;
+      padding: 0.75rem 1rem;
+      font-family: $font-text;
+      @include typography.body;
+      width: 100%;
+      cursor: pointer;
+      transition: border-color $animation ease-in-out;
+
+      &:focus {
+         outline: none;
+         border: 1px solid $color-secondary;
+      }
+
+      &:disabled {
+         background-color: $color-gray-light;
+         color: $color-gray;
+         cursor: not-allowed;
+      }
+   }
+
+   &_option {
+      font-family: $font-text;
+      @include typography.body;
+      background-color: $color-white;
+      color: $color-black;
+
+      &:disabled {
+         color: $color-gray;
+      }
+   }
+}

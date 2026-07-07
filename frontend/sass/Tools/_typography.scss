@@ -2,17 +2,15 @@
 @use "../Settings/responsive_variables";
 
 // Text
-@mixin fontSize($size: 16px,
-   $lineHeight: ($size + 10px,
-   )) {
+@mixin fontSize($size: 1em,
+   $lineHeight: 1.5) {
    font-size: $size;
    line-height: $lineHeight;
 }
 
-@mixin fontStyle($size: 16px,
+@mixin fontStyle($size: 1em,
    $weight: 300,
-   $lineHeight: ($size + 10px,
-   )) {
+   $lineHeight: 1.5) {
    @include fontSize($size, $lineHeight);
    font-weight: $weight;
 }
@@ -29,51 +27,106 @@
    text-transform: initial;
 }
 
+@mixin text($weight: 400) {
+   font-family: $font-text;
+   font-weight: $weight;
+}
+
 @mixin h1 {
    @include title($weight: 300);
-   @include fontSize(36px, 46px);
+   @include fontSize(2.5em, 1.2);
 
    @media screen and (min-width: responsive_variables.$screen-m-min) {
-      @include fontSize(48px, 58px);
+      @include fontSize(3.5em, 1.2);
    }
 }
 
 @mixin h2 {
    @include title;
-   @include fontSize(24px, 34px);
+   @include fontSize(2em, 1.2);
 
    @media screen and (min-width: responsive_variables.$screen-m-min) {
-      @include fontSize(36px, 46px);
+      @include fontSize(3em, 1.2);
    }
 }
 
 @mixin h3 {
    @include title;
-   @include fontSize(20px, 30px);
+   @include fontSize(1.75em, 1.2);
 
    @media screen and (min-width: responsive_variables.$screen-m-min) {
-      @include fontSize(32px, 42px);
+      @include fontSize(2.5em, 1.2);
    }
 }
 
 @mixin h4 {
    @include title;
-   @include fontSize(16px, 26px);
+   @include fontSize(1.5em, 1.2);
 
    @media screen and (min-width: responsive_variables.$screen-m-min) {
-      @include fontSize(24px, 34px);
+      @include fontSize(2em, 1.2);
+   }
+}
+
+@mixin h5 {
+   @include title;
+   @include fontSize(1.25em, 1.2);
+
+   @media screen and (min-width: responsive_variables.$screen-m-min) {
+      @include fontSize(1.5em, 1.2);
+   }
+}
+
+@mixin h6 {
+   @include title;
+   @include fontSize(1.125em, 1.2);
+
+   @media screen and (min-width: responsive_variables.$screen-m-min) {
+      @include fontSize(1.25em, 1.2);
    }
 }
 
 @mixin body {
-   @include fontSize(14px, 30px);
-
-   @media screen and (min-width: responsive_variables.$screen-m-min) {
-      @include fontSize(16px, 32px);
-   }
+   @include text;
+   @include fontSize(1em, 1.5);
 }
 
-@mixin body-bold($weight: 600) {
+@mixin body-large {
+   @include text;
+   @include fontSize(1.125em, 1.5);
+}
+
+@mixin body-small {
+   @include text;
+   @include fontSize(0.875em, 1.5);
+}
+
+@mixin body-annotation {
+   @include text;
+   @include fontSize(0.75em, 1.5);
+}
+
+@mixin body-bold {
    @include body;
-   font-weight: $weight;
+   font-weight: 700;
+}
+
+@mixin body-large-bold {
+   @include body-large;
+   font-weight: 700;
+}
+
+@mixin body-small-bold {
+   @include body-small;
+   font-weight: 700;
+}
+
+@mixin body-annotation-bold {
+   @include body-annotation;
+   font-weight: 700;
+}
+
+@mixin cta {
+   @include text($weight: 500);
+   @include fontSize(1em, 1.5);
 }

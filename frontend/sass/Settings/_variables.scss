@@ -3,15 +3,24 @@ $font-title: var(--font-bellerose), sans-serif;
 $font-text: var(--font-roboto), sans-serif;
 
 // Colors
-$color-primary: #01B4B8;
-$color-secondary: #008EA1;
-$color-tertiary: #00DAC1;
-$color-quaternary: #1D6a80;
-$color-quinery: #2F4858;
+$color-primary: var(--color-primary, #1D6980);
+$color-secondary: var(--color-secondary, #01B4B8);
+$color-tertiary: var(--color-tertiary, #2F4858);
 
+// Colors global
 $color-black: #181818;
 $color-white: #FFFFFF;
 $color-light: #ddf7f2;
+$color-gray: #666666;
+$color-gray-light: #F4F5F7;
+
+// Colors status
+$color-success: #27ae60;
+$color-error: #c0392b;
+$color-warning: #f39c12;
+$color-success-light: rgba($color-success, 0.08);
+$color-error-light: rgba($color-error, 0.08);
+$color-warning-light: rgba($color-warning, 0.08);
 
 // Radius
 $border-radius-100: 100px;

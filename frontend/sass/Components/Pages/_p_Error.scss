@@ -1,0 +1,48 @@
+@use '../../Tools/mixins';
+@use '../../Tools/typography';
+@use '../../Settings/responsive_variables';
+
+.p_Error {
+   @include mixins.padding;
+   @include mixins.wrapper;
+
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   gap: 3rem;
+   width: 100%;
+   height: 100%;
+   width: 100%;
+   min-height: 100vh;
+
+   &_title {
+      @include typography.h1;
+      @include mixins.underline;
+
+      margin-top: 50%;
+   }
+
+   &_subtitle {
+      @include typography.h4;
+   }
+
+   &_text {
+      @include typography.body-bold;
+   }
+
+   &_button {
+      width: max-content;
+   }
+
+   &_actions {
+      display: 'flex';
+      gap: 1rem;
+      margin-top: 2rem;
+   }
+
+   @media screen and (min-width: responsive_variables.$screen-m-min) {
+      &_title {
+         margin-top: 8rem;
+      }
+   }
+}

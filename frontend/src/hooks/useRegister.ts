@@ -13,6 +13,7 @@ type RegisterPayload = {
 export type DaycareOption = {
   id: number
   name: string
+  slug: string
 }
 
 type UseRegisterReturn = {
@@ -34,10 +35,13 @@ export function useRegister(): UseRegisterReturn {
       .then(res => res.json())
       .then(data => {
         const members = data['hydra:member'] ?? data['member'] ?? []
-        setDaycares(members.map((d: { '@id': string; id?: number; name: string }) => ({
-          id: d.id ?? parseInt((d['@id'] ?? '').split('/').pop() ?? '0', 10),
-          name: d.name,
-        })))
+        setDaycares(
+          members.map((d: { '@id': string; id?: number; name: string; slug: string }) => ({
+            id: d.id ?? parseInt((d['@id'] ?? '').split('/').pop() ?? '0', 10),
+            name: d.name,
+            slug: d.slug,
+          }))
+        )
       })
       .catch(() => {})
   }, [])

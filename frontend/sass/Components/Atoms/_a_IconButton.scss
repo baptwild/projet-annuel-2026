@@ -14,14 +14,15 @@
    }
 
    &-secondary {
-      @include mixins.buttonColor($color-white, $color-primary, $color-primary, $color-white);
-   }
-
-   &-tertiary {
-      @include mixins.buttonColor($color-white, $color-primary, $color-secondary, $color-white);
-   }
-
-   &-quarternary {
       @include mixins.buttonColor($color-secondary, $color-white, $color-primary, $color-white);
+   }
+
+   &-outline {
+      @include mixins.buttonColor(transparent, $color-primary, transparent, $color-secondary);
+      @include mixins.buttonBorder($color-primary);
+
+      &:hover {
+         @include mixins.buttonBorder($color-secondary);
+      }
    }
 }

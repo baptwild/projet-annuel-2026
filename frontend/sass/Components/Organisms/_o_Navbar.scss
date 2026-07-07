@@ -1,3 +1,4 @@
+@use "../../Settings/variables" as *;
 @use "../../Settings/responsive_variables";
 @use "../../Tools/typography";
 @use "../../Tools/mixins";
@@ -21,11 +22,11 @@
       gap: 1.5rem;
    }
 
-   &_socials {
+   &_login {
       display: none;
    }
 
-   &_login {
+   &_desktopActions {
       display: none;
    }
 
@@ -35,7 +36,7 @@
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      gap: 2rem;
+      gap: 1.5rem;
 
       &-link {
          display: flex;
@@ -49,7 +50,7 @@
       }
    }
 
-   @media screen and (min-width: responsive_variables.$screen-s-min) {
+   @media screen and (min-width: responsive_variables.$screen-m-min) {
       &_menu {
          display: flex;
          flex-direction: row;
@@ -61,32 +62,28 @@
          }
       }
 
+      &_desktopActions {
+         display: flex;
+         flex-direction: row;
+         align-items: center;
+         gap: 1.25rem;
+      }
+
       &_mobileMenu {
          display: none;
       }
 
-      &_socials {
-         display: flex;
-         flex-direction: row;
-         align-items: center;
-         gap: 1rem;
-
-         &-link {
-            display: flex;
-            align-items: center;
-
-            i {
-               font-size: 1.5rem;
-            }
-         }
-      }
-
-      &_profile {
+      &_profileIcon {
          display: flex;
          align-items: center;
 
          i {
-            font-size: 2rem;
+            font-size: 1.85rem;
+            transition: color $animation ease-in-out;
+
+            &:hover {
+               color: $color-secondary;
+            }
          }
       }
 

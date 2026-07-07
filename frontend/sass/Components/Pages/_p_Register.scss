@@ -1,0 +1,96 @@
+@use '../../Settings/variables' as *;
+@use '../../Settings/responsive_variables';
+@use '../../Tools/typography';
+@use '../../Tools/mixins';
+
+.p_Register {
+   @include mixins.wrapper;
+   @include mixins.margin;
+   @include mixins.padding(3rem);
+
+   width: 100%;
+   min-height: 70vh;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+
+   &_container {
+      border-radius: $border-radius;
+      border: $border;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      width: 100%;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 480px;
+   }
+
+   &_title {
+      @include typography.h2;
+      @include mixins.underlineTitle;
+
+      text-transform: none;
+      text-align: center;
+   }
+
+   &_row {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+   }
+
+   &_submit {
+      width: 100%;
+      justify-content: center;
+      margin-top: 0.5rem;
+   }
+
+   &_success {
+      @include typography.body;
+      color: $color-success;
+      background-color: $color-success-light;
+      border-radius: $border-radius-half;
+      padding: 0.5rem 1rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+   }
+
+   &_error {
+      @include typography.body;
+      color: $color-error;
+      background-color: $color-error-light;
+      border-radius: $border-radius-half;
+      padding: 0.5rem 1rem;
+   }
+
+   &_switch {
+      @include typography.body;
+      text-align: center;
+      margin-top: 1.5rem;
+      color: $color-tertiary;
+
+      &-link {
+         color: $color-primary;
+         font-weight: 600;
+         text-decoration: none;
+
+         &:hover {
+            color: $color-secondary;
+         }
+      }
+   }
+
+   &_daycare {
+      @include typography.body;
+      color: $color-tertiary;
+      text-align: center;
+   }
+}

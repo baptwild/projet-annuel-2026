@@ -1,0 +1,363 @@
+@use '../../Settings/variables' as *;
+@use '../../Settings/responsive_variables';
+@use '../../Tools/typography';
+@use '../../Tools/mixins';
+@use 'sass:color';
+
+.p_Admin {
+  @include mixins.wrapper;
+  @include mixins.margin;
+  max-width: 720px;
+
+  &-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    @include typography.body;
+    color: $color-tertiary;
+  }
+
+  &_header {
+    margin-bottom: 3rem;
+  }
+
+  &_title {
+    @include typography.h2;
+    color: $color-tertiary;
+    margin-bottom: 0.25rem;
+  }
+
+  &_subtitle {
+    @include typography.h5;
+    color: $color-tertiary;
+  }
+
+  &_daycare {
+    @include typography.body-small-bold;
+    color: $color-primary;
+    margin-top: 1.5rem;
+  }
+
+
+
+  &_section {
+    background: $color-white;
+    border: 1.5px solid color.adjust($color-light, $lightness: -8%);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    max-width: 900px;
+
+    &-title {
+      @include typography.h3;
+      color: $color-tertiary;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+  }
+
+  &_list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  &_badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: $color-primary;
+    color: $color-white;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.15rem 0.55rem;
+    min-width: 22px;
+  }
+
+  &_empty {
+    @include typography.body;
+    color: $color-tertiary;
+    opacity: 0.6;
+    padding: 1.5rem 0;
+    text-align: center;
+  }
+
+  &_form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  &_times {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    @media (max-width: responsive_variables.$screen-xs-max) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &_field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &_label {
+    @include typography.body;
+    font-weight: 600;
+    color: $color-tertiary;
+    font-size: 0.9rem;
+  }
+
+  &_days {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  &_day {
+    @include typography.body-small-bold;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid $color-secondary;
+    color: $color-primary;
+    border-radius: $border-radius;
+    cursor: pointer;
+    color: $color-tertiary;
+    transition: all $animation ease-in-out;
+    user-select: none;
+
+    input[type='checkbox'] {
+      accent-color: $color-secondary;
+      width: 15px;
+      height: 15px;
+    }
+
+    &:has(input:checked) {
+      border-color: $color-secondary;
+      background-color: $color-primary;
+      color: $color-white;
+    }
+  }
+
+  &_select {
+    border-radius: $border-radius-half;
+    border: 1px solid $color-primary;
+    background-color: $color-white;
+    padding: 0.75rem 1rem;
+    font-family: $font-text;
+    @include typography.body;
+    width: 100%;
+    cursor: pointer;
+    transition: border-color $animation ease-in-out;
+
+    &:focus {
+      outline: none;
+      border: 1px solid $color-secondary;
+    }
+  }
+
+  &_submit {
+    width: fit-content;
+  }
+
+  &_success {
+    @include typography.body;
+    color: #276749;
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    background-color: $color-success-light;
+    border: 1px solid $color-success;
+    border-radius: 8px;
+  }
+
+  &_divider {
+    border: none;
+    border-top: 1px solid color.adjust($color-light, $lightness: -8%);
+    margin: 0.5rem 0;
+  }
+
+  &_toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    @include typography.body;
+    font-size: 0.92rem;
+    color: $color-tertiary;
+    user-select: none;
+
+    input[type='checkbox'] {
+      accent-color: $color-primary;
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &_tier {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1rem;
+    background: color.adjust($color-light, $lightness: -3%);
+    border-radius: 8px;
+    flex-wrap: wrap;
+  }
+
+  &_tierLabel {
+    @include typography.body;
+    font-size: 0.88rem;
+    color: rgba($color-tertiary, 0.7);
+    white-space: nowrap;
+  }
+
+  &_tierInput {
+    width: 70px;
+    padding: 0.4rem 0.6rem;
+    border: 1.5px solid color.adjust($color-light, $lightness: -10%);
+    border-radius: 6px;
+    background: $color-white;
+    @include typography.body;
+    font-size: 0.9rem;
+    color: $color-tertiary;
+    text-align: center;
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+    }
+  }
+
+  &_inputRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &_inputUnit {
+    @include typography.body;
+    font-size: 0.88rem;
+    color: rgba($color-tertiary, 0.6);
+    white-space: nowrap;
+  }
+
+  &_fieldHint {
+    font-size: 0.8rem;
+    color: rgba($color-tertiary, 0.45);
+    margin-top: 0.1rem;
+  }
+
+  &_error {
+    @include typography.body;
+    color: $color-error;
+    font-size: 0.9rem;
+    padding: 0.75rem 1rem;
+    background-color: $color-error-light;
+    border: 1px solid $color-error;
+    border-radius: 8px;
+  }
+
+  &_colorGrid {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
+
+    .p_Admin_field {
+      .p_Admin_label {
+        text-align: center;
+      }
+    }
+  }
+
+  &_colorRow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &_colorPicker {
+    width: 44px;
+    height: 44px;
+    padding: 2px;
+    border: 1.5px solid color.adjust($color-light, $lightness: -10%);
+    border-radius: $border-radius;
+    background: $color-white;
+    cursor: pointer;
+    flex-shrink: 0;
+
+    &::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    &::-webkit-color-swatch {
+      border: none;
+      border-radius: 4px;
+    }
+
+    &::-moz-color-swatch {
+      border: none;
+      border-radius: 4px;
+    }
+  }
+
+  &_colorSwatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1.5px solid color.adjust($color-light, $lightness: -10%);
+    flex-shrink: 0;
+    transition: background $animation ease-in-out;
+  }
+
+  &_colorPreview {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: $color-gray-light;
+    border-radius: $border-radius;
+    margin-top: 0.5rem;
+  }
+
+  &_colorPreviewChip {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid rgba($color-white, 0.6);
+    box-shadow: 0 1px 3px rgba($color-black, 0.15);
+    transition: background $animation ease-in-out;
+  }
+
+  &_colorPreviewLabel {
+    @include typography.body-small;
+    color: $color-black;
+    margin-left: 0.25rem;
+    margin-right: 1rem;
+  }
+
+  @media screen and (min-width: responsive_variables.$screen-m-min) {
+    &_colorGrid {
+      .p_Admin_field {
+        .p_Admin_label {
+          text-align: left;
+        }
+      }
+    }
+
+    &_colorRow {
+      flex-direction: row;
+    }
+  }
+}

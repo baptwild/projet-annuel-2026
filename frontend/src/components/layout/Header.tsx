@@ -4,11 +4,13 @@ import React, { FC, useEffect, useState } from 'react'
 import classNames from 'classnames'
 import Navbar from '../organisms/Navbar'
 import MobileMenu from '../organisms/MobileMenu'
-import { usePathname } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 
 const Header: FC = () => {
   const pathname = usePathname()
-  const isHome = pathname === '/'
+  const params = useParams()
+    const slug = params.slug as string
+  const isHome = pathname === `/${slug}`
 
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMenuOpen, setIsMenuOpen] = useState(false)

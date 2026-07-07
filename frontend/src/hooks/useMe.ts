@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
+import { Daycare } from '@/types/Daycare'
+import { useAuth } from '@/hooks/useAuth'
 
 export type Dog = {
   '@id': string
@@ -24,14 +26,7 @@ export type Me = {
   firstName: string | null
   lastName: string | null
   roles: string[]
-  daycare: {
-    id: number; name: string; slug: string
-    openingTime: string; closingTime: string; openDays: number[]
-    billingMode: string; pricePerUnit: number; priceHalfDay: number
-    tierHoursThreshold: number | null; tierPrice: number | null
-    weeklyDiscountEnabled: boolean; weeklyDiscountThreshold: number; weeklyDiscountPercent: number
-    maxDogsPerDay: number | null
-  }
+  daycare: Daycare
 }
 
 type UseMeReturn = {
@@ -43,6 +38,7 @@ type UseMeReturn = {
 }
 
 export function useMe(): UseMeReturn {
+  const { logout } = useAuth()
   const [me, setMe] = useState<Me | null>(null)
   const [dogs, setDogs] = useState<Dog[]>([])
   const [bookings, setBookings] = useState<Booking[]>([])
@@ -50,7 +46,10 @@ export function useMe(): UseMeReturn {
 
   const fetchAll = useCallback(async () => {
     const token = localStorage.getItem('token')
-    if (!token) { setLoading(false); return }
+    if (!token) {
+      setLoading(false)
+      return
+    }
 
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -60,7 +59,18 @@ export function useMe(): UseMeReturn {
 
     try {
       const meRes = await fetch(`${api}/auth/me`, { headers })
-      if (!meRes.ok) { setLoading(false); return }
+
+      if (meRes.status === 401) {
+        logout()
+        setLoading(false)
+        return
+      }
+
+      if (!meRes.ok) {
+        setLoading(false)
+        return
+      }
+
       const meData: Me = await meRes.json()
       setMe(meData)
 
@@ -77,9 +87,11 @@ export function useMe(): UseMeReturn {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [logout])
 
-  useEffect(() => { fetchAll() }, [fetchAll])
+  useEffect(() => {
+    fetchAll()
+  }, [fetchAll])
 
   return { me, dogs, bookings, loading, refetch: fetchAll }
 }

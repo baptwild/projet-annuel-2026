@@ -1,4 +1,4 @@
-// Screen size trigger
+// Screen sizes
 $screen-xl: 1600px;
 $screen-l: 1200px;
 $screen-m: 992px;
@@ -6,7 +6,7 @@ $screen-s: 768px;
 $screen-xs: 576px;
 $screen-xxs: 375px;
 
-// Break point trigger
+// Break points
 $screen-xl-min: $screen-xl;
 $screen-l-max: $screen-xl-min - 1; // 1599px
 $screen-l-min: $screen-l;

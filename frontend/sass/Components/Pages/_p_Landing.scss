@@ -1,0 +1,66 @@
+@use '../../Settings/variables' as *;
+@use '../../Tools/typography';
+
+.p_Landing {
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   gap: 3rem;
+   width: 100%;
+   padding-bottom: 10rem;
+
+   &_hero {
+      background: linear-gradient(135deg, #1D6980 0%, #01B4B8 100%),
+         radial-gradient(circle at top right, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+      padding: 6rem 2rem;
+      color: $color-white;
+      position: relative;
+      overflow: hidden;
+
+      &-content {
+         max-width: 800px;
+         margin: 0 auto;
+         display: flex;
+         flex-direction: column;
+         gap: 2.5rem;
+         justify-content: center;
+         align-items: center;
+         text-align: center;
+      }
+
+      &-title {
+         @include typography.h1;
+      }
+
+      &-description {
+         @include typography.body-large;
+         opacity: 0.95;
+         max-width: 650px;
+      }
+   }
+
+   &_content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+
+      &-header {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         gap: 1.5rem;
+         text-align: center;
+      }
+
+      &-title {
+         @include typography.h3;
+      }
+
+      &-description {
+         @include typography.body-bold;
+      }
+   }
+}

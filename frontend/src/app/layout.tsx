@@ -1,11 +1,7 @@
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import localFont from 'next/font/local'
-
-import Header from '@/components/layout/Header'
-import Footer from '@/components/layout/Footer'
 import { AuthProvider } from '@/hooks/useAuth'
-
 import '../../sass/main.scss'
 
 const roboto = Roboto({
@@ -20,26 +16,19 @@ const bellerose = localFont({
 })
 
 export const metadata: Metadata = {
-  title: 'Le Café des Chiens',
+  title: 'Votre solution pour gérer votre centre aéré canin !',
   description: 'Votre centre aéré canin.',
-  icons: {
-    icon: '/favicon.ico',
-  },
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang='fr' className={`${roboto.variable} ${bellerose.variable}`}>
       <body>
         <AuthProvider>
-          <Header />
           <div id='modal' className='m_Modal'></div>
-          <main className='l_MainContent'>{children}</main>
-          <Footer />
+          {children}
         </AuthProvider>
       </body>
     </html>

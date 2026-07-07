@@ -25,6 +25,23 @@
    transition: all $animation ease-in-out;
 }
 
+@mixin buttonDisabled {
+
+   &:disabled,
+   &[disabled] {
+      background-color: $color-gray-light;
+      color: $color-gray;
+      border-color: transparent;
+      cursor: not-allowed;
+      pointer-events: none;
+      box-shadow: none;
+   }
+}
+
+@mixin buttonBorder($color) {
+   border: 2px solid $color;
+}
+
 // Padding
 @mixin padding($padding: 7.5rem) {
    padding-top: 5rem;
