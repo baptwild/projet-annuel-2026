@@ -72,11 +72,11 @@ class AppFixtures extends Fixture
         $this->w0 = $now->modify('-' . ($dayOfWeek - 1) . ' days')->setTime(0, 0, 0);
 
         // ══════════════════════════════════════════════════════════════════
-        // DAYCARE 1 : Happy Paws
+        // DAYCARE 1 : Le Café des chiens
         // ══════════════════════════════════════════════════════════════════
         $hp = new Daycare();
-        $hp->setName('Happy Paws Daycare');
-        $hp->setSlug('happy-paws');
+        $hp->setName('Le Café des chiens');
+        $hp->setSlug('cafe-des-chiens');
         $hp->setIsActive(true);
         $hp->setOpeningTime('08:00');
         $hp->setClosingTime('19:00');
@@ -90,6 +90,14 @@ class AppFixtures extends Fixture
         $hp->setWeeklyDiscountThreshold(3);
         $hp->setWeeklyDiscountPercent(10.0);
         $hp->setMaxDogsPerDay(5);
+        $hp->setAddress('Rue des Brassières, 38420 Le Versoud');
+        $hp->setPhone('01 42 78 15 32');
+        $hp->setEmail('contact@cafe-des-chiens.fr');
+        $hp->setFacebook('https://facebook.com/lecafedeschiens');
+        $hp->setInstagram('https://instagram.com/lecafedeschiens');
+        $hp->setColorPrimary('#1D6980');
+        $hp->setColorSecondary('#01B4B8');
+        $hp->setColorTertiary('#2F4858');
         $manager->persist($hp);
 
         // DAYCARE 2 : Woof Valley
@@ -109,12 +117,20 @@ class AppFixtures extends Fixture
         $wv->setWeeklyDiscountThreshold(3);
         $wv->setWeeklyDiscountPercent(0.0);
         $wv->setMaxDogsPerDay(8);
+        $wv->setAddress('4 Chemin des Vallons, 69009 Lyon');
+        $wv->setPhone('04 78 56 23 41');
+        $wv->setEmail('contact@woof-valley.fr');
+        $wv->setFacebook('https://facebook.com/woofvalley');
+        $wv->setInstagram('https://instagram.com/woof.valley');
+        $wv->setColorPrimary('#B4501D');
+        $wv->setColorSecondary('#E8A230');
+        $wv->setColorTertiary('#4A3728');
         $manager->persist($wv);
 
-        // ── Admin Happy Paws ───────────────────────────────────────────────
-        $admin = $this->user('admin@happy-paws.com', 'Sophie', 'Martin', 'admin1234', ['ROLE_ADMIN'], $hp, $manager);
+        // ── Admin Café des chiens ───────────────────────────────────────────────
+        $admin = $this->user('admin@cafe-des-chiens.fr', 'Sophie', 'Martin', 'admin1234', ['ROLE_ADMIN'], $hp, $manager);
 
-        // ── Utilisateurs Happy Paws ────────────────────────────────────────
+        // ── Utilisateurs Café des chiens ────────────────────────────────────────
         $alice  = $this->user('alice@example.com',     'Alice',     'Dupont',   'password', [], $hp, $manager);
         $bob    = $this->user('bob@example.com',       'Bob',       'Bernard',  'password', [], $hp, $manager);
         $carol  = $this->user('carol@example.com',     'Carol',     'Leclerc',  'password', [], $hp, $manager);
@@ -127,7 +143,7 @@ class AppFixtures extends Fixture
         $jules  = $this->user('jules@example.com',     'Jules',     'Petit',    'password', [], $hp, $manager);
         $karine = $this->user('karine@example.com',    'Karine',    'Blanc',    'password', [], $hp, $manager);
 
-        // ── Chiens Happy Paws ─────────────────────────────────────────────
+        // ── Chiens Café des chiens ─────────────────────────────────────────────
         $rex    = $this->dog('Rex',    'Labrador',               '2020-03-15', $alice,  $hp, $manager);
         $bella  = $this->dog('Bella',  'Golden Retriever',       '2019-07-22', $bob,    $hp, $manager);
         $max    = $this->dog('Max',    'Beagle',                 '2021-11-05', $carol,  $hp, $manager);
@@ -144,7 +160,7 @@ class AppFixtures extends Fixture
         $venus  = $this->dog('Venus',  'Shih Tzu',               '2022-11-30', $karine, $hp, $manager);
 
         // ══════════════════════════════════════════════════════════════════
-        // RÉSERVATIONS HAPPY PAWS
+        // RÉSERVATIONS CAFÉ DES CHIENS
         // Règle statut : wk < 0 → Completed | wk = 0,1 → Confirmed | wk ≥ 2 → Pending
         // Remise hebdo Rex : dès la 3e résa dans la semaine (−10%)
         // Journée pleine (5/5) : W+1 mardi

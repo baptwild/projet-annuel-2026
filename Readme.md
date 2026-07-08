@@ -85,11 +85,11 @@ Ouvre [http://localhost:8000/api](http://localhost:8000/api) pour accéder à l'
 
 ### Comptes de démo
 
-**Happy Paws Daycare** (facturation horaire, capacité 5 chiens/jour, remise hebdo dès 3 résa)
+**Le Café des chiens** (facturation horaire, capacité 5 chiens/jour, remise hebdo dès 3 résa)
 
 | Rôle | Email | Mot de passe |
 |---|---|---|
-| Admin | admin@happy-paws.com | admin1234 |
+| Admin | admin@cafe-des-chiens.fr | admin1234 |
 | Alice (Rex) | alice@example.com | password |
 | Bob (Bella) | bob@example.com | password |
 | Carol (Max, Chloé) | carol@example.com | password |
@@ -115,7 +115,7 @@ Ouvre [http://localhost:8000/api](http://localhost:8000/api) pour accéder à l'
 ```bash
 curl -X POST http://localhost:8000/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"email": "admin@happy-paws.com", "password": "admin1234"}'
+  -d '{"email": "admin@cafe-des-chiens.fr", "password": "admin1234"}'
 ```
 
 ### Appeler une route protégée
@@ -141,6 +141,8 @@ curl http://localhost:8000/api/bookings \
 | `make jwt` | Régénérer les clés JWT |
 | `make fixtures` | Recharger les fixtures |
 | `make cache-clear` | Vider le cache Symfony + restart backend |
+| `make test-setup` | Migrer la base de test (`app_test`) — à lancer une fois après `make install` |
+| `make test` | Lancer la suite PHPUnit (backend) |
 
 ### Docker direct
 
@@ -153,6 +155,20 @@ curl http://localhost:8000/api/bookings \
 | `docker compose logs -f frontend` | Suivre les logs frontend |
 | `docker compose exec backend php bin/console <cmd>` | Lancer une commande Symfony |
 | `docker compose exec backend composer require <pkg>` | Ajouter un package Composer |
+
+---
+
+## Tests (backend)
+
+Le backend utilise PHPUnit pour les tests unitaires et fonctionnels. La base de données de test (`app_test`) est séparée de la base de dev (`app`) et est réinitialisée automatiquement entre chaque test (transaction annulée après coup, via `dama/doctrine-test-bundle`) — aucune donnée ne persiste, la base de dev n'est jamais touchée.
+
+```bash
+make test-setup   # une seule fois après make install / make reset (migre app_test)
+make test          # lance toute la suite
+```
+
+- `tests/Unit/` : tests unitaires purs, sans base de données (ex. logique `isPending()` / `isCancellable()` sur `Booking`)
+- `tests/Functional/` : tests bout-en-bout via de vraies requêtes HTTP (`WebTestCase`), couvrant l'authentification, la création de réservation (dont le blocage double-réservation même chien/jour), l'isolation multi-tenant (un admin ne voit jamais les données d'une autre garderie) et le calcul d'occupation
 
 ---
 
@@ -236,7 +252,7 @@ docker compose exec backend php bin/console doctrine:fixtures:load --no-interact
 ### 1. Inscription et connexion
 
 - Aller sur [http://localhost:3000/register](http://localhost:3000/register)
-- Créer un compte sur **Happy Paws Daycare** avec prénom, nom, email et mot de passe
+- Créer un compte sur **Le Café des chiens** avec prénom, nom, email et mot de passe
 - Vérifier la redirection automatique vers `/me` après inscription
 - Se déconnecter, puis tenter d'accéder à `/register` en étant connecté → redirection automatique
 - Se reconnecter sur [http://localhost:3000/login](http://localhost:3000/login)
@@ -265,7 +281,7 @@ Se connecter en tant qu'**Alice** (`alice@example.com` / `password`) pour avoir 
 
 ### 4. Administration — `/admin` — Réservations
 
-Se connecter en tant qu'**admin Happy Paws** (`admin@happy-paws.com` / `admin1234`).
+Se connecter en tant qu'**admin Le Café des chiens** (`admin@cafe-des-chiens.fr` / `admin1234`).
 
 **Navigation par semaine**
 - Les chevrons `‹` `›` permettent de naviguer semaine par semaine
@@ -300,4 +316,4 @@ Se connecter en tant qu'**admin Happy Paws** (`admin@happy-paws.com` / `admin123
 
 - Se connecter en tant qu'**admin Woof Valley** (`admin@woof-valley.com` / `admin1234`)
 - Vérifier que seules les réservations de Woof Valley apparaissent (Eve, Félix, Grace — pas Alice ni Bob)
-- Se connecter en tant qu'**Eve** (`eve@example.com`) → elle ne voit que ses propres données, pas celles de Happy Paws
+- Se connecter en tant qu'**Eve** (`eve@example.com`) → elle ne voit que ses propres données, pas celles du Café des chiens

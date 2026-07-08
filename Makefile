@@ -7,9 +7,9 @@ install: up wait db-setup jwt fixtures
 	@echo "   Backend  : http://localhost:8000"
 	@echo "   API docs : http://localhost:8000/api"
 	@echo ""
-	@echo "   Admin Happy Paws : admin@happy-paws.com / admin1234"
-	@echo "   Admin Woof Valley: admin@woof-valley.com / admin1234"
-	@echo "   Users             : alice@example.com ... karine@example.com / password"
+	@echo "   Admin Café des chiens : admin@cafe-des-chiens.fr / admin1234"
+	@echo "   Admin Woof Valley     : admin@woof-valley.com / admin1234"
+	@echo "   Users                 : alice@example.com ... karine@example.com / password"
 
 up:
 	docker compose up --build -d
@@ -34,6 +34,12 @@ jwt:
 
 fixtures:
 	docker compose exec backend php bin/console doctrine:fixtures:load --no-interaction
+
+test-setup:
+	docker compose exec backend php bin/console --env=test doctrine:migrations:migrate --no-interaction
+
+test:
+	docker compose exec backend php bin/phpunit
 
 logs:
 	docker compose logs -f
