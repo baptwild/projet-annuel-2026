@@ -65,3 +65,19 @@ export function inWeek(b: AdminBooking, weekStart: Date, weekEnd: Date) {
   const d = new Date(b.startDate)
   return d >= weekStart && d <= weekEnd
 }
+
+export function getWeekDayList(weekStart: Date): Date[] {
+  return Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(weekStart)
+    d.setDate(weekStart.getDate() + i)
+    return d
+  })
+}
+
+export function isSameDay(a: Date, b: Date): boolean {
+  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate()
+}
+
+export function onDay(b: AdminBooking, day: Date): boolean {
+  return isSameDay(new Date(b.startDate), day)
+}

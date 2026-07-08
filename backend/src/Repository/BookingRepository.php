@@ -19,9 +19,9 @@ class BookingRepository extends ServiceEntityRepository
     }
 
     /** Returns the first active (confirmed or pending) booking for a dog on a given day, or null. */
-    public function findActiveDogBookingOnDay(\App\Entity\Dog $dog, \DateTimeImmutable $start, \DateTimeImmutable $end): ?Booking
+    public function findActiveDogBookingOnDay(\App\Entity\Dog $dog, \DateTimeImmutable $start, \DateTimeImmutable $end, ?int $excludeBookingId = null): ?Booking
     {
-        return $this->createQueryBuilder('b')
+        $qb = $this->createQueryBuilder('b')
             ->where('b.dog = :dog')
             ->andWhere('b.startDate <= :end')
             ->andWhere('b.endDate >= :start')
@@ -30,9 +30,13 @@ class BookingRepository extends ServiceEntityRepository
             ->setParameter('start', $start)
             ->setParameter('end', $end)
             ->setParameter('statuses', [BookingStatus::Confirmed, BookingStatus::Pending])
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
+            ->setMaxResults(1);
+
+        if ($excludeBookingId !== null) {
+            $qb->andWhere('b.id != :excludeId')->setParameter('excludeId', $excludeBookingId);
+        }
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /** Bookings confirmed or pending for a daycare on a given day (for occupancy check). */

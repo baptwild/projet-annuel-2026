@@ -75,4 +75,57 @@ class BookingApiTest extends ApiTestCase
 
         $this->assertResponseStatus(401);
     }
+
+    public function testPatchCanKeepBookingOnSameDayWithoutFalseConflict(): void
+    {
+        $daycare = $this->createDaycare();
+        $alice = $this->createUser($daycare, 'alice@example.com');
+        $rex = $this->createDog($alice, $daycare, 'Rex');
+
+        $this->authenticatedRequest($alice, 'POST', '/api/bookings', [
+            'dog' => '/api/dogs/' . $rex->getId(),
+            'startDate' => '2026-08-10T09:00:00+00:00',
+            'endDate' => '2026-08-10T13:00:00+00:00',
+        ]);
+        $this->assertResponseStatus(201);
+        $bookingIri = $this->jsonResponse()['@id'];
+
+        // Editing the time on the same day must not conflict with itself
+        $this->authenticatedRequest($alice, 'PATCH', $bookingIri, [
+            'startDate' => '2026-08-10T10:00:00+00:00',
+            'endDate' => '2026-08-10T14:00:00+00:00',
+        ], ['CONTENT_TYPE' => 'application/merge-patch+json']);
+
+        $this->assertResponseStatus(200);
+    }
+
+    public function testPatchRejectsMovingBookingOntoAnotherActiveBookingSameDay(): void
+    {
+        $daycare = $this->createDaycare();
+        $alice = $this->createUser($daycare, 'alice@example.com');
+        $rex = $this->createDog($alice, $daycare, 'Rex');
+
+        $this->authenticatedRequest($alice, 'POST', '/api/bookings', [
+            'dog' => '/api/dogs/' . $rex->getId(),
+            'startDate' => '2026-08-10T09:00:00+00:00',
+            'endDate' => '2026-08-10T13:00:00+00:00',
+        ]);
+        $this->assertResponseStatus(201);
+
+        $this->authenticatedRequest($alice, 'POST', '/api/bookings', [
+            'dog' => '/api/dogs/' . $rex->getId(),
+            'startDate' => '2026-08-11T09:00:00+00:00',
+            'endDate' => '2026-08-11T13:00:00+00:00',
+        ]);
+        $this->assertResponseStatus(201);
+        $secondBookingIri = $this->jsonResponse()['@id'];
+
+        // Moving the second booking onto the first booking's day must be rejected
+        $this->authenticatedRequest($alice, 'PATCH', $secondBookingIri, [
+            'startDate' => '2026-08-10T14:00:00+00:00',
+            'endDate' => '2026-08-10T17:00:00+00:00',
+        ], ['CONTENT_TYPE' => 'application/merge-patch+json']);
+
+        $this->assertResponseStatus(422);
+    }
 }

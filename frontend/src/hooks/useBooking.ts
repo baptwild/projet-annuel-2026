@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { generateTimeSlots } from '@/utils/timeSlots'
+import { AvailableDate, generateAvailableDates } from '@/utils/availableDates'
 
 type Dog = {
   '@id': string
@@ -14,11 +16,6 @@ type DaycareConfig = {
   closingTime: string
   openDays: number[]
   maxDogsPerDay: number | null
-}
-
-export type AvailableDate = {
-  value: string
-  label: string
 }
 
 export type OccupancyInfo = {
@@ -39,43 +36,6 @@ type UseBookingReturn = {
   error: string | null
   fetchOccupancy: (date: string) => Promise<void>
   submit: (dogIri: string, date: string, startTime: string, endTime: string) => Promise<boolean>
-}
-
-function generateTimeSlots(opening: string, closing: string): string[] {
-  const [openH, openM] = opening.split(':').map(Number)
-  const [closeH, closeM] = closing.split(':').map(Number)
-  const slots: string[] = []
-  let totalMin = openH * 60 + openM
-  const closeMin = closeH * 60 + closeM
-  while (totalMin <= closeMin) {
-    const h = Math.floor(totalMin / 60)
-    const m = totalMin % 60
-    slots.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`)
-    totalMin += 30
-  }
-  return slots
-}
-
-const DAY_LABELS = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam']
-const MONTH_LABELS = ['jan', 'fév', 'mar', 'avr', 'mai', 'juin', 'juil', 'aoû', 'sep', 'oct', 'nov', 'déc']
-
-function generateAvailableDates(openDays: number[], count = 30): AvailableDate[] {
-  const dates: AvailableDate[] = []
-  const cursor = new Date()
-  cursor.setHours(0, 0, 0, 0)
-  let checked = 0
-  while (dates.length < count && checked < 365) {
-    if (openDays.includes(cursor.getDay())) {
-      const y = cursor.getFullYear()
-      const m = String(cursor.getMonth() + 1).padStart(2, '0')
-      const d = String(cursor.getDate()).padStart(2, '0')
-      const label = `${DAY_LABELS[cursor.getDay()]} ${cursor.getDate()} ${MONTH_LABELS[cursor.getMonth()]}`
-      dates.push({ value: `${y}-${m}-${d}`, label })
-    }
-    cursor.setDate(cursor.getDate() + 1)
-    checked++
-  }
-  return dates
 }
 
 export function useBooking(): UseBookingReturn {

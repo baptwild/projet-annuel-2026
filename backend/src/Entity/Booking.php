@@ -21,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         new GetCollection(),
         new Get(security: "is_granted('ROLE_ADMIN') or object.getDog().getOwner() == user"),
         new Post(security: "is_granted('ROLE_USER')", processor: 'App\State\BookingProcessor'),
-        new Patch(security: "is_granted('ROLE_ADMIN') or (object.getDog().getOwner() == user and (object.isPending() or object.isCancellable()))"),
+        new Patch(security: "is_granted('ROLE_ADMIN') or (object.getDog().getOwner() == user and (object.isPending() or object.isCancellable()))", processor: 'App\State\BookingProcessor'),
         new Delete(security: "is_granted('ROLE_ADMIN')"),
     ],
     normalizationContext: ['groups' => ['booking:read']],

@@ -6,9 +6,10 @@ import { computeBookingCosts, formatCost, getBillingDetail, BillingConfig, BILLI
 type Props = {
    bookings: Booking[]
    me: NonNullable<Me>
+   monthLabel: string
 }
 
-const CostSection = ({ bookings, me }: Props) => {
+const CostSection = ({ bookings, me, monthLabel }: Props) => {
    const d = me.daycare
    const config: BillingConfig = {
       billingMode: d.billingMode as BillingConfig['billingMode'],
@@ -23,17 +24,11 @@ const CostSection = ({ bookings, me }: Props) => {
 
    if (!d.pricePerUnit && !d.priceHalfDay) return null
 
-   const now = new Date()
-   const monthBookings = bookings.filter(b => {
-      if (b.status === 'cancelled') return false
-      const date = new Date(b.startDate)
-      return date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth()
-   })
+   const monthBookings = bookings.filter(b => b.status !== 'cancelled')
 
    const withCosts = computeBookingCosts(monthBookings, config)
    const total = withCosts.reduce((sum, b) => sum + b.finalCost, 0)
    const totalSaving = withCosts.reduce((sum, b) => sum + b.saving, 0)
-   const monthLabel = now.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })
 
    const componentsClass = 'o_CostSection'
    const parentClass = 'o_MeSection'

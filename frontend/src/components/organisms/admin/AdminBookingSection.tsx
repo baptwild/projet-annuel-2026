@@ -6,8 +6,11 @@ import BookingCard from '@/components/molecules/admin/BookingCard'
 import {
   StatusFilter,
   STATUS_TABS,
+  WEEK_DAYS,
   getWeekBounds,
-  inWeek
+  getWeekDayList,
+  inWeek,
+  onDay
 } from '@/utils/adminHelpers'
 import {
   computeBookingCosts,
@@ -21,17 +24,26 @@ interface AdminBookingSectionProps {
   loading: boolean
   updateStatus: (id: string, status: 'confirmed' | 'cancelled' | 'completed') => void
   billingConfig: BillingConfig
+  openDays: number[]
 }
 
-export default function AdminBookingSection({ bookings, loading, updateStatus, billingConfig }: AdminBookingSectionProps) {
+export default function AdminBookingSection({ bookings, loading, updateStatus, billingConfig, openDays }: AdminBookingSectionProps) {
   const [filter, setFilter] = useState<StatusFilter>('pending')
   const [weekOffset, setWeekOffset] = useState(0)
+  const [dayIndex, setDayIndex] = useState<number | null>(null)
 
   const week = getWeekBounds(weekOffset)
+  const weekDays = getWeekDayList(week.start)
+  const selectedDay = dayIndex !== null ? weekDays[dayIndex] : null
+
+  const bookingsThisWeek = bookings.filter(b => inWeek(b, week.start, week.end))
+  const bookingsInScope = selectedDay ? bookingsThisWeek.filter(b => onDay(b, selectedDay)) : bookingsThisWeek
 
   const byStatus = filter === 'all' ? bookings : bookings.filter(b => b.status === filter)
-  const filtered = byStatus.filter(b => inWeek(b, week.start, week.end))
-  const pendingThisWeek = bookings.filter(b => b.status === 'pending' && inWeek(b, week.start, week.end)).length
+  const filtered = byStatus.filter(b => inWeek(b, week.start, week.end) && (!selectedDay || onDay(b, selectedDay)))
+
+  const countInScope = (status: StatusFilter) =>
+    status === 'all' ? bookingsInScope.length : bookingsInScope.filter(b => b.status === status).length
 
   const now = new Date()
   const inCurrentMonth = (b: AdminBooking) => {
@@ -80,37 +92,60 @@ export default function AdminBookingSection({ bookings, loading, updateStatus, b
       )}
 
       <div className={`${componentsClass}_weekNav`}>
-        <button className={`${componentsClass}_weekBtn`} onClick={() => setWeekOffset(o => o - 1)}>
+        <button className={`${componentsClass}_weekBtn`} onClick={() => { setWeekOffset(o => o - 1); setDayIndex(null) }}>
           <i className='bi bi-chevron-left' />
         </button>
         <div className={`${componentsClass}_weekLabel`}>
           <span>{week.label}</span>
           {weekOffset !== 0 && (
-            <button className={`${componentsClass}_weekToday`} onClick={() => setWeekOffset(0)}>Aujourd'hui</button>
+            <button className={`${componentsClass}_weekToday`} onClick={() => { setWeekOffset(0); setDayIndex(null) }}>Aujourd'hui</button>
           )}
         </div>
-        <button className={`${componentsClass}_weekBtn`} onClick={() => setWeekOffset(o => o + 1)}>
+        <button className={`${componentsClass}_weekBtn`} onClick={() => { setWeekOffset(o => o + 1); setDayIndex(null) }}>
           <i className='bi bi-chevron-right' />
         </button>
       </div>
 
-      <div className={`${componentsClass}_tabs`}>
-        {STATUS_TABS.map(tab => (
-          <button
-            key={tab.key}
-            className={`${componentsClass}_tab${filter === tab.key ? ` ${componentsClass}_tab-active` : ''}`}
-            onClick={() => setFilter(tab.key)}
-          >
-            {tab.label}
-            {tab.key === 'pending' && pendingThisWeek > 0 && ` (${pendingThisWeek})`}
-          </button>
+      <div className={`${componentsClass}_dayNav`}>
+        <button
+          className={`${componentsClass}_dayChip${dayIndex === null ? ` ${componentsClass}_dayChip-active` : ''}`}
+          onClick={() => setDayIndex(null)}
+        >
+          Semaine
+        </button>
+        {weekDays.map((date, i) => (
+          openDays.includes(WEEK_DAYS[i].value) && (
+            <button
+              key={i}
+              className={`${componentsClass}_dayChip${dayIndex === i ? ` ${componentsClass}_dayChip-active` : ''}`}
+              onClick={() => setDayIndex(i)}
+            >
+              {WEEK_DAYS[i].label.slice(0, 3)} {date.getDate()}
+            </button>
+          )
         ))}
+      </div>
+
+      <div className={`${componentsClass}_tabs`}>
+        {STATUS_TABS.map(tab => {
+          const count = countInScope(tab.key)
+          return (
+            <button
+              key={tab.key}
+              className={`${componentsClass}_tab${filter === tab.key ? ` ${componentsClass}_tab-active` : ''}`}
+              onClick={() => setFilter(tab.key)}
+            >
+              {tab.label}
+              {count > 0 && ` (${count})`}
+            </button>
+          )
+        })}
       </div>
 
       {loading ? (
         <p className={`${parentClass}_empty`}>Chargement...</p>
       ) : filtered.length === 0 ? (
-        <p className={`${parentClass}_empty`}>Aucune réservation cette semaine.</p>
+        <p className={`${parentClass}_empty`}>Aucune réservation {selectedDay ? 'ce jour-là' : 'cette semaine'}.</p>
       ) : (
         <div className={`${componentsClass}_bookings`}>
           {filtered.map(b => (

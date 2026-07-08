@@ -3,6 +3,7 @@
 namespace App\State;
 
 use ApiPlatform\Metadata\Operation;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\State\ProcessorInterface;
 use ApiPlatform\Validator\Exception\ValidationException;
@@ -28,11 +29,13 @@ final class BookingProcessor implements ProcessorInterface
             $data->setDaycare($data->getDog()->getDaycare());
         }
 
-        if ($operation instanceof Post && $data->getDog() !== null && $data->getStartDate() !== null) {
+        if (($operation instanceof Post || $operation instanceof Patch) && $data->getDog() !== null && $data->getStartDate() !== null) {
             $dayStart = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $data->getStartDate()->format('Y-m-d') . ' 00:00:00');
             $dayEnd   = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $data->getStartDate()->format('Y-m-d') . ' 23:59:59');
 
-            if ($this->bookingRepo->findActiveDogBookingOnDay($data->getDog(), $dayStart, $dayEnd) !== null) {
+            $conflict = $this->bookingRepo->findActiveDogBookingOnDay($data->getDog(), $dayStart, $dayEnd, $data->getId());
+
+            if ($conflict !== null) {
                 $violations = new ConstraintViolationList([
                     new ConstraintViolation(
                         sprintf('%s a déjà une réservation ce jour-là.', $data->getDog()->getName()),

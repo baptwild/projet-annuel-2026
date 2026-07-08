@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { useMe } from '@/hooks/useMe'
 import { useAuth } from '@/hooks/useAuth'
@@ -8,6 +8,7 @@ import AccountSection from '@/components/organisms/me/AccountSection'
 import DogsSection from '@/components/organisms/me/DogSection'
 import BookingsSection from '@/components/organisms/me/BookingSection'
 import CostSection from '@/components/organisms/me/CostSection'
+import { getMonthBounds, inMonthRange } from '@/utils/monthHelpers'
 
 export default function MePage() {
   const { userDaycareSlug, isAuthenticated, logout } = useAuth()
@@ -15,6 +16,7 @@ export default function MePage() {
   const router = useRouter()
   const params = useParams()
   const slug = params.slug as string
+  const [monthOffset, setMonthOffset] = useState(0)
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -39,6 +41,11 @@ export default function MePage() {
   if (!isAuthenticated || (userDaycareSlug && userDaycareSlug !== slug)) return null
   if (loading || !me) return null
 
+  const month = getMonthBounds(monthOffset)
+  const monthBookings = bookings
+    .filter(b => inMonthRange(b.startDate, month.start, month.end))
+    .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
+
   const componentsClass = 'p_Me'
 
   return (
@@ -56,8 +63,29 @@ export default function MePage() {
           <AccountSection me={me} refetch={refetch} />
           <DogsSection dogs={dogs} refetch={refetch} />
         </div>
-        <BookingsSection bookings={bookings} refetch={refetch} />
-        <CostSection bookings={bookings} me={me} />
+        <div className={`${componentsClass}_monthNav`}>
+          <button className={`${componentsClass}_monthBtn`} onClick={() => setMonthOffset(o => o - 1)}>
+            <i className='bi bi-chevron-left' />
+          </button>
+          <div className={`${componentsClass}_monthLabel`}>
+            <span>{month.label}</span>
+            {monthOffset !== 0 && (
+              <button className={`${componentsClass}_monthToday`} onClick={() => setMonthOffset(0)}>Ce mois-ci</button>
+            )}
+          </div>
+          <button className={`${componentsClass}_monthBtn`} onClick={() => setMonthOffset(o => o + 1)}>
+            <i className='bi bi-chevron-right' />
+          </button>
+        </div>
+        <BookingsSection
+          bookings={monthBookings}
+          refetch={refetch}
+          monthLabel={month.label}
+          openingTime={me.daycare.openingTime}
+          closingTime={me.daycare.closingTime}
+          openDays={me.daycare.openDays}
+        />
+        <CostSection bookings={monthBookings} me={me} monthLabel={month.label} />
       </div>
     </div>
   )

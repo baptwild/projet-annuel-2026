@@ -5,6 +5,8 @@ import Button from '@/components/atoms/Button'
 import { ColorButton } from '@/enums/ColorButton'
 import { Booking } from '@/hooks/useMe'
 import { authHeaders } from '@/utils/authHeaders'
+import { generateTimeSlots } from '@/utils/timeSlots'
+import { generateAvailableDates, withGuaranteedDate } from '@/utils/availableDates'
 
 const API = process.env.NEXT_PUBLIC_API_URL
 
@@ -23,29 +25,48 @@ function isCancellable(booking: Booking): boolean {
       && new Date(booking.startDate) > new Date(Date.now() + 86_400_000)
 }
 
-function BookingRow({ booking, refetch }: { booking: Booking; refetch: () => void }) {
+function BookingRow({ booking, refetch, openingTime, closingTime, openDays }: { booking: Booking; refetch: () => void; openingTime: string; closingTime: string; openDays: number[] }) {
    const isPending = booking.status === 'pending'
    const canCancel = isCancellable(booking)
-   const [startDate, setStartDate] = useState(booking.startDate.slice(0, 10))
-   const [endDate, setEndDate] = useState(booking.endDate.slice(0, 10))
+   const [date, setDate] = useState(booking.startDate.slice(0, 10))
+   const [startTime, setStartTime] = useState(booking.startDate.slice(11, 16))
+   const [endTime, setEndTime] = useState(booking.endDate.slice(11, 16))
    const [open, setOpen] = useState(false)
    const [success, setSuccess] = useState(false)
+   const [error, setError] = useState<string | null>(null)
    const [cancelling, setCancelling] = useState(false)
+
+   const timeSlots = generateTimeSlots(openingTime, closingTime)
+   const endTimeSlots = timeSlots.filter(t => t > startTime)
+   const availableDates = withGuaranteedDate(generateAvailableDates(openDays), date)
+
+   const handleStartTimeChange = (val: string) => {
+      setStartTime(val)
+      if (val >= endTime) {
+         const idx = timeSlots.indexOf(val)
+         if (idx >= 0 && timeSlots[idx + 1]) setEndTime(timeSlots[idx + 1])
+      }
+   }
 
    const handleSubmit = async (e: FormEvent) => {
       e.preventDefault()
+      setError(null)
+      setSuccess(false)
       const res = await fetch(`${API}${booking['@id']}`, {
          method: 'PATCH',
          headers: authHeaders(),
          body: JSON.stringify({
-            startDate: new Date(startDate).toISOString(),
-            endDate: new Date(endDate).toISOString(),
+            startDate: `${date}T${startTime}:00`,
+            endDate: `${date}T${endTime}:00`,
          }),
       })
       if (res.ok) {
          setSuccess(true)
          refetch()
          setTimeout(() => setOpen(false), 800)
+      } else {
+         const data = await res.json().catch(() => null)
+         setError(data?.detail ?? 'Erreur lors de la modification de la réservation.')
       }
    }
 
@@ -89,20 +110,33 @@ function BookingRow({ booking, refetch }: { booking: Booking; refetch: () => voi
          </div>
          {isPending && open && (
             <form className={`${componentsClass}-form`} onSubmit={handleSubmit}>
-               <div className={`${parentClass}-row`}>
-                  <label>Date de début</label>
-                  <input type='date' value={startDate} onChange={e => setStartDate(e.target.value)} required />
+               <div className={`${componentsClass}-times`}>
+                  <div className={`${componentsClass}-field`}>
+                     <label className={`${componentsClass}-label`}>Date</label>
+                     <select className={`${componentsClass}-select`} value={date} onChange={e => setDate(e.target.value)} required>
+                        {availableDates.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}
+                     </select>
+                  </div>
+                  <div className={`${componentsClass}-field`}>
+                     <label className={`${componentsClass}-label`}>Heure de début</label>
+                     <select className={`${componentsClass}-select`} value={startTime} onChange={e => handleStartTimeChange(e.target.value)} required>
+                        {timeSlots.map(t => <option key={t} value={t}>{t}</option>)}
+                     </select>
+                  </div>
+                  <div className={`${componentsClass}-field`}>
+                     <label className={`${componentsClass}-label`}>Heure de fin</label>
+                     <select className={`${componentsClass}-select`} value={endTime} onChange={e => setEndTime(e.target.value)} required>
+                        {endTimeSlots.map(t => <option key={t} value={t}>{t}</option>)}
+                     </select>
+                  </div>
                </div>
-               <div className={`${parentClass}-row`}>
-                  <label>Date de fin</label>
-                  <input type='date' value={endDate} onChange={e => setEndDate(e.target.value)} required />
-               </div>
-               {success && <p className={`${parentClass}-success`}>Réservation mise à jour.</p>}
+               {success && <p className={`${componentsClass}-success`}>Réservation mise à jour.</p>}
+               {error && <p className={`${componentsClass}-error`}>{error}</p>}
                <Button
                   label='Enregistrer'
                   type='submit'
                   color={ColorButton.PRIMARY}
-                  className={`${parentClass}-submit`}
+                  className={`${componentsClass}-submit`}
                />
             </form>
          )}
@@ -113,15 +147,21 @@ function BookingRow({ booking, refetch }: { booking: Booking; refetch: () => voi
 type Props = {
    bookings: Booking[]
    refetch: () => void
+   monthLabel: string
+   openingTime: string
+   closingTime: string
+   openDays: number[]
 }
 
-const BookingsSection = ({ bookings, refetch }: Props) => {
+const BookingsSection = ({ bookings, refetch, monthLabel, openingTime, closingTime, openDays }: Props) => {
    return (
       <section className={parentClass}>
-         <h2 className={`${parentClass}-title`}>Mes réservations</h2>
+         <h2 className={`${parentClass}-title`}>Mes réservations — {monthLabel}</h2>
          {bookings.length === 0
-            ? <p className={`${parentClass}-empty`}>Aucune réservation.</p>
-            : bookings.map(b => <BookingRow key={b['@id']} booking={b} refetch={refetch} />)
+            ? <p className={`${parentClass}-empty`}>Aucune réservation ce mois-ci.</p>
+            : bookings.map(b => (
+               <BookingRow key={b['@id']} booking={b} refetch={refetch} openingTime={openingTime} closingTime={closingTime} openDays={openDays} />
+            ))
          }
       </section>
    )

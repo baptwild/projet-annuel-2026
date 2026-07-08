@@ -140,6 +140,49 @@
     }
   }
 
+  &_dayNav {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    padding-bottom: 0.15rem;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &_dayChip {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    @include typography.body;
+    font-size: 0.8rem;
+    color: $color-tertiary;
+    background: $color-light;
+    border: 1.5px solid transparent;
+    border-radius: 20px;
+    padding: 0.4rem 0.85rem;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: border-color 0.2s, color 0.2s;
+
+    &:hover {
+      border-color: $color-primary;
+      color: $color-primary;
+    }
+
+    &-active {
+      border-color: $color-primary;
+      color: $color-primary;
+      font-weight: 600;
+      background: rgba($color-primary, 0.08);
+    }
+  }
+
   &_tabs {
     display: flex;
     gap: 0.25rem;

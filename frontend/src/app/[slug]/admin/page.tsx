@@ -188,6 +188,7 @@ export default function AdminPage() {
           loading={bookingsLoading}
           updateStatus={updateStatus}
           billingConfig={billingConfig}
+          openDays={openDays}
         />
       )}
 

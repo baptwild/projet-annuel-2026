@@ -51,6 +51,63 @@
     gap: 2rem;
   }
 
+  &_monthNav {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: $color-light;
+    border-radius: 10px;
+    padding: 0.5rem 0.75rem;
+  }
+
+  &_monthBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1.5px solid color.adjust($color-light, $lightness: -10%);
+    background: $color-white;
+    color: $color-tertiary;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: border-color 0.2s, color 0.2s;
+
+    &:hover {
+      border-color: $color-primary;
+      color: $color-primary;
+    }
+  }
+
+  &_monthLabel {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    @include typography.body-bold;
+    font-size: 0.92rem;
+    color: $color-tertiary;
+    text-align: center;
+  }
+
+  &_monthToday {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: $color-primary;
+    background: rgba($color-primary, 0.1);
+    border: none;
+    border-radius: 20px;
+    padding: 0.15rem 0.65rem;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: rgba($color-primary, 0.18);
+    }
+  }
+
 
   @media screen and (min-width: responsive_variables.$screen-s-min) {
     &_content-row {
