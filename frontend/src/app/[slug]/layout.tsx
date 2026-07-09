@@ -19,7 +19,8 @@ async function getDaycareBySlug(slug: string): Promise<Daycare | null> {
     const data = await res.json()
     const members: Daycare[] = data['hydra:member'] ?? data['member'] ?? []
     return members.find(d => d.slug === slug) ?? null
-  } catch {
+  } catch (error) {
+    console.error(error)
     return null
   }
 }

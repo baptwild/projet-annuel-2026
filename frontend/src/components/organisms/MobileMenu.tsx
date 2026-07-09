@@ -48,7 +48,7 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
     <div className={classNames('o_MobileMenu', { open: isOpen })}>
       <Wrapper className={`${componentsClass}_content`}>
         <div className={`${componentsClass}_header`}>
-          <Link href={`/`} onClick={onClose}>
+          <Link href={`/${slug}`} onClick={onClose}>
             <Logo
               isColorInverted={false}
               className={`${componentsClass}_logo`}

@@ -9,23 +9,47 @@ async function fetchDaycares(): Promise<Daycare[]> {
   try {
     const res = await fetch(`${API}/api/daycares`, {
       headers: { Accept: 'application/ld+json' },
-      next: { revalidate: 60 },
+      // next: { revalidate: 60 },
+      cache: 'no-store',
     })
     if (!res.ok) return []
     const data = await res.json()
     return data['hydra:member'] ?? data['member'] ?? []
-  } catch {
+  } catch (error) {
+    console.error(error)
     return []
   }
 }
 
 function getLightTint(hexString: string, opacity = 0.08) {
-  let hex = hexString.replace('#', '');
-  if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
-  const r = parseInt(hex.substring(0, 2), 16);
-  const g = parseInt(hex.substring(2, 4), 16);
-  const b = parseInt(hex.substring(4, 6), 16);
-  return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+  let hex = hexString.replace('#', '')
+  if (hex.length === 3) hex = hex.split('').map(c => c + c).join('')
+  const r = parseInt(hex.substring(0, 2), 16)
+  const g = parseInt(hex.substring(2, 4), 16)
+  const b = parseInt(hex.substring(4, 6), 16)
+  return `rgba(${r}, ${g}, ${b}, ${opacity})`
+}
+
+function isDaycareCurrentlyOpen(daycare: Daycare): boolean {
+  if (!daycare.openingTime || !daycare.closingTime || !daycare.openDays) return false
+
+  const now = new Date()
+
+  const jsDay = now.getDay()
+  const currentDayIso = jsDay === 0 ? 7 : jsDay
+
+  if (!daycare.openDays.includes(currentDayIso)) {
+    return false
+  }
+
+  const currentTimeStr = now.toLocaleTimeString('fr-FR', {
+    timeZone: 'Europe/Paris',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  })
+
+  return currentTimeStr >= daycare.openingTime && currentTimeStr <= daycare.closingTime
 }
 
 export default async function DaycareList() {
@@ -35,8 +59,7 @@ export default async function DaycareList() {
 
   if (daycares.length === 0) {
     return (
-      <div
-        className={`${componentsClass}_empty`}>
+      <div className={`${componentsClass}_empty`}>
         <i className='bi bi-building-exclamation'></i>
         <p>Aucune garderie disponible pour le moment.</p>
       </div>
@@ -44,10 +67,11 @@ export default async function DaycareList() {
   }
 
   return (
-    <div className={`${componentsClass}_list`} >
+    <div className={`${componentsClass}_list`}>
       {daycares.map((daycare) => {
         const primaryColor = daycare.colorPrimary || '#1D6980'
         const lightBgColor = getLightTint(primaryColor, 0.06)
+        const isOpenNow = isDaycareCurrentlyOpen(daycare)
 
         return (
           <Link
@@ -60,17 +84,17 @@ export default async function DaycareList() {
               '--card-bg-hover': lightBgColor,
             } as React.CSSProperties}
           >
-
             <div className={`${componentsClass}_card-body`}>
               <div className={`${componentsClass}_card-information`}>
-                <h3 className={`${componentsClass}_card-title`} >
+                <h3 className={`${componentsClass}_card-title`}>
                   {daycare.name}
                 </h3>
-                <span className={classNames(`${componentsClass}_card-status`, {
-                  [`${componentsClass}_card-status-active`]: daycare.isActive,
-                })}
+                <span
+                  className={classNames(`${componentsClass}_card-status`, {
+                    [`${componentsClass}_card-status-active`]: isOpenNow,
+                  })}
                 >
-                  {daycare.isActive ? 'Ouvert' : 'Fermé'}
+                  {isOpenNow ? 'Ouvert' : 'Fermé'}
                 </span>
               </div>
 
@@ -90,8 +114,7 @@ export default async function DaycareList() {
                 </div>
               </div>
 
-              <div
-                className={`${componentsClass}_card-hours`}>
+              <div className={`${componentsClass}_card-hours`}>
                 <i className='bi bi-clock-fill' style={{ color: primaryColor }}></i>
                 <span className={`${componentsClass}_card-hours-content`}>
                   {daycare.openingTime
@@ -100,8 +123,8 @@ export default async function DaycareList() {
                 </span>
               </div>
 
-              <div className={`${componentsClass}_card-button`} >
-                <span style={{ color: primaryColor, borderColor: primaryColor }} >
+              <div className={`${componentsClass}_card-button`}>
+                <span style={{ color: primaryColor, borderColor: primaryColor }}>
                   Visiter {daycare.name} <i className='bi bi-arrow-right'></i>
                 </span>
               </div>

@@ -6,6 +6,7 @@
 
 .p_Booking {
   @include mixins.wrapper;
+  @include mixins.margin;
   @include mixins.padding(5rem);
   max-width: 640px;
 
@@ -25,13 +26,12 @@
   &_title {
     @include typography.h2;
     color: $color-tertiary;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
   }
 
   &_subtitle {
     @include typography.body;
     color: $color-tertiary;
-    opacity: 0.7;
   }
 
   &_form {
@@ -115,7 +115,6 @@
     }
   }
 
-  // ── Occupation du jour ───────────────────────────────────────────
   &_occupancy {
     background: $color-light;
     border: 1.5px solid color.adjust($color-light, $lightness: -8%);
