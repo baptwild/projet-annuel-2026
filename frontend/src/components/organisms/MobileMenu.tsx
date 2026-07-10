@@ -134,6 +134,7 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
                 className={`${componentsClass}_social-link`}
                 isExternal
                 target='_blank'
+                ariaLabel="Visiter notre page Facebook"
               />
               <NavLink
                 url={daycare.instagram ?? ''}
@@ -141,6 +142,7 @@ const MobileMenu: FC<MobileMenuProps> = (props) => {
                 className={`${componentsClass}_social-link`}
                 isExternal
                 target='_blank'
+                ariaLabel="Visiter notre page Instagram"
               />
             </div>
           )}

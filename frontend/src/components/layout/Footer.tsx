@@ -133,7 +133,7 @@ const Footer: FC<FooterProps> = (props) => {
                 <IconButton
                   url={daycare.facebook}
                   icon='bi bi-facebook'
-                  ariaLabel='Facebook'
+                  ariaLabel='Visiter notre page Facebook'
                   isExternal
                   className={`${componentsClass}_contact-social-link`}
                 />
@@ -142,7 +142,7 @@ const Footer: FC<FooterProps> = (props) => {
                 <IconButton
                   url={daycare.instagram}
                   icon='bi bi-instagram'
-                  ariaLabel='Instagram'
+                  ariaLabel='Visiter notre page Instagram'
                   isExternal
                   className={`${componentsClass}_contact-social-link`}
                 />
