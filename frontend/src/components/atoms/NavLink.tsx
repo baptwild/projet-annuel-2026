@@ -10,6 +10,7 @@ export type NavLinkProps = {
   target?: string
   noUnderline?: boolean
   isExternal?: boolean
+  ariaLabel?: string
   children?: ReactNode
 }
 
@@ -22,6 +23,7 @@ const NavLink: FC<NavLinkProps> = (props) => {
     target,
     noUnderline,
     isExternal,
+    ariaLabel,
     children,
   } = props
 
@@ -46,6 +48,7 @@ const NavLink: FC<NavLinkProps> = (props) => {
         className={classes}
         target={target}
         rel={target === '_blank' ? 'noopener noreferrer' : undefined}
+        aria-label={ariaLabel}
       >
         {content}
       </a>
@@ -53,7 +56,7 @@ const NavLink: FC<NavLinkProps> = (props) => {
   }
 
   return (
-    <NextLink href={url} className={classes} target={target}>
+    <NextLink href={url} className={classes} target={target} aria-label={ariaLabel}>
       {content}
     </NextLink>
   )

@@ -33,7 +33,7 @@ const Navbar: FC<NavbarProps> = (props) => {
 
   return (
     <nav className={componentsClass}>
-      <Link href={`/${slug}`}>
+      <Link href={`/${slug}`} aria-label="Revenir à la page d'accueil">
         <Logo isColorInverted={!isTransparent} />
       </Link>
       <div className={`${componentsClass}_menu`}>

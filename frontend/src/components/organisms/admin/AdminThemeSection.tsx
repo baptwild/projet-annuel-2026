@@ -1,6 +1,6 @@
 'use client'
 
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useMemo } from 'react'
 import Button from '@/components/atoms/Button'
 import { ColorButton } from '@/enums/ColorButton'
 
@@ -27,6 +27,29 @@ interface AdminThemeSectionProps {
   error: string | null
 }
 
+function getLuminance(hex: string): number {
+  const cleanHex = hex.replace('#', '')
+  const rgb = parseInt(cleanHex.length === 3 ? cleanHex.split('').map(c => c + c).join('') : cleanHex, 16)
+
+  const r = (rgb >> 16) & 0xff
+  const g = (rgb >> 8) & 0xff
+  const b = (rgb >> 0) & 0xff
+
+  const [R, G, B] = [r, g, b].map(v => {
+    v /= 255
+    return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)
+  })
+  return 0.2126 * R + 0.7152 * G + 0.0722 * B
+}
+
+function getContrastRatio(color1: string, color2: string): number {
+  const l1 = getLuminance(color1)
+  const l2 = getLuminance(color2)
+  const lightest = Math.max(l1, l2)
+  const darkest = Math.min(l1, l2)
+  return (lightest + 0.05) / (darkest + 0.05)
+}
+
 export default function AdminThemeSection({
   address,
   setAddress,
@@ -49,6 +72,16 @@ export default function AdminThemeSection({
   success,
   error
 }: AdminThemeSectionProps) {
+
+  const primaryContrast = useMemo(() => {
+    try {
+      return getContrastRatio(colorPrimary || '#1D6980', '#FFFFFF')
+    } catch {
+      return 5
+    }
+  }, [colorPrimary])
+
+  const hasContrastIssue = primaryContrast < 4.5
 
   const componentsClass = 'p_Admin'
 
@@ -116,6 +149,15 @@ export default function AdminThemeSection({
           <span className={`${componentsClass}_colorPreviewChip`} style={{ background: colorSecondary }} title='Secondaire' />
           <span className={`${componentsClass}_colorPreviewChip`} style={{ background: colorTertiary }} title='Tertiaire' />
         </div>
+
+        {hasContrastIssue && (
+          <div className={`${componentsClass}_colorWarning`}>
+            <i className="bi bi-exclamation-triangle-fill"></i>
+            <p>
+              <strong>Alerte Accessibilité :</strong> Votre couleur primaire actuelle pourrait rendre le texte blanc difficile à lire (Contraste: {primaryContrast.toFixed(1)}:1). Il est recommandé d'utiliser une couleur légèrement plus foncée.
+            </p>
+          </div>
+        )}
 
         {success && <p className={`${componentsClass}_success`}>Thème mis à jour.</p>}
         {error && <p className={`${componentsClass}_error`}>{error}</p>}

@@ -21,7 +21,7 @@ export type HeroProps = {
 const Hero: FC<HeroProps> = (props) => {
   const { title, subtitle, address, showLogo = false, isHome } = props
   const daycare = useDaycareSafe()
-  const displaySubtitle = subtitle ?? daycare?.name ?? ''
+  const displayTitle = title ?? daycare?.name ?? ''
   const displayAddress = address ?? daycare?.address
 
   const isDesktop = useMediaQuery(ResponsiveSize.SCREEN_S_MIN)
@@ -44,12 +44,11 @@ const Hero: FC<HeroProps> = (props) => {
         )}
 
         <div className={`${componentsClass}_information`}>
-          <h1 className={`${componentsClass}_title`}>{title}</h1>
-          {displaySubtitle && <h2 className={`${componentsClass}_subtitle`}>{displaySubtitle}</h2>}
+          <h1 className={`${componentsClass}_title`}>{displayTitle}</h1>
           {isHome && displayAddress && (
-            <h3 className={`${componentsClass}_address`}>
+            <h2 className={`${componentsClass}_address`}>
               <FormattedAddress address={displayAddress} />
-            </h3>
+            </h2>
           )}
         </div>
       </div>
@@ -58,6 +57,7 @@ const Hero: FC<HeroProps> = (props) => {
         url='#a-propos'
         icon='bi bi-chevron-down'
         className={`${componentsClass}_scroll`}
+        ariaLabel="Défiler vers la section suivante"
         noUnderline
       />
     </section>
