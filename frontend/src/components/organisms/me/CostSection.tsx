@@ -53,11 +53,11 @@ const CostSection = ({ bookings, me, monthLabel }: Props) => {
                      <div key={b['@id']} className={`${componentsClass}_costRow${b.discounted ? ' ${componentsClass}_costRow-discounted' : ''}`}>
                         <span className={`${componentsClass}_costDog`}>{b.dog.name}</span>
                         <span className={`${componentsClass}_costDate`}>
-                           {new Date(b.startDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
+                           {new Date(b.startDate.slice(0, 19)).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
                            {' · '}
-                           {new Date(b.startDate).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+                           {b.startDate.slice(11, 16)}
                            {' → '}
-                           {new Date(b.endDate).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+                           {b.endDate.slice(11, 16)}
                         </span>
                         <span className={`${componentsClass}_costDetail`}>{getBillingDetail(b.startDate, b.endDate, config)}</span>
                         <span className={`${componentsClass}_costAmount`}>

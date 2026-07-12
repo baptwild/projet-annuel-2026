@@ -41,10 +41,11 @@ export function generateTimeSlots(): string[] {
 export const ALL_SLOTS = generateTimeSlots()
 
 export function formatDateTime(iso: string) {
-  const d = new Date(iso)
+  const localString = iso.slice(0, 19)
+  const d = new Date(localString)
   return {
     date: d.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }),
-    time: d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
+    time: iso.slice(11, 16),
   }
 }
 
@@ -79,5 +80,6 @@ export function isSameDay(a: Date, b: Date): boolean {
 }
 
 export function onDay(b: AdminBooking, day: Date): boolean {
-  return isSameDay(new Date(b.startDate), day)
+  const localString = b.startDate.slice(0, 19)
+  return isSameDay(new Date(localString), day)
 }

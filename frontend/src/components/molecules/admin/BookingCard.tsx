@@ -20,25 +20,34 @@ export default function BookingCard({ booking, onConfirm, onCancel, onComplete }
   const canComplete = booking.status === 'confirmed' && isEndPast
 
   const componentsClass = 'm_BookingCard'
+  const hasActions = booking.status === 'pending' || canComplete || booking.status === 'confirmed'
 
   return (
     <div className={`${componentsClass} ${componentsClass}-${booking.status}`}>
-      <div className={`${componentsClass}-dog`}>
-        <span className={`${componentsClass}-dogName`}>{booking.dog.name}</span>
-        {booking.dog.breed && <span className={`${componentsClass}-breed`}>{booking.dog.breed}</span>}
+
+      <div className={`${componentsClass}-header`}>
+        <div className={`${componentsClass}-dog`}>
+          <span className={`${componentsClass}-dogName`}>{booking.dog.name}</span>
+          {booking.dog.breed && <span className={`${componentsClass}-breed`}>{booking.dog.breed}</span>}
+        </div>
+        <span className={`${componentsClass}-status ${booking.status}`}>
+          {STATUS_LABELS[booking.status] ?? booking.status}
+        </span>
       </div>
+
       <div className={`${componentsClass}-owner`}>
         <i className='bi bi-person' />
         <span>{ownerName}</span>
         <span className={`${componentsClass}-email`}>{owner.email}</span>
       </div>
+
       <div className={`${componentsClass}-schedule`}>
         <i className='bi bi-calendar3' />
         <span>{start.date}</span>
         <span className={`${componentsClass}-times`}>{start.time} → {end.time}</span>
       </div>
-      <div className={`${componentsClass}-footer`}>
-        <span className={`${componentsClass}-status`}>{STATUS_LABELS[booking.status] ?? booking.status}</span>
+
+      {hasActions && (
         <div className={`${componentsClass}-actions`}>
           {booking.status === 'pending' && (
             <button className={`${componentsClass}-btn ${componentsClass}-btn-confirm`} onClick={onConfirm}>
@@ -56,7 +65,7 @@ export default function BookingCard({ booking, onConfirm, onCancel, onComplete }
             </button>
           )}
         </div>
-      </div>
+      )}
     </div>
   )
 }

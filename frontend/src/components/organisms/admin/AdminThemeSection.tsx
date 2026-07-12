@@ -89,7 +89,7 @@ export default function AdminThemeSection({
     <section className={`${componentsClass}_section`}>
       <form className={`${componentsClass}_form`} onSubmit={onSubmit}>
 
-        <h3 className={`${componentsClass}_sectionTitle`}>Informations de contact</h3>
+        <h3 className={`${componentsClass}_section-title`}>Informations de contact</h3>
 
         <div className={`${componentsClass}_field`}>
           <label className={`${componentsClass}_label`}>Adresse postale</label>
@@ -108,7 +108,7 @@ export default function AdminThemeSection({
         </div>
 
         <div className={`${componentsClass}_divider`} />
-        <h3 className={`${componentsClass}_sectionTitle`}>Réseaux sociaux</h3>
+        <h3 className={`${componentsClass}_section-title`}>Réseaux sociaux</h3>
 
         <div className={`${componentsClass}_field`}>
           <label className={`${componentsClass}_label`}><i className='bi bi-facebook' /> Facebook</label>
@@ -122,7 +122,7 @@ export default function AdminThemeSection({
         </div>
 
         <div className={`${componentsClass}_divider`} />
-        <h3 className={`${componentsClass}_sectionTitle`}>Couleurs de la plateforme</h3>
+        <h3 className={`${componentsClass}_section-title`}>Couleurs de la plateforme</h3>
         <p className={`${componentsClass}_fieldHint`}>Ces couleurs s'appliquent à l'ensemble du site. Elles sont visibles immédiatement après l'enregistrement.</p>
 
         <div className={`${componentsClass}_colorGrid`}>
