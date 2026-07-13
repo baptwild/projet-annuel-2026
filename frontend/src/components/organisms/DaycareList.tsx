@@ -9,7 +9,6 @@ async function fetchDaycares(): Promise<Daycare[]> {
   try {
     const res = await fetch(`${API}/api/daycares`, {
       headers: { Accept: 'application/ld+json' },
-      // next: { revalidate: 60 },
       cache: 'no-store',
     })
     if (!res.ok) return []
@@ -31,14 +30,12 @@ function getLightTint(hexString: string, opacity = 0.08) {
 }
 
 function isDaycareCurrentlyOpen(daycare: Daycare): boolean {
-  if (!daycare.openingTime || !daycare.closingTime || !daycare.openDays) return false
+  if (!daycare.openingTime || !daycare.closingTime || !daycare.openDays?.length) return false
 
   const now = new Date()
+  const currentDay = now.getDay()
 
-  const jsDay = now.getDay()
-  const currentDayIso = jsDay === 0 ? 7 : jsDay
-
-  if (!daycare.openDays.includes(currentDayIso)) {
+  if (!daycare.openDays.includes(currentDay)) {
     return false
   }
 
@@ -49,7 +46,51 @@ function isDaycareCurrentlyOpen(daycare: Daycare): boolean {
     hour12: false,
   })
 
-  return currentTimeStr >= daycare.openingTime && currentTimeStr <= daycare.closingTime
+  const openStr = daycare.openingTime.substring(0, 5)
+  const closeStr = daycare.closingTime.substring(0, 5)
+
+  return currentTimeStr >= openStr && currentTimeStr <= closeStr
+}
+
+const DAY_NAMES: Record<number, string> = {
+  1: 'lundi',
+  2: 'mardi',
+  3: 'mercredi',
+  4: 'jeudi',
+  5: 'vendredi',
+  6: 'samedi',
+  0: 'dimanche'
+}
+
+function formatOpeningDaysStr(openDays: number[]) {
+  if (!openDays || openDays.length === 0) return ''
+
+  const sortedDays = [...openDays].sort((a, b) => {
+    const aValue = a === 0 ? 7 : a
+    const bValue = b === 0 ? 7 : b
+    return aValue - bValue
+  })
+
+  const firstDay = DAY_NAMES[sortedDays[0]]
+  const lastDay = DAY_NAMES[sortedDays[sortedDays.length - 1]]
+
+  if (sortedDays.length === 1) return `Ouvert le ${firstDay}`
+
+  return `Ouvert du ${firstDay} au ${lastDay}`
+}
+
+function formatClosedDaysStr(openDays: number[]) {
+  const allDays = [1, 2, 3, 4, 5, 6, 0]
+  const closedDays = allDays.filter(day => !openDays.includes(day))
+
+  if (closedDays.length === 0) return null
+
+  const labels = closedDays.map(d => DAY_NAMES[d])
+
+  if (labels.length === 1) return `Fermé le ${labels[0]}`
+
+  const last = labels.pop()
+  return `Fermé le ${labels.join(', ')} et le ${last}`
 }
 
 export default async function DaycareList() {
@@ -116,11 +157,23 @@ export default async function DaycareList() {
 
               <div className={`${componentsClass}_card-hours`}>
                 <i className='bi bi-clock-fill' style={{ color: primaryColor }}></i>
-                <span className={`${componentsClass}_card-hours-content`}>
-                  {daycare.openingTime
-                    ? `${daycare.openingTime} - ${daycare.closingTime}`
-                    : 'Horaires non précisés'}
-                </span>
+                <div className={`${componentsClass}_card-hours-content`}>
+                  {daycare.openingTime && daycare.openDays?.length ? (
+                    <>
+                      <p className={`${componentsClass}_card-hours-content-open`}>{formatOpeningDaysStr(daycare.openDays)}</p>
+                      <p className={`${componentsClass}_card-hours-content-time`}>
+                        De {daycare.openingTime.substring(0, 5)} à {daycare.closingTime.substring(0, 5)}
+                      </p>
+                      {formatClosedDaysStr(daycare.openDays) && (
+                        <p className={`${componentsClass}_card-hours-content-closed`}>
+                          {formatClosedDaysStr(daycare.openDays)}
+                        </p>
+                      )}
+                    </>
+                  ) : (
+                    <p>Horaires non précisés</p>
+                  )}
+                </div>
               </div>
 
               <div className={`${componentsClass}_card-button`}>

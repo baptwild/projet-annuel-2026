@@ -1,11 +1,17 @@
+'use client'
+
 import React from 'react'
 import Image from 'next/image'
 import Wrapper from '../layout/Wrapper'
 import Button from '../atoms/Button'
 import { ColorButton } from '@/enums/ColorButton'
 import profileImg from '../../../public/images/elise-collin-educatrice-canin.webp'
+import { useParams } from 'next/navigation'
 
 const AboutMeHome: React.FC = () => {
+  const params = useParams()
+  const slug = params?.slug as string
+
   const componentsClass = 'o_AboutMeHome'
 
   return (
@@ -34,7 +40,7 @@ const AboutMeHome: React.FC = () => {
             <Button
               label='En savoir plus'
               color={ColorButton.GHOST}
-              url='/education'
+              url={`${slug}/education`}
               className={`${componentsClass}_text-button`}
             />
           </div>

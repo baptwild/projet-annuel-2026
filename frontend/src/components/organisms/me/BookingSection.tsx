@@ -89,10 +89,10 @@ function BookingRow({ booking, refetch, openingTime, closingTime, openDays }: { 
          <div className={`${componentsClass}-header`} onClick={() => isPending && setOpen(o => !o)}>
             <span className={`${componentsClass}-dog`}>{booking.dog.name}</span>
             <span className={`${componentsClass}-dates`}>
-               {new Date(booking.startDate).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' })}{' '}
-               {new Date(booking.startDate).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+               {new Date(booking.startDate.slice(0, 19)).toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' })}{' '}
+               {booking.startDate.slice(11, 16)}
                {' → '}
-               {new Date(booking.endDate).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+               {booking.endDate.slice(11, 16)}
             </span>
             <span className={`${componentsClass}-status`}>{STATUS_LABELS[booking.status] ?? booking.status}</span>
             <div className={`${componentsClass}-actions`}>

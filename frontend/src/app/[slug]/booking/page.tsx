@@ -81,7 +81,7 @@ export default function BookingPage() {
             <Button
               label='Voir mes réservations'
               color={ColorButton.PRIMARY}
-              onClick={() => router.push('/me')}
+              onClick={() => router.push(`/${slug}/me`)}
             />
             <Button
               label='Nouvelle réservation'
